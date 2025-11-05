@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles/about.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+</head>
+
+
+<body oncontextmenu="return false;">
+<script>
+    document.onkeydown = function (e) {
+        const key = e.key.toLowerCase(); // Normalize to lowercase
+
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
+            (e.ctrlKey && key === "u")
+        ) {
+            alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
+            return false;
+        }
+    };
+</script>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    <header>
+        <!-- GIF Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="home_elements/logo.gif" alt="Logo">
+            </a>
+        </div>
+        <nav class="nav-desktop">
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-mobile">
+            <button id="menu-btn" class="menu-btn">☰</button>
+
+            <div id="nav-overlay" class="nav-overlay">
+                <button id="close-btn" class="close-btn">&times;</button>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Toggle Switch -->
+        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <label for="toggle" class="toy-toggle">
+            <span class="border1"></span>
+            <span class="border2"></span>
+            <span class="border3"></span>
+            <span class="handle">
+                <span class="handle-off"></span>
+                <span class="handle-on"></span>
+            </span>
+        </label>
+        <script>
+            // Initialize theme based on local storage
+            const initializeTheme = () => {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                const toggle = document.getElementById('toggle');
+
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    toggle.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggle.checked = false;
+                }
+            };
+
+            // Save theme preference to local storage
+            const saveThemePreference = (isDarkMode) => {
+                localStorage.setItem('darkMode', isDarkMode);
+            };
+
+            // Add event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('toggle');
+                initializeTheme();
+
+                toggle.addEventListener('change', () => {
+                    const isDarkMode = toggle.checked;
+                    if (isDarkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    saveThemePreference(isDarkMode);
+                });
+            });
+        </script>
+    </header>
+
+    <script>
+        // JavaScript for Mobile Navigation
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        menuBtn.addEventListener('click', () => {
+            navOverlay.classList.add('visible');
+            menuBtn.style.display = 'none';  // Hide the menu button
+            closeBtn.style.display = 'block'; // Show the close button
+        });
+
+        closeBtn.addEventListener('click', () => {
+            navOverlay.classList.remove('visible');
+            closeBtn.style.display = 'none';  // Hide the close button
+            menuBtn.style.display = 'block';  // Show the menu button
+        });
+
+        // Optional: Close the overlay when clicking outside of the nav links
+        navOverlay.addEventListener('click', (event) => {
+            if (event.target === navOverlay) {
+                navOverlay.classList.remove('visible');
+                closeBtn.style.display = 'none';  // Hide the close button
+                menuBtn.style.display = 'block';  // Show the menu button
+            }
+        });
+    </script>
+
+
+    <div class="container"></div>
+    <div class="main-content">
+        <div class="resume-profile">
+            <img src="about_elements/profile_photo.JPG" alt="image" class="personal-photo">
+            <h1>Abhimanyu Surendran</h1>
+            <h2>Software Developer</h2>
+            <div class="detail-item">
+                <img src="about_elements/about-calendar-logo.png" alt="image">
+                <p><b>Date of Birth:</b> 01/09/2003</p>
+            </div>
+            <div class="detail-item">
+                <img src="about_elements/about-location-logo.png" alt="image">
+                <p><b>Location:</b> Mumbai, Maharashtra, India</p>
+            </div>
+            <div class="detail-item">
+                <img src="about_elements/about-message-logo.png" alt="image">
+                <p><b>Email:</b> abhimanyu.surendran01@gmail.com</p>
+            </div>
+            <div class="detail-item">
+                <img src="about_elements/about-call-logo.png" alt="image">
+                <p><b>Phone:</b> +91 8839261551</p>
+            </div>
+            <div class="resume-button">
+                <a href="about_elements/RESUME REBUILD.pdf" target="_blank" class="resume-link">Download Resume</a>
+            </div>
+        </div>
+        <div class="main-profile">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <script>
+                // Update the progress bar width on scroll
+                document.querySelector('.main-profile').addEventListener('scroll', (e) => {
+                    const progressBar = document.getElementById("progress-bar");
+                    const element = e.target;
+
+                    const scrollTop = element.scrollTop;
+                    const scrollHeight = element.scrollHeight - element.clientHeight;
+                    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+
+                    progressBar.style.width = scrollPercentage + "%";
+                });
+            </script>
+            <div class="about-me">
+                <h1>About Me</h1>
+                <p>I’m a developer with a strong focus on creating smooth, responsive web and Android applications. My
+                    expertise spans JavaScript, React, Java, and SQL, with experience in both full-stack development and
+                    mobile solutions. I take pride in delivering clean, functional, and user-friendly code that brings
+                    ideas to life. Whether it's developing dynamic websites or building mobile apps, I enjoy solving
+                    complex problems with practical, effective solutions. With a passion for detail and a love for
+                    coding, I aim to craft digital experiences that are seamless and engaging for users.</p>
+            </div>
+            <div class="my-mission">
+                <img src="about_elements/about_mission.gif" alt="Image">
+                <div class="my-mission-text-content">
+                    <h1>My Mission</h1>
+                    <p>As a software developer, my vision is to leverage technology to create innovative solutions that
+                        enhance user experiences and solve real-world problems. I aim to stay at the forefront of
+                        emerging technologies, continually refining my skills in full-stack development, mobile
+                        applications, and cloud computing. My goal is to contribute to projects that prioritize
+                        user-centric design, seamless functionality, and scalability. I aspire to collaborate with
+                        diverse teams, fostering a culture of creativity and continuous learning. Ultimately, I envision
+                        building applications that not only meet user needs but also inspire and empower them in their
+                        everyday lives.</p>
+                </div>
+            </div>
+            <h1 class="title">My Experience</h1>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/Experience-S-TEK_IT.png" alt="Image 1">
+                        <div class="card-text">
+                            <h3>S-TEK IT Education</h3>
+                            <h3>Full-Stack Development Trainer</h3>
+                            <h3>January 2025 - Present</h3>
+                            <p>Training students in Full Stack Development using HTML, CSS, JavaScript, React.js,
+                                Node.js, MongoDB, MySQL, Express.js along with C, C++, Java, Python. Also guiding on AI
+                                integration to enhance coding efficiency and project development.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="title">My Internships</h1>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-Cloudstrats.png" alt="Image 1">
+                        <div class="card-text">
+                            <h3>Cloudstrats</h3>
+                            <h3>Data Analyst and AI Intern</h3>
+                            <h3>Duration :- 6 Months</h3>
+                            <p>Completed a 6-month remote internship at CLOUDSTRATS, gaining hands-on experience in Data
+                                Analytics and AI, collaborating with a team to solve real-world challenges and drive
+                                data-driven business decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-AICTE.png" alt="Image 2">
+                        <div class="card-text">
+                            <h3>AICTE</h3>
+                            <h3>Android Developer Intern</h3>
+                            <h3>Duration :- 3 Months</h3>
+                            <p>Worked as an Android Development Intern with AICTE under Google for Developers, building
+                                user-friendly mobile apps using Java, focusing on performance optimization and gaining
+                                industry best practices.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-OASISinfobyte.png" alt="Image 3">
+                        <div class="card-text">
+                            <h3>Oasis Infobyte</h3>
+                            <h3>Android App Development Intern</h3>
+                            <h3>Duration :- 2 Months</h3>
+                            <p>Completed a remote internship at Oasis Infobyte, developing Android apps using Java and
+                                Android Studio, focusing on UI optimization, bug fixing, and team collaboration.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-Technohacks.png" alt="Image 4">
+                        <div class="card-text">
+                            <h3>TechnoHacks Solutions Pvt. Ltd.</h3>
+                            <h3>Java Developer Intern</h3>
+                            <h3>Duration :- 2 Months</h3>
+                            <p>Completed a 1-month internship at Technohacks, enhancing Java development skills by
+                                optimizing code, implementing features, and gaining experience in software development,
+                                debugging, and performance optimization.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-Acmegrade.png" alt="Image 5">
+                        <div class="card-text">
+                            <h3>Acmegrade</h3>
+                            <h3>Android App Development Intern</h3>
+                            <h3>Duration :- 2 Months</h3>
+                            <p>Completed a 2-month remote internship at ACMEGRADE, developing Android applications using
+                                Java, focusing on UI/UX enhancement, performance optimization, and bug fixing, while
+                                gaining experience in mobile development and team collaboration.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <img src="about_elements/internship-Corizo.png" alt="Image 6">
+                        <div class="card-text">
+                            <h3>Corizo</h3>
+                            <h3>Web Developer Intern</h3>
+                            <h3>Duration :- 2 Months</h3>
+                            <p>Completed a 2-month remote internship at CORIZO, designing responsive web interfaces
+                                using HTML, CSS, JavaScript, optimizing code, fixing issues, and gaining experience in
+                                Git and agile methodologies.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="my-skills">
+                <div class="my-skills-text-content">
+                    <h1>Skills & Strength</h1>
+                    <p>I am skilled in web development, with proficiency in HTML, CSS, JavaScript, and React, allowing
+                        me to build responsive and user-friendly websites and web applications. I also have expertise in
+                        Android app development using Java, creating intuitive mobile experiences. My knowledge extends
+                        to backend technologies, including server-side programming, databases like SQL, and API
+                        integration for dynamic applications. I excel in problem-solving, with a strong ability to find
+                        efficient solutions to complex challenges. Adaptable and quick to learn, I stay updated with the
+                        latest industry trends, and I thrive in collaborative environments with strong communication and
+                        teamwork skills.</p>
+                </div>
+                <img src="about_elements/about_skills.gif" alt="Image">
+            </div>
+            <div class="my-achievements">
+                <img src="about_elements/about_achievements.gif" alt="Image">
+                <div class="my-achievements-text-content">
+                    <h1>My Achievements</h1>
+                    <p>
+                        I have completed my Bachelor's in Computer Applications (BCA), specializing in mobile
+                        applications and cloud technology, and I am currently pursuing a Master's in Computer
+                        Applications (MCA) with a focus on full-stack development. Along the way, I’ve earned multiple
+                        certifications in programming and web development, mastering technologies like JavaScript,
+                        React, HTML, CSS, and SQL. I have also gained proficiency in Android development using Java,
+                        allowing me to create functional and user-friendly mobile apps. Throughout my journey, I’ve
+                        honed strong problem-solving and teamwork skills, consistently delivering high-quality solutions
+                        in collaborative projects and learning environments.</p>
+                </div>
+            </div>
+            <h1 class="title">Education</h1>
+            <div class="education">
+                <h1>2024-2026</h1>
+                <div class="education-description">
+                    <h2>Masters in Computer Applications - MCA</h2>
+                    <h3>Jain (Deemed-to-be University)</h3>
+                    <p>I am currently pursuing my Master's in Computer Applications (MCA) with a focus on Full-Stack
+                        Development at Jain University, where I am gaining advanced skills in software engineering and
+                        web development.</p>
+                </div>
+            </div>
+            <div class="education">
+                <h1>2021-2024</h1>
+                <div class="education-description">
+                    <h2>Bachelors in Computer Applications - BCA (Gold Medalist)</h2>
+                    <h3>Ajeenkya D.Y. Patil University</h3>
+                    <p>I completed my Bachelor's in Computer Applications (BCA) with a specialization in Mobile
+                        Applications & Cloud Technology from Ajeenkya D.Y. Patil University, graduating as the batch
+                        topper with a Gold Medal and achieving a CGPA of 8.37 in 2024, which laid the groundwork for my
+                        journey in Android development.</p>
+                </div>
+            </div>
+            <div class="education">
+                <h1>2020-2021</h1>
+                <div class="education-description">
+                    <h2>Higher Secondary Certificate - 12th - NIOS</h2>
+                    <h3>Nidaan School</h3>
+                    <p>I completed my 12th standard at Nidaan School with 81.9% in 2021, building a solid foundation
+                        for my higher education and career.</p>
+                </div>
+            </div>
+            <div class="education">
+                <h1>2018-2019</h1>
+                <div class="education-description">
+                    <h2> Secondary School Certificate - 10th - CBSE</h2>
+                    <h3>Holy cross Sr. Sec. School</h3>
+                    <p>I finished my 10th standard at Holy cross Sr. Sec. School with 64.7% in 2019, which gave me a
+                        strong base
+                        for my further studies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-top">
+            <div class="footer-top-items">
+                <img src="about_elements/footer-call-logo.png" alt="image">
+                <div class="footer-top-content">
+                    <h1>Call Me</h1>
+                    <p>+91 8839261551</p>
+                </div>
+            </div>
+            <div class="footer-top-items">
+                <img src="about_elements/footer-message-logo.png" alt="image">
+                <div class="footer-top-content">
+                    <h1>Mail Me</h1>
+                    <p>abhimanyu.surendran01@gmail.com</p>
+                    <p>abhiyoyo165@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-top-items">
+                <img src="about_elements/footer-whatsapp-logo.png" alt="image">
+                <div class="footer-top-content">
+                    <button class="btn">
+                        <svg width="150" height="60" viewBox="0 0 150 60" class="border">
+                            <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+                            <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+                        </svg>
+                        <span><a href="https://wa.me/+918839261551" target="_blank">WhatsApp</a></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-column-1">
+                <div class="footer-column-upper">
+                    <h1>ABOUT ME</h1>
+                    <p>Passionate developer crafting seamless web and mobile experiences, merging creativity with
+                        technical
+                        expertise to inspire users.</p>
+                </div>
+                <div class="footer-column-lower">
+                    <h1>SOCIAL</h1>
+                    <div class="social-pair-container">
+                        <a href="https://www.linkedin.com/in/abhimanyu-surendran-53b9b3234/" target="_blank"
+                            rel="noopener noreferrer" class="social-pair">
+                            <img src="home_elements/linkedin-logo.png" alt="LinkedIn">
+                            <h6>LinkedIn</h6>
+                        </a>
+                        <a href="https://github.com/AbhimanyuSurendran" target="_blank" rel="noopener noreferrer"
+                            class="social-pair">
+                            <img src="home_elements/github-logo.png" alt="GitHub">
+                            <h6>GitHub</h6>
+                        </a>
+                        <a href="https://www.facebook.com/abhi.surendran.169/" target="_blank" rel="noopener noreferrer"
+                            class="social-pair">
+                            <img src="home_elements/facebook-logo.png" alt="Facebook">
+                            <h6>Facebook</h6>
+                        </a>
+                        <a href="https://www.instagram.com/abhimanyusurendran01/" target="_blank"
+                            rel="noopener noreferrer" class="social-pair">
+                            <img src="home_elements/instagram-logo.png" alt="Instagram">
+                            <h6>Instagram</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h1>PRODUCTS & SERVICES</h1>
+                <p>Web Development</p>
+                <p>Web Design</p>
+                <p>Android Development</p>
+                <p>Java Development</p>
+                <p>React Development</p>
+                <p>SQL / MongoDB / Firebase</p>
+            </div>
+            <div class="footer-column">
+                <h1>QUICK LINKS</h1>
+                <a href="home.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html">Skills</a></li>
+                <a href="certificates.html">Certificates</a>
+                <a href="publications.html">Publications</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-column">
+                <h1>LOCATION</h1>
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d458.5230561150662!2d77.41476017509488!3d23.16346722779044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c437cdd5a4be7%3A0xf216124eaea54d3c!2sG95%2C%20Varun%20Nagar%2C%20Lalita%20Nagar%2C%20Kolar%20Rd%2C%20Bhopal%2C%20Madhya%20Pradesh%20462042!5e0!3m2!1sen!2sin!4v1728796936117!5m2!1sen!2sin"
+                        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <h5>&copy; 2024 Abhimanyu Surendran. All rights reserved.</h5>
+            </div>
+        </div>
+    </footer>
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,  // Increased number of particles
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"  // Repel on hover
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 150,  // The distance around the cursor where particles will repel
+                        "duration": 0.6   // Duration of the repelling effect (increased slightly for smoother movement)
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+    </script>
+</body>
+
+</html>

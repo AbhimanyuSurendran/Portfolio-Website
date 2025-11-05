@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+        content="Abhimanyu Surendran - Full-Stack Developer and Trainer with expertise in Android, Java, MERN stack, and AI-driven development. Proven track record in building scalable web and mobile applications.">
+    <meta name="keywords"
+        content="Abhimanyu Surendran, Full-Stack Developer, Android Developer, Java Developer, MERN Stack, React Developer, Node.js, MongoDB, Web Development, App Development, Git, Full Stack Trainer, AI in development, Portfolio, Bhopal Developer, MCA Developer, S-TEK IT, Internship Experience, Mobile Developer India, Full Stack Projects, Code Optimization, CI/CD, Agile Developer, Software Trainer, Modern Web Developer, Firebase, Android Studio, REST APIs, Responsive Design, Cloud Deployment">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Home</title>
+    <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/animation.css">
+
+</head>
+
+<body oncontextmenu="return false;">
+<script>
+    document.onkeydown = function (e) {
+        const key = e.key.toLowerCase(); // Normalize to lowercase
+
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
+            (e.ctrlKey && key === "u")
+        ) {
+            alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
+            return false;
+        }
+    };
+</script>
+    <div class="bubble-background">
+        <!-- Create multiple bubbles -->
+        <script>
+            const bubbleNum = 50; // Number of bubbles
+            const bubbleContainer = document.querySelector('.bubble-background');
+
+            for (let i = 0; i < bubbleNum; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+
+                // Randomize bubble size and horizontal position
+                const size = Math.random() * 10 + 5; // Random size between 5 and 15
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+                bubble.style.animationDuration = `${Math.random() * 3 + 3}s`; // Random rise duration
+
+                // Add bubbles to the container
+                bubbleContainer.appendChild(bubble);
+            }
+        </script>
+    </div>
+    <!-- Navigation Bar -->
+    <header>
+        <!-- GIF Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="home_elements/logo.gif" alt="Logo">
+            </a>
+        </div>
+        <nav class="nav-desktop">
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-mobile">
+            <button id="menu-btn" class="menu-btn">☰</button>
+
+            <div id="nav-overlay" class="nav-overlay">
+                <button id="close-btn" class="close-btn">&times;</button>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Toggle Switch -->
+        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <label for="toggle" class="toy-toggle">
+            <span class="border1"></span>
+            <span class="border2"></span>
+            <span class="border3"></span>
+            <span class="handle">
+                <span class="handle-off"></span>
+                <span class="handle-on"></span>
+            </span>
+        </label>
+        <script>
+            // Initialize theme based on local storage
+            const initializeTheme = () => {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                const toggle = document.getElementById('toggle');
+
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    toggle.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggle.checked = false;
+                }
+            };
+
+            // Save theme preference to local storage
+            const saveThemePreference = (isDarkMode) => {
+                localStorage.setItem('darkMode', isDarkMode);
+            };
+
+            // Add event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('toggle');
+                initializeTheme();
+
+                toggle.addEventListener('change', () => {
+                    const isDarkMode = toggle.checked;
+                    if (isDarkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    saveThemePreference(isDarkMode);
+                });
+            });
+        </script>
+    </header>
+
+    <script>
+        // JavaScript for Mobile Navigation
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        menuBtn.addEventListener('click', () => {
+            navOverlay.classList.add('visible');
+            menuBtn.style.display = 'none';  // Hide the menu button
+            closeBtn.style.display = 'block'; // Show the close button
+        });
+
+        closeBtn.addEventListener('click', () => {
+            navOverlay.classList.remove('visible');
+            closeBtn.style.display = 'none';  // Hide the close button
+            menuBtn.style.display = 'block';  // Show the menu button
+        });
+
+        // Optional: Close the overlay when clicking outside of the nav links
+        navOverlay.addEventListener('click', (event) => {
+            if (event.target === navOverlay) {
+                navOverlay.classList.remove('visible');
+                closeBtn.style.display = 'none';  // Hide the close button
+                menuBtn.style.display = 'block';  // Show the menu button
+            }
+        });
+    </script>
+
+
+    <div class="container"></div>
+
+
+    <div class="profile-title">
+        <h1 class="name">Abhimanyu Surendran</h1>
+        <h2>I am a <span class="typed-text"></span><span class="cursor">&nbsp;</span></h2>
+        <h3>I'm a developer focused on creating smooth, responsive web and Android experiences. I turn ideas into
+            functional, user-friendly digital solutions.</h3>
+        <h4 style="text-align: center;">Contact Me</h4>
+        <div class="contact-sources">
+            <a href="https://www.linkedin.com/in/abhimanyu-surendran-53b9b3234/" target="_blank"
+                rel="noopener noreferrer">
+                <img src="home_elements/linkedin-logo.png" alt="LinkedIn" class="circular-image">
+            </a>
+            <a href="https://github.com/AbhimanyuSurendran" target="_blank" rel="noopener noreferrer">
+                <img src="home_elements/github-logo.png" alt="GitHub" class="circular-image">
+            </a>
+            <a href="https://www.facebook.com/abhi.surendran.169/" target="_blank" rel="noopener noreferrer">
+                <img src="home_elements/facebook-logo.png" alt="Facebook" class="circular-image">
+            </a>
+            <a href="https://www.instagram.com/abhimanyusurendran01/" target="_blank" rel="noopener noreferrer">
+                <img src="home_elements/instagram-logo.png" alt="Instagram" class="circular-image">
+            </a>
+
+        </div>
+    </div>
+
+    <div class="profile-image">
+        <div class="profile-container">
+            <div class="row full-height justify-content-center">
+                <div class="col-lg-10 col-xl-8 align-self-center padding-tb">
+                    <div class="section mx-auto text-center slider-height-padding">
+                        <ul>
+                            <li class="slide"></li>
+                            <li class="slide"></li>
+                            <li class="slide"></li>
+                            <li class="slide"></li>
+                            <li class="slide"></li>
+                            <li class="slide"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>Abhimanyu Surendran</h1>
+    </div>
+    <script>
+        const slides = document.querySelectorAll(".slide");
+        let currentSlide = 0;
+
+        // Show the first slide immediately
+        slides[currentSlide].classList.add("active");
+
+        // Start the interval after 5 seconds (5000 ms)
+        setTimeout(() => {
+            // Set up interval to change slides every 5 seconds
+            setInterval(showNextSlide, 8000);
+        }, 3000); // Initial delay for the first image
+
+        function showNextSlide() {
+            // Remove 'active' class from the current slide
+            slides[currentSlide].classList.remove("active");
+
+            // Move to the next slide, wrapping around to the first slide
+            currentSlide = (currentSlide + 1) % slides.length;
+
+            // Add 'active' class to the next slide
+            slides[currentSlide].classList.add("active");
+        }
+    </script>
+
+    <script>
+
+        // this code is for the typing effect
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+
+        const textArray = ["Software Developer", "Full-Stack Developer", "Web Developer", "React Developer", "Android Developer"];
+        const typingDelay = 100;
+        const erasingDelay = 100;
+        const newTextDelay = 1000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            }
+            else {
+                cursorSpan.classList.remove("typing");
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            }
+            else {
+                cursorSpan.classList.remove("typing");
+                textArrayIndex++;
+                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () { // On DOM Load initiate the effect
+            if (textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+    </script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/04/01/10/20250401103738-L5WYZ13S.js"></script>
+</body>
+
+</html>

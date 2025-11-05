@@ -1,0 +1,1089 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+GB+S:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    height: 100%;
+    background: linear-gradient(to right, #000000, #3533cd);
+    font-size: 16px;
+    /* Base font size */
+    --on: #055daf;
+    --off: #f0f0f0;
+    --transDur: 1s;
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%2300F9FF" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>')16 16, auto;
+}
+
+body.dark-mode {
+    background: linear-gradient(to right, #000000, #495057);
+}
+
+input {
+    position: absolute;
+    transform: translateX(-100%);
+    opacity: 0;
+    /* Completely hide the checkbox */
+    pointer-events: none;
+    /* Disable interaction with the hidden checkbox */
+
+}
+
+.toy-toggle {
+    background: radial-gradient(at top left, #fff 10%, #fff0 20%),
+        radial-gradient(at top right, #fff 20%, #e4e4e4 35%);
+    border-radius: 6em;
+    box-shadow: 0 0 0.25em #0002, 0 3em 1.5em 0.5em #0002;
+    cursor: pointer;
+    display: block;
+    font-size: 8px;
+    position: absolute;
+    margin: auto;
+    top: 120px;
+    /* Distance from the top of the viewport */
+    left: 50px;
+    /* Distance from the left of the viewport */
+    width: 6em;
+    /* Smaller width */
+    height: 3.5em;
+    /* Smaller height */
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+.toy-toggle span {
+    display: block;
+    position: absolute;
+}
+
+.toy-toggle>span {
+    top: 50%;
+    left: 50%;
+}
+
+.toy-toggle>span:not(.handle) {
+    transform: translate(-50%, -50%);
+}
+
+.border1 {
+    background: #f0f0f0;
+    border-radius: 5.5em;
+    box-shadow: 0 0 0.2em 0.1em #f0f0f0;
+    width: 9.5em;
+    /* Reduced from 19em */
+    height: 5.5em;
+    /* Reduced from 11em */
+}
+
+.border2 {
+    background: linear-gradient(0deg, #fff 33%, #ccc 45%);
+    border-radius: 4.75em;
+    box-shadow: 0 0 0.2em 0.3em #f0f0f0 inset;
+    width: 8.25em;
+    /* Reduced from 16.5em */
+    height: 4.75em;
+    /* Reduced from 9.5em */
+}
+
+.border3,
+.handle {
+    background: linear-gradient(90deg, var(--on) 50%, var(--off) 0);
+}
+
+.border3 {
+    background-position: 75% 0;
+    background-size: 200% 100%;
+    border-radius: 4.25em;
+    box-shadow: 0 0 0.1em 0.1em #ddd inset, 0 1.5em 1.5em 1em #0004 inset, 0 0 0 4.25em #0002 inset;
+    width: 7.75em;
+    /* Reduced from 15.5em */
+    height: 4.25em;
+    /* Reduced from 8.5em */
+    transition: background-position var(--transDur) ease-in-out;
+}
+
+.handle {
+    border-radius: 50%;
+    box-shadow: 0 0 0.5em 0 #0007;
+    width: 4.25em;
+    /* Reduced from 8.5em */
+    height: 4.25em;
+    /* Reduced from 8.5em */
+    transform: translate(-90%, -50%);
+    transition: transform var(--transDur) ease-in-out;
+    z-index: 0;
+}
+
+.handle:before {
+    background: radial-gradient(2em 1.5em at 50% 35%, #fff6 15%, #fff0),
+        radial-gradient(1.5em 2.5em at 75% 40%, #fff6 15%, #fff0),
+        radial-gradient(100% 100% at 50% 33%, #0000 25%, #0003 50%);
+    border-radius: 50%;
+    box-shadow: 0 0 0.3em 0.1em #0003 inset;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.handle-off,
+.handle-on {
+    width: 50%;
+    height: 100%;
+    transition: transform calc(var(--transDur)/2);
+    z-index: 2;
+}
+
+.handle-off {
+    background: var(--off);
+    border-radius: 100% 0 0 100% / 50% 50% 50% 50%;
+    right: 50%;
+    transform-origin: 100% 50%;
+    transition-delay: calc(var(--transDur)/2);
+    transition-timing-function: ease-out;
+}
+
+.handle-on {
+    background: var(--on);
+    border-radius: 0 100% 100% 0 / 50% 50% 50% 50%;
+    left: 50%;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition-timing-function: ease-in;
+}
+
+/* On */
+input:checked+.toy-toggle .border3 {
+    background-position: 25% 0;
+}
+
+input:checked+.toy-toggle .handle {
+    transform: translate(-10%, -50%);
+}
+
+input:checked+.toy-toggle .handle-off {
+    transform: scaleX(0);
+    transition-delay: 0s;
+    transition-timing-function: ease-in;
+}
+
+input:checked+.toy-toggle .handle-on {
+    transform: scaleX(1);
+    transition-delay: calc(var(--transDur)/2);
+    transition-timing-function: ease-out;
+}
+
+a:hover {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%23FFFFFF" stroke-width="2" d="M16.95 3h-9.9a2.06 2.06 0 0 0-1.34 3.62L11.99 12l6.28-5.38A2.06 2.06 0 0 0 16.93 3ZM7.05 21h9.89c1.9 0 2.78-2.38 1.34-3.62L12 12l-6.28 5.38A2.06 2.06 0 0 0 7.06 21Z"></path></svg>')16 16, pointer;
+    /* 16 16 centers the cursor */
+}
+
+.bubble-background {
+    position: fixed;
+    /* Fixed position to ensure the background covers the viewport */
+    width: 100vw;
+    height: 100vh;
+    /* Full viewport height */
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    /* Ensure it's behind the content */
+}
+
+.bubble {
+    position: absolute;
+    bottom: -10%;
+    /* Start just below the visible area */
+    border-radius: 50%;
+    background-color: rgba(173, 216, 230, 0.5);
+    /* Light blue with transparency */
+    animation: rise 8s linear infinite;
+    /* Adjusted for smooth movement */
+    transition: transform 0.3s ease-out;
+    /* Smooth transition for movement */
+    animation-delay: 3s;
+}
+
+body.dark-mode .bubble {
+    background-color: rgba(95, 110, 247, 0.5);
+    /* Dark blue with transparency */
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(100vh) scale(1);
+        /* Start below the viewport */
+    }
+
+    100% {
+        transform: translateY(-120vh) scale(1.5);
+        /* Move upwards and scale slightly */
+    }
+}
+
+/* Header and Navigation */
+header {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    /* Space between the items */
+    position: relative;
+    /* For positioning pseudo-elements */
+}
+
+.navbar li {
+    display: inline-block;
+    position: relative;
+    font-family: "Playwrite GB S", cursive;
+    font-size: 2rem;
+    font-weight: 400;
+    opacity: 0;
+    animation: popIn 1s ease-in-out forwards;
+}
+
+.navbar li:nth-child(1) {
+    animation-delay: 1s;
+}
+
+.navbar li:nth-child(2) {
+    animation-delay: 1.25s;
+}
+
+.navbar li:nth-child(3) {
+    animation-delay: 1.5s;
+}
+
+.navbar li:nth-child(4) {
+    animation-delay: 1.75s;
+}
+
+.navbar li:nth-child(5) {
+    animation-delay: 2s;
+}
+
+.navbar li:nth-child(6) {
+    animation-delay: 2.25s;
+}
+
+.navbar li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.5s;
+}
+
+.navbar li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Underline effect */
+.navbar li a::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    /* Start in the middle */
+    bottom: 0;
+    /* Position it at the bottom */
+    width: 0;
+    /* Start with no width */
+    height: 2px;
+    /* Height of the underline */
+    background: #ffffff;
+    /* Color of the underline */
+    transition: width 0.5s ease, left 0.5s ease;
+    /* Animate width and left position */
+}
+
+.navbar li a:hover::before {
+    width: 100%;
+    /* Expand to full width on hover */
+    left: 0;
+    /* Align to the left */
+}
+
+
+.nav-mobile .menu-btn,
+.nav-mobile .close-btn {
+    position: relative;
+    right: 20px;
+    font-size: 24px;
+    height: 50px;
+    width: 50px;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.nav-mobile .close-btn {
+    display: none;
+    /* Initially hidden */
+}
+
+.nav-mobile .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1;
+}
+
+.nav-mobile .nav-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+}
+
+.nav-mobile .nav-links {
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-mobile .nav-links li {
+    margin: 20px 0;
+}
+
+.nav-mobile .nav-links a {
+    font-size: 2.5rem;
+    color: white;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 0.5s forwards;
+}
+
+.nav-mobile .nav-overlay.visible .nav-links a {
+    opacity: 1;
+    transform: translateY(0);
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-mobile .nav-links a:hover {
+    transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+    .nav-mobile {
+        display: none;
+        /* Hide mobile nav on desktop */
+    }
+
+    .nav-desktop {
+        display: block;
+        /* Show desktop nav */
+    }
+}
+
+/* For screens smaller than 768px (mobile devices) */
+@media (max-width: 767px) {
+    .nav-desktop {
+        display: none;
+        /* Hide desktop nav on mobile */
+    }
+
+    .nav-mobile {
+        display: block;
+        /* Show mobile nav */
+    }
+
+    .toy-toggle {
+        top: 35px;
+        left: 220px;
+    }
+}
+
+/* Container */
+.container {
+    position: static;
+    padding-top: 80px;
+    /* Give space for the fixed header */
+}
+
+/* GIF logo */
+.logo {
+    width: clamp(120px, 20vw, 200px);
+    height: clamp(80px, 8vh, 100px);
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: logo-animation 1s ease-out forwards;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Profile title section */
+.profile-title {
+    margin-top: 100px;
+    margin-left: 5%;
+    width: clamp(300px, 40%, 600px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2vw;
+
+}
+
+.profile-title h1,
+.profile-title h2,
+.profile-title h3,
+.profile-title h4 {
+    margin: 0.5em 0;
+    line-height: 1.2;
+    text-align: left;
+    overflow-wrap: break-word;
+    color: #ffffff;
+}
+
+.profile-title h1 {
+font-size: clamp(28px, calc(28px + 1.5vw), 60px);
+    font-family: "Lobster", sans-serif;
+    font-weight: 500;
+
+    font-style: normal;
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg, #f35654, #feab3a);
+    animation: hue 5s infinite linear, slideInFromLeft 2s ease-out forwards;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 5s infinite linear, slideInFromLeft 2s ease-out forwards;
+}
+@-webkit-keyframes hue {
+    from {
+      -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+      -webkit-filter: hue-rotate(-360deg);
+    }
+}
+.profile-title h2 {
+    font-size: clamp(18px, calc(18px + 0.5vw), 36px);
+
+    animation: slideInFromLeft 2.5s ease-out forwards;
+}
+
+.profile-title h2 .typed-text {
+    font-weight: bold;
+    color: #faa200;
+}
+
+.profile-title h2 .cursor {
+    display: inline-block;
+    background-color: #ffffff;
+    margin-left: 0.1rem;
+    width: 3px;
+    animation: blink 1s infinite;
+}
+
+.profile-title h2 .cursor.typing {
+    animation: none;
+}
+
+.profile-title h3 {
+    font-size: clamp(16px, calc(16px + 0.3vw), 28px);
+    animation: slideInFromLeft 3s ease-out forwards;
+}
+
+.profile-title h4 {
+    font-size: clamp(18px, calc(18px + 0.3vw), 36px);
+    animation: slideUpFromBottom 2s ease-out forwards;
+    animation-delay: 2s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Contact sources */
+.contact-sources {
+    display: inline-flex;
+    justify-content: center;
+    gap: clamp(10px, 2vw, 30px);
+    background-color: #ffffff;
+    height: clamp(50px, 10vh, 70px);
+    align-items: center;
+    border-radius: 25px;
+    padding: 50px clamp(15px, 3vw, 45px);
+    white-space: nowrap;
+    margin-top: 20px;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    border: 5px solid transparent;
+    /* Set a transparent border for the effect */
+    animation: slideUpFromBottom 2s ease-out forwards, rgb-border 3s linear infinite;
+    /* Add border and glow animation */
+}
+
+body.dark-mode .contact-sources {
+    background-color: #4b4b4b;
+}
+
+@keyframes rgb-border {
+    0% {
+        border-color: rgba(255, 0, 0, 0.5);
+        /* Red */
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 30px rgba(255, 0, 0, 0.5);
+        /* Red glow */
+    }
+
+    33% {
+        border-color: rgba(0, 255, 0, 0.5);
+        /* Green */
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.7), 0 0 30px rgba(0, 255, 0, 0.5);
+        /* Green glow */
+    }
+
+    66% {
+        border-color: rgba(0, 0, 255, 0.5);
+        /* Blue */
+        box-shadow: 0 0 20px rgba(0, 0, 255, 0.7), 0 0 30px rgba(0, 0, 255, 0.5);
+        /* Blue glow */
+    }
+
+    100% {
+        border-color: rgba(255, 0, 0, 0.5);
+        /* Red */
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.5);
+        /* Red glow */
+    }
+}
+
+.circular-image {
+    width: clamp(35px, 6vw, 60px);
+    /* Increased width */
+    height: clamp(35px, 6vw, 60px);
+    /* Increased height */
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth transition for both transform and box-shadow */
+}
+
+.circular-image:hover {
+    transform: translateY(-10px) scale(1.2);
+    /* Moves the image up by 5px */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.8);
+    /* Adds a shadow effect for depth */
+}
+
+/* Profile image section */
+.profile-image {
+    position: absolute;
+    top: 200px;
+    /* Adjusted to be below the nav bar */
+    right: 5vw;
+    text-align: center;
+    width: clamp(250px, 30vw, 500px);
+    animation: slideInFromRight 2s ease-out forwards;
+}
+
+.profile-container {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    /* Adjust this to create space for the h1 */
+    text-align: center;
+}
+
+.section {
+    position: relative;
+    height: auto;
+    display: block;
+}
+
+.profile-container ul {
+    position: relative;
+    /* Changed to relative to avoid issues with absolute positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.profile-container ul li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    border: 5px solid #ffffff;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s ease;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-1.png?alt=media&token=1fc1da87-267c-4b41-a0f5-4d7dfd4723cf');
+    animation: border-transform 15s linear infinite alternate forwards;
+}
+
+body.dark-mode .profile-container ul li {
+    border: 5px solid #000000;
+}
+
+.profile-container ul li.active {
+    opacity: 1;
+    transform: scale(1.3);
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.8);
+    animation-play-state: running;
+}
+
+/* Specific background images for list items */
+.profile-container ul li:nth-child(2) {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-2.png?alt=media&token=8b03ead7-ede5-4399-a86c-de400571c5e0');
+}
+
+.profile-container ul li:nth-child(3) {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-3.png?alt=media&token=173f1734-b949-44a0-90a5-d3134413666e');
+}
+
+.profile-container ul li:nth-child(4) {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-4.png?alt=media&token=f7bf0e73-0733-4811-8ed5-1ec37d1e5523');
+}
+
+.profile-container ul li:nth-child(5) {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-5.png?alt=media&token=2efa0a07-6c5b-480a-bfba-44d64034d801');
+}
+
+.profile-container ul li:nth-child(6) {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-6.png?alt=media&token=19700d0a-6e97-4a7b-82bf-3e3b9d3b8381');
+}
+
+@keyframes border-transform {
+    0% {
+        border-top-left-radius: 0%;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 0%;
+        border-bottom-left-radius: 50%;
+    }
+
+    25% {
+        border-top-left-radius: 50%;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 0%;
+    }
+
+    50% {
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 0%;
+        border-bottom-left-radius: 0%;
+    }
+
+    75% {
+        border-top-left-radius: 0%;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 0%;
+    }
+
+    100% {
+        border-top-left-radius: 0%;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+}
+
+/* Styles for h1 inside the profile-image */
+.profile-image h1 {
+    color: #ffffff;
+    margin-top: 10px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(500%);
+    /* Start off-screen */
+    animation: rollIn 1s forwards;
+    /* Roll-in animation */
+    animation-delay: 4s;
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-size: 4rem;
+    position: absolute;
+    /* Change to absolute */
+    top: 600px;
+    /* Adjust this value to position below profile-container */
+}
+
+
+
+@media (max-width: 480px) {
+
+    /* Adjust navbar for smaller screens */
+    .navbar {
+        flex-direction: row;
+        /* Arrange links in a row */
+        justify-content: center;
+        /* Center the navbar */
+        width: 100%;
+        /* Full width to avoid overlap */
+        padding: 10px 0;
+        /* Add some padding */
+        margin-top: 15%;
+        /* Space between logo and navbar */
+    }
+
+    .navbar li {
+        margin: 0 10px;
+        /* Space between the items */
+    }
+
+    .navbar li a {
+        padding: 8px 15px;
+        /* Ensure clickable area remains comfortable */
+        font-size: 14px;
+        /* Reduce font size slightly */
+    }
+
+    /* Adjust logo for smaller screens */
+    .logo {
+        top: 10px;
+        /* Adjust logo positioning */
+        width: clamp(100px, 40vw, 150px);
+        /* Scale logo for mobile */
+        height: clamp(60px, 10vw, 80px);
+        margin-bottom: 20px;
+        /* Add some margin to separate from navbar */
+    }
+
+    .container {
+        padding-top: 10px;
+        /* Give space for the fixed header */
+    }
+
+    /* Adjust profile image for smaller screens */
+    .profile-image {
+        position: static;
+        /* Let it flow naturally */
+        margin: 30px auto 20px auto;
+        /* Center the image and adjust margins */
+        text-align: center;
+    }
+
+    .profile-image img {
+        width: 80vw;
+        /* Make the image responsive */
+        height: auto;
+        border-radius: 10px;
+        box-shadow: none;
+        /* Remove shadow for simplicity */
+    }
+
+    .profile-image h1 {
+        font-size: 18px;
+        /* Adjust font size */
+        margin-top: 10px;
+    }
+
+    /* Adjust profile title for smaller screens */
+    .profile-title {
+        width: 90%;
+        margin: 50px auto 20px auto;
+        /* Center and adjust margins */
+        padding: 0 10px;
+        /* Add some padding for readability */
+    }
+
+    .profile-title h1 {
+        font-size: 22px;
+    }
+
+    .profile-title h2 {
+        font-size: 18px;
+    }
+
+    .profile-title h3 {
+        font-size: 14px;
+    }
+
+    .profile-title h4 {
+        font-size: 16px;
+    }
+
+    /* Adjust contact sources */
+    .contact-sources {
+        display: flex;
+        flex-wrap: wrap;
+        /* Enable wrapping */
+        justify-content: center;
+        /* Center the icons */
+        gap: 10px;
+        /* Space between icons */
+        padding: 10px;
+        height: auto;
+        /* Remove fixed height */
+    }
+
+    .contact-sources a {
+        flex: 0 0 calc(50% - 10px);
+        /* Take up half the width minus gap */
+        text-align: center;
+        /* Center the individual items */
+    }
+
+    .circular-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-image {
+        top: 100px;
+        /* Reduced top position */
+        right: 2vw;
+        /* More padding from the right */
+        width: clamp(150px, 60vw, 250px);
+        /* Smaller width for mobile */
+        animation: slideInFromRight 2s ease-out forwards;
+    }
+
+    .profile-container {
+        top: 5px;
+        /* Reduced spacing for mobile */
+        padding: 0 10px;
+        /* Centering content with padding */
+    }
+
+    .profile-container ul li {
+        height: 300px;
+        /* Smaller height */
+        border: 4px solid #ffffff;
+        border-radius: 50%;
+        /* Circular shape */
+        box-shadow: 0 0 15px rgba(0, 0, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.6);
+        animation: border-transform 15s linear infinite alternate forwards;
+    }
+
+    .profile-image h1 {
+        font-size: 2rem;
+        /* Smaller font size for mobile */
+        top: 350px;
+        /* Adjusted position */
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Adjust navbar for medium screens */
+    .navbar {
+        flex-direction: row;
+        /* Keep links in a row */
+        justify-content: center;
+        /* Center the navbar */
+        width: 100%;
+        /* Full width to avoid overlap */
+        padding: 10px 0;
+        /* Add some padding */
+        margin-top: 15%;
+        /* Space between logo and navbar */
+    }
+
+    .navbar li {
+        margin: 0 15px;
+        /* Add more space between items */
+    }
+
+    .navbar li a {
+        padding: 8px 15px;
+        /* Ensure clickable area remains comfortable */
+        font-size: 16px;
+        /* Slightly larger font size for better readability */
+    }
+
+    /* Adjust logo for medium screens */
+    .logo {
+        top: 10px;
+        /* Keep logo positioning */
+        width: clamp(120px, 40vw, 180px);
+        /* Scale logo for medium screens */
+        height: clamp(70px, 10vw, 90px);
+        margin-bottom: 20px;
+        /* Add some margin to separate from navbar */
+    }
+
+    .container {
+        padding-top: 10px;
+        /* Give space for the fixed header */
+    }
+
+    /* Adjust profile image for medium screens */
+    .profile-image {
+        position: static;
+        /* Let it flow naturally */
+        margin: 40px auto 20px auto;
+        /* Center the image and adjust margins */
+        text-align: center;
+    }
+
+    .profile-image img {
+        width: 70vw;
+        /* Make the image responsive */
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Add a subtle shadow for depth */
+    }
+
+    .profile-image h1 {
+        font-size: 20px;
+        /* Adjust font size */
+        margin-top: 10px;
+    }
+
+    /* Adjust profile title for medium screens */
+    .profile-title {
+        width: 85%;
+        /* Adjust width for better alignment */
+        margin: 40px auto 20px auto;
+        /* Center and adjust margins */
+        padding: 0 10px;
+        /* Add some padding for readability */
+    }
+
+    .profile-title h1 {
+        font-size: clamp(28px, calc(28px + 1.5vw), 60px);
+        /* Slightly larger font size */
+    }
+
+    .profile-title h2 {
+        font-size: 20px;
+        /* Adjust font size */
+    }
+
+    .profile-title h3 {
+        font-size: 16px;
+        /* Adjust font size */
+    }
+
+    .profile-title h4 {
+        font-size: 18px;
+        /* Adjust font size */
+    }
+
+    /* Adjust contact sources */
+    .contact-sources {
+        display: flex;
+        flex-wrap: wrap;
+        /* Enable wrapping */
+        justify-content: center;
+        /* Center the icons */
+        gap: 15px;
+        /* Space between icons */
+        padding: 10px;
+        height: auto;
+        /* Remove fixed height */
+    }
+
+    .contact-sources a {
+        flex: 0 0 calc(50% - 15px);
+        /* Take up half the width minus gap */
+        text-align: center;
+        /* Center the individual items */
+    }
+
+    .circular-image {
+        width: 50px;
+        /* Slightly larger icon size */
+        height: 50px;
+    }
+
+    .profile-image {
+        top: 100px;
+        /* Reduced top position */
+        right: 2vw;
+        /* More padding from the right */
+        width: clamp(150px, 60vw, 250px);
+        /* Smaller width for mobile */
+        animation: slideInFromRight 2s ease-out forwards;
+    }
+
+    .profile-container {
+        top: 5px;
+        /* Reduced spacing for mobile */
+        padding: 0 10px;
+        /* Centering content with padding */
+    }
+
+    .profile-container ul li {
+        height: 300px;
+        /* Smaller height */
+        border: 4px solid #ffffff;
+        border-radius: 50%;
+        /* Circular shape */
+        box-shadow: 0 0 15px rgba(0, 0, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.6);
+        animation: border-transform 15s linear infinite alternate forwards;
+    }
+
+    .profile-image h1 {
+        font-size: 2rem;
+        /* Smaller font size for mobile */
+        top: 350px;
+        /* Adjusted position */
+        text-align: center;
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+}

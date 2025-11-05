@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills</title>
+    <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/skills.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+
+<body oncontextmenu="return false;">
+    <script>
+        document.onkeydown = function (e) {
+            const key = e.key.toLowerCase(); // Normalize to lowercase
+
+            if (
+                e.key === "F12" ||
+                (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
+                (e.ctrlKey && key === "u")
+            ) {
+                alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
+                return false;
+            }
+        };
+    </script>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    <header>
+        <!-- GIF Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="home_elements/logo.gif" alt="Logo">
+            </a>
+        </div>
+        <nav class="nav-desktop">
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-mobile">
+            <button id="menu-btn" class="menu-btn">☰</button>
+
+            <div id="nav-overlay" class="nav-overlay">
+                <button id="close-btn" class="close-btn">&times;</button>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Toggle Switch -->
+        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <label for="toggle" class="toy-toggle">
+            <span class="border1"></span>
+            <span class="border2"></span>
+            <span class="border3"></span>
+            <span class="handle">
+                <span class="handle-off"></span>
+                <span class="handle-on"></span>
+            </span>
+        </label>
+        <script>
+            // Initialize theme based on local storage
+            const initializeTheme = () => {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                const toggle = document.getElementById('toggle');
+
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    toggle.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggle.checked = false;
+                }
+            };
+
+            // Save theme preference to local storage
+            const saveThemePreference = (isDarkMode) => {
+                localStorage.setItem('darkMode', isDarkMode);
+            };
+
+            // Add event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('toggle');
+                initializeTheme();
+
+                toggle.addEventListener('change', () => {
+                    const isDarkMode = toggle.checked;
+                    if (isDarkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    saveThemePreference(isDarkMode);
+                });
+            });
+        </script>
+    </header>
+
+    <script>
+        // JavaScript for Mobile Navigation
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        menuBtn.addEventListener('click', () => {
+            navOverlay.classList.add('visible');
+            menuBtn.style.display = 'none';  // Hide the menu button
+            closeBtn.style.display = 'block'; // Show the close button
+        });
+
+        closeBtn.addEventListener('click', () => {
+            navOverlay.classList.remove('visible');
+            closeBtn.style.display = 'none';  // Hide the close button
+            menuBtn.style.display = 'block';  // Show the menu button
+        });
+
+        // Optional: Close the overlay when clicking outside of the nav links
+        navOverlay.addEventListener('click', (event) => {
+            if (event.target === navOverlay) {
+                navOverlay.classList.remove('visible');
+                closeBtn.style.display = 'none';  // Hide the close button
+                menuBtn.style.display = 'block';  // Show the menu button
+            }
+        });
+    </script>
+
+
+    <div class="container"></div>
+    <div class="main-content">
+        <div class="top-skill-sets">
+            <h1>Top Skill Sets</h1>
+            <div class="skills-gallery">
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-Java.png" alt="Skill 1">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95"
+                            aria-valuemin="0" aria-valuemax="100">95%</div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-JavaScript.png" alt="Skill 2">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
+                            aria-valuemin="0" aria-valuemax="100">85%</div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-C++.png" alt="Skill 3">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
+                            aria-valuemin="0" aria-valuemax="100">70%</div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-NodeJS.png" alt="Skill 4">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-Python.png" alt="Skill 5">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <img src="skills_elements/top_skills/top-skills-SQL.png" alt="Skill 6">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
+                            aria-valuemin="0" aria-valuemax="100">85%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fullstack">
+            <div class="frontend">
+                <h1>Frontend Languages</h1>
+                <div class="image-gallery">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-JavaScript.png" alt="Frontend 1">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-React.png" alt="Frontend 2">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-HTML.png" alt="Frontend 3">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-CSS.png" alt="Frontend 4">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-NuxtJS.png" alt="Frontend 5">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-Vue.JS.png" alt="Frontend 6">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-Bootstrap.png" alt="Frontend 7">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-Flutter.png" alt="Frontend 8">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-Android-Studio.png" alt="Frontend 9">
+                    <img class="skill-img" src="skills_elements/frontend/frontend-XML.png" alt="Frontend 10">
+                </div>
+            </div>
+            <div class="backend">
+                <h1>Backend Languages</h1>
+                <div class="image-gallery">
+                    <img class="skill-img" src="skills_elements/backend/backend-Java.png" alt="Backend 1">
+                    <img class="skill-img" src="skills_elements/backend/backend-NodeJS.png" alt="Backend 2">
+                    <img class="skill-img" src="skills_elements/backend/backend-Python.png" alt="Backend 3">
+                    <img class="skill-img" src="skills_elements/backend/backend-SQL.png" alt="Backend 4">
+                    <img class="skill-img" src="skills_elements/backend/backend-C++.png" alt="Backend 5">
+                    <img class="skill-img" src="skills_elements/backend/backend-Kotlin.png" alt="Backend 6">
+                    <img class="skill-img" src="skills_elements/backend/backend-Dart.png" alt="Backend 7">
+                    <img class="skill-img" src="skills_elements/backend/backend-spring-boot.png" alt="Backend 8">
+                    <img class="skill-img" src="skills_elements/backend/backend-rest-API.png" alt="Backend 9">
+                    <img class="skill-img" src="skills_elements/backend/backend-mongo DB.png" alt="Backend 10">
+                    <img class="skill-img" src="skills_elements/backend/backend-MySQL.png" alt="Backend 11">
+                    <img class="skill-img" src="skills_elements/backend/backend-PostgreSQL.png" alt="Backend 12">
+
+                </div>
+            </div>
+        </div>
+        <div id="techStackGame">
+
+            <h1>🚀 Tech Stack Builder Game 🚀</h1>
+            <p class="instructions">Drag technologies below into the box to build your own Stack! 🎯</p>
+
+            <div class="drag-zone" id="dragZone">
+                <!-- Frontend -->
+                <div class="tech" draggable="true" data-id="html">HTML</div>
+                <div class="tech" draggable="true" data-id="css">CSS</div>
+                <div class="tech" draggable="true" data-id="js">JavaScript</div>
+                <div class="tech" draggable="true" data-id="tailwind">Tailwind CSS</div>
+                <div class="tech" draggable="true" data-id="bootstrap">Bootstrap</div>
+                <div class="tech" draggable="true" data-id="react">React</div>
+                <div class="tech" draggable="true" data-id="vue">Vue.js</div>
+                <div class="tech" draggable="true" data-id="angular">Angular</div>
+                <div class="tech" draggable="true" data-id="nuxt">Nuxt.js</div>
+                <div class="tech" draggable="true" data-id="flutter">Flutter</div>
+                <div class="tech" draggable="true" data-id="typescript">TypeScript</div>
+
+
+                <!-- Backend -->
+                <div class="tech" draggable="true" data-id="node">Node.js</div>
+                <div class="tech" draggable="true" data-id="express">Express.js</div>
+                <div class="tech" draggable="true" data-id="php">PHP</div>
+                <div class="tech" draggable="true" data-id="java">Java</div>
+                <div class="tech" draggable="true" data-id="spring">Spring Boot</div>
+                <div class="tech" draggable="true" data-id="kotlin">Kotlin</div>
+                <div class="tech" draggable="true" data-id="dart">Dart</div>
+                <div class="tech" draggable="true" data-id="swift">Swift</div>
+                <div class="tech" draggable="true" data-id="go">Go</div>
+                <div class="tech" draggable="true" data-id="jquery">jQuery</div>
+                <div class="tech" draggable="true" data-id="reactnative">React Native</div>
+                <div class="tech" draggable="true" data-id="laravel">Laravel</div>
+                <div class="tech" draggable="true" data-id="flask">Flask</div>
+                <div class="tech" draggable="true" data-id="python">Python</div>
+                <div class="tech" draggable="true" data-id="django">Django</div>
+                <div class="tech" draggable="true" data-id="ruby">Ruby</div>
+                <div class="tech" draggable="true" data-id="rails">Rails</div>
+
+
+                <!-- DB & Others -->
+                <div class="tech" draggable="true" data-id="mongodb">MongoDB</div>
+                <div class="tech" draggable="true" data-id="mysql">MySQL</div>
+                <div class="tech" draggable="true" data-id="postgres">PostgreSQL</div>
+                <div class="tech" draggable="true" data-id="firebase">Firebase</div>
+                <div class="tech" draggable="true" data-id="api">APIs</div>
+                <div class="tech" draggable="true" data-id="markup">Markup</div>
+                <div class="tech" draggable="true" data-id="linux">Linux</div>
+                <div class="tech" draggable="true" data-id="apache">Apache</div>
+                <div class="tech" draggable="true" data-id="nginx">Nginx</div>
+                <div class="tech" draggable="true" data-id="csharp">C#</div>
+                <div class="tech" draggable="true" data-id="aspnet">ASP.NET</div>
+                <div class="tech" draggable="true" data-id="iis">IIS</div>
+                <div class="tech" draggable="true" data-id="azure">Azure</div>
+                <div class="tech" draggable="true" data-id="aws">AWS</div>
+                <div class="tech" draggable="true" data-id="docker">Docker</div>
+
+            </div>
+
+            <div class="drop-area" id="dropArea">
+                Drop your stack here 👇
+            </div>
+
+            <div class="message-box" id="messageBox">Waiting for a valid tech stack...</div>
+        </div>
+        <script>
+
+            const dropArea = document.getElementById("dropArea");
+            const messageBox = document.getElementById("messageBox");
+            let currentStack = [];
+            let lastMessage = "";
+
+            const stacks = {
+                "html+css+js": "🌐 Basic Frontend Stack: HTML + CSS + JS! \n This is the foundation of all web development — HTML builds the structure, CSS styles it beautifully, and JavaScript makes it interactive. Mastery of this stack is essential before diving into advanced tools.",
+                "html+css+js+react": "⚛️ React Stack: Modern frontend with React!\nReact brings modular, component-based architecture to your frontend. Combined with HTML, CSS, and JS, it enables the creation of scalable, high-performance user interfaces and single-page applications (SPAs).",
+                "html+css+js+vue": "🌟 Vue.js Stack: Progressive frontend with Vue!\nVue.js offers a flexible, approachable framework for building interactive UIs. It enhances the basic HTML + CSS + JS stack with reactive data binding and component-based architecture, making it easy to create dynamic web applications.",
+                "html+css+js+angular": "🔧 Angular Stack: Full-fledged frontend framework!\nAngular is a powerful, opinionated framework for building large-scale applications. It extends the basic HTML + CSS + JS stack with TypeScript, dependency injection, and a rich set of tools for building complex SPAs.",
+                "mongodb+express+react+node": "🌐 MERN Stack: React frontend with Express + MongoDB!\nOne of the most popular JavaScript stacks. MongoDB handles the NoSQL database, Express and Node power the backend, and React rules the frontend. Ideal for building scalable, full-stack web apps using a single language throughout.",
+                "mongodb+express+angular+node": "🌐 MEAN Stack: Full JS-powered app using Angular!\nAn enterprise-grade full stack using Angular for robust, TypeScript-based frontend development. Coupled with Express and Node for the backend and MongoDB for the database, it's perfect for large-scale apps with complex logic.",
+                "mongodb+express+vue+node": "🌐 MEVN Stack: Vue-powered full stack JS app!\nA modern and beginner-friendly stack. Vue offers a reactive frontend layer, paired with Express + Node on the backend and MongoDB as a document-oriented database — great for startups and fast-paced dev cycles.",
+                "postgres+express+react+node": "🌐 PERN Stack: React frontend with Express + PostgreSQL!\nA full-stack JavaScript solution paired with PostgreSQL's relational power. Ideal for apps that need structured data and complex querying with modern UI and scalable backend logic.",
+                "nuxt+firebase": "🌈 Nuxt + Firebase: Vue-based SSR with serverless backend!\nLeverage Nuxt for SEO-friendly, server-side rendered Vue apps while Firebase handles authentication, hosting, and real-time database — no need to manage servers.",
+                "nuxt+express+mongodb": "🚀 Nuxt Full Stack: Vue SSR with Express + MongoDB!\nCombines Nuxt's powerful frontend rendering with a flexible backend and a NoSQL database. Perfect for building fast, dynamic apps with real-time capabilities and smooth routing.",
+                "react+firebase": "🔥 Serverless Stack: Firebase backend with React frontend!\nA lightning-fast combo for building real-time apps with ease. Firebase takes care of the backend (auth, DB, hosting), while React provides a modern and fluid user interface.",
+                "react+node+mysql": "🔗 Custom Stack: React + Node.js + MySQL combo!\nA full-stack approach that merges React's frontend capabilities with Node's backend and MySQL's reliable relational storage — great for data-heavy web applications and enterprise solutions.",
+                "react+flask+postgres": "🧪 Modern Hybrid: React + Flask + PostgreSQL!\nA flexible, efficient stack for building dynamic apps with a responsive React frontend, a lightweight Python Flask backend, and a powerful relational database in PostgreSQL.",
+                "python+django+postgres+js": "🐍 Django Stack: Pythonic powerhouse for clean apps!\nCombines Django's built-in features with JavaScript interactivity and PostgreSQL's reliability — perfect for building secure, scalable web applications fast.",
+                "django+rest+react": "🎯 DRF + React: API-driven Django backend with React UI!\nUse Django REST Framework to expose a robust backend API, then pair it with React for a responsive, modern frontend experience. Ideal for SPAs with decoupled architectures.",
+                "python+flask+mongodb": "⚗️ Flask Stack: Lightweight Python backend with MongoDB!\nA minimal, flexible stack perfect for microservices or quick MVPs. MongoDB offers schema-less storage, while Flask gives you control over the backend logic.",
+                "php+laravel+mysql": "🧬 Laravel Stack: PHP made modern and elegant!\nLaravel brings expressive syntax and powerful tooling to PHP, paired with MySQL for stable relational data — a great choice for scalable and maintainable applications.",
+                "linux+apache+mysql+php": "🐘 LAMP Stack: Classic PHP-based stack with Apache!\nA reliable full stack solution used by millions of websites. Linux serves as the OS, Apache as the web server, MySQL as the relational database, and PHP powers the backend — stable, secure, and widely supported for CMSs like WordPress and Joomla.",
+                "linux+nginx+mysql+php": "🧰 LEMP Stack: Nginx replacing Apache for speed!\nLEMP swaps Apache for Nginx, offering asynchronous processing and higher concurrency. It's a lightweight, high-performance stack favored for modern web apps and optimized server environments, especially when low latency is key.",
+                "spring+java+mysql": "🌱 Spring Boot Stack: Powerful enterprise-level backend!\nSpring Boot simplifies the complexity of building enterprise-grade Java applications. Paired with MySQL for transactional integrity, it's commonly used in fintech, e-commerce, and microservice architectures where performance and reliability matter.",
+                "spring+react+postgres": "💻 Spring + React: Java backend with React frontend!\nThis full-stack setup combines Java's enterprise strength on the backend with React's dynamic frontend. PostgreSQL adds relational power, making this stack ideal for corporate dashboards, data-driven platforms, and scalable web services.",
+                "csharp+aspnet+sqlserver+azure": "🧱 .NET Stack: Enterprise-ready apps with Azure!\nThis Microsoft stack is the go-to choice for enterprise software, government systems, and cloud-native development. C# and ASP.NET enable rapid backend development, SQL Server ensures data consistency, and Azure brings in world-class scalability and deployment features.",
+                "aspnet+react+azure": "🔒 .NET + React: Microsoft stack with a modern twist!\nCombine the robustness of ASP.NET's server-side logic with React's dynamic UI capabilities. Hosted on Azure, this stack is ideal for building secure, scalable cloud-native enterprise apps with seamless CI/CD pipelines.",
+                "ruby+rails+postgres+js": "💼 Ruby on Rails: Fast MVPs with convention over config!\nA developer-friendly stack that shines in rapid prototyping and product launches. Rails' convention-over-configuration approach, backed by PostgreSQL and JavaScript, helps teams ship full-featured apps in record time.",
+                "js+api+markup": "⚛️ JAM Stack: Static site generation with dynamic APIs!\nA modern architecture focused on performance, scalability, and security. By separating frontend markup, reusable APIs, and JavaScript-based interactivity, JAMstack is ideal for blazing-fast sites, personal blogs, and headless CMS projects.",
+                "flutter+firebase": "📱 Flutter + Firebase: Beautiful apps with a scalable backend!\nPerfect for cross-platform development, Flutter allows for expressive UIs on Android, iOS, web, and desktop, while Firebase handles real-time data, authentication, and serverless cloud logic. A dream stack for indie devs and startups.",
+                "reactnative+node+mongodb": "📲 React Native Full Stack: Cross-platform mobile with Node.js backend!\nDevelop mobile apps with native performance and a shared codebase using React Native. Node.js powers a fast, event-driven backend, while MongoDB provides flexibility with NoSQL document storage — great for social apps and mobile SaaS platforms.",
+                "go+react+mongodb": "🚀 Go + React: Blazing fast backend with modern UI!\nUse Golang to build high-performance microservices and REST APIs, React for interactive UIs, and MongoDB for schemaless, scalable data storage. This stack excels in real-time apps, analytics dashboards, and performance-sensitive products.",
+                "typescript+next+mongodb": "🧠 Full TypeScript Stack: Next.js + MongoDB + Type Safety!\nNext.js powers server-side rendering and full-stack features, while TypeScript adds developer confidence with static types. MongoDB brings flexibility for rapidly evolving data models. This stack is perfect for large-scale SaaS platforms, dashboards, and modern web portals that require scalability, maintainability, and SEO friendliness.",
+                "tailwind+vue+firebase": "✨ Tailwind + Vue + Firebase: Stylish, reactive & serverless!\nCraft responsive and elegant user interfaces with Tailwind CSS, bring them to life using Vue's reactivity, and power your app with Firebase's real-time database, authentication, and hosting. This stack is loved by indie developers and startups building real-time apps, admin panels, and community platforms — all without managing infrastructure.",
+                "docker+node+postgres": "🐳 Dockerized Stack: Isolated dev environments with Node and PostgreSQL!\nPackage your app into portable containers with Docker, ensuring consistency from development to production. Node.js handles high-performance backend logic, and PostgreSQL provides reliable relational storage. This stack is a go-to for building scalable microservices, REST APIs, and enterprise-grade apps with CI/CD integration and multi-environment testing.",
+                "docker+django+nginx": "🚢 Django + Docker + Nginx: Production-grade Python deployment!\nLeverage Django's powerful admin interface and ORM for rapid backend development, wrap it in Docker for reproducibility, and serve it efficiently via Nginx. This production-ready setup is ideal for secure, data-driven platforms such as content management systems, fintech apps, or internal enterprise tools requiring authentication, analytics, and performance.",
+                "node+express+aws": "☁️ AWS Stack: Node.js backend deployed on AWS cloud!\nExpress.js handles fast API logic while AWS provides infrastructure scalability and flexibility — from Lambda functions to S3 and EC2. This stack is excellent for building event-driven serverless APIs, mobile app backends, and global-scale platforms using managed services, all while maintaining cost-efficiency and speed.",
+                "react+aws+s3": "🌍 Serverless React: Hosting on AWS S3 with Lambda integrations!\nDeploy React as a static site on S3, serve it globally through CloudFront, and connect dynamic functionality via AWS Lambda, DynamoDB, or API Gateway. A clean, serverless approach perfect for blogs, marketing sites, dashboards, or even fully-featured SPAs — with the benefits of high uptime, low cost, and infinite scalability."
+            };
+
+            // Enable drag for all tech items
+            document.querySelectorAll('.tech').forEach(item => {
+                item.addEventListener("dragstart", e => {
+                    e.dataTransfer.setData("text/plain", item.dataset.id);
+                });
+            });
+
+            // Drag and drop handlers
+            dropArea.addEventListener("dragover", e => {
+                e.preventDefault();
+                dropArea.classList.add("highlight");
+            });
+
+            dropArea.addEventListener("dragleave", () => {
+                dropArea.classList.remove("highlight");
+            });
+
+            dropArea.addEventListener("drop", e => {
+                e.preventDefault();
+                dropArea.classList.remove("highlight");
+
+                const techId = e.dataTransfer.getData("text/plain");
+
+                if (!currentStack.includes(techId)) {
+                    currentStack.push(techId);
+
+                    const techClone = document.createElement("div");
+                    techClone.className = "tech clone";
+                    techClone.textContent = techId.toUpperCase();
+                    techClone.dataset.id = techId;
+                    techClone.title = "Click to remove";
+
+                    techClone.addEventListener("click", () => {
+                        techClone.remove();
+                        currentStack = currentStack.filter(item => item !== techId);
+                        checkCombo();
+                    });
+
+                    dropArea.appendChild(techClone);
+                }
+
+                checkCombo();
+            });
+
+            function checkCombo() {
+                const stackSet = new Set(currentStack.map(item => item.toLowerCase()));
+
+                for (const [combo, message] of Object.entries(stacks)) {
+                    const comboSet = new Set(combo.split("+"));
+
+                    if (comboSet.size === stackSet.size &&
+                        [...comboSet].every(tech => stackSet.has(tech))) {
+
+                        if (messageBox.textContent !== message) {
+                            messageBox.textContent = message;
+                            lastMessage = message;
+                        }
+
+                        return;
+                    }
+                }
+
+                messageBox.textContent = currentStack.length === 0
+                    ? "Waiting for a valid tech stack..."
+                    : "Stack in progress... add more techs!";
+            }
+        </script>
+
+    </div>
+
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 20,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#ffffff" },
+                "shape": {
+                    "type": "edge",
+                    "stroke": { "width": 2, "color": "#000" },
+                    "polygon": { "nb_sides": 3 },
+                    "image": { "src": "img/github.svg", "width": 100, "height": 100 }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 100,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 10,
+                        "size_min": 40,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false,
+                    "distance": 200,
+                    "color": "#ffffff",
+                    "opacity": 1,
+                    "width": 2
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 8,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": false, "mode": "repulse" },
+                    "onclick": { "enable": false, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": { "opacity": 1 }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": { "particles_nb": 4 },
+                    "remove": { "particles_nb": 2 }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

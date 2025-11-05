@@ -1,0 +1,244 @@
+@keyframes logo-animation {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        /* Start off-screen to the left */
+        opacity: 0;
+        /* Fully transparent */
+    }
+
+    100% {
+        transform: translateX(0);
+        /* End at normal position */
+        opacity: 1;
+        /* Fully visible */
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        /* Start off-screen to the right */
+        opacity: 0;
+        /* Fully transparent */
+    }
+
+    100% {
+        transform: translateX(0);
+        /* End at normal position */
+        opacity: 1;
+        /* Fully visible */
+    }
+}
+
+@keyframes slideUpFromBottom {
+    0% {
+        transform: translateY(100%);
+        /* Start off-screen from the bottom */
+        opacity: 0;
+        /* Fully transparent */
+        visibility: visible;
+        /* Become visible when animation starts */
+    }
+
+    100% {
+        transform: translateY(0);
+        /* End at the original position */
+        opacity: 1;
+        /* Fully visible */
+    }
+}
+
+@keyframes rollIn {
+    to {
+        transform: translateY(0);
+        /* End at normal position */
+    }
+}
+
+
+
+
+
+
+
+/* from here the animations for the projects page starts*/
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        /* Start smaller */
+        opacity: 0;
+        /* Fully transparent */
+    }
+
+    100% {
+        transform: scale(1);
+        /* Full size */
+        opacity: 1;
+        /* Fully visible */
+    }
+}
+
+
+
+
+
+/* from here the animations for the certificates page starts*/
+@keyframes zoomIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+
+
+
+
+
+
+/* from here the animations for the skills page starts*/
+@keyframes slideInBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes swipeIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+        /* Start position (off-screen left) */
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+        /* End position (fully visible) */
+    }
+}
+
+@keyframes slideFill {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;  /* Fully visible */
+    }
+    100% {
+        opacity: 1;  /* Fully transparent */
+    }
+}
+
+@keyframes zigZagIn {
+    0% {
+        transform: translateY(150%) translateX(-50%); /* Start below and to the left */
+        opacity: 0; /* Initially invisible */
+    }
+    5% {
+        transform: translateY(140%) translateX(-45%); /* Slightly move up */
+        opacity: 0.05; /* Slightly visible */
+    }
+    10% {
+        transform: translateY(130%) translateX(-40%); /* Move up more */
+        opacity: 0.1; /* More visible */
+    }
+    15% {
+        transform: translateY(120%) translateX(-35%); /* Continue moving up */
+        opacity: 0.15; /* Slightly more visible */
+    }
+    20% {
+        transform: translateY(100%) translateX(15%); /* Move slightly up and to the right */
+        opacity: 0.3; /* Slightly visible */
+    }
+    25% {
+        transform: translateY(90%) translateX(10%); /* Move up and right */
+        opacity: 0.4; /* More visible */
+    }
+    30% {
+        transform: translateY(70%) translateX(5%); /* Continue moving */
+        opacity: 0.5; /* Halfway visible */
+    }
+    35% {
+        transform: translateY(50%) translateX(0%); /* Approaching final position */
+        opacity: 0.6; /* More visible */
+    }
+    40% {
+        transform: translateY(30%) translateX(-5%); /* Move slightly back to the left */
+        opacity: 0.7; /* Almost fully visible */
+    }
+    45% {
+        transform: translateY(20%) translateX(-10%); /* Close to final position */
+        opacity: 0.8; /* Almost fully visible */
+    }
+    50% {
+        transform: translateY(10%) translateX(-5%); /* Final adjustments */
+        opacity: 0.9; /* Very visible */
+    }
+    55% {
+        transform: translateY(5%) translateX(-2%); /* Minor adjustments */
+        opacity: 0.95; /* Nearly fully visible */
+    }
+    60% {
+        transform: translateY(0) translateX(0); /* Move to original position */
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        transform: translateY(0) translateX(0); /* Ensure final position */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+
+
+
+
+
+/* from here the animations for the publications page starts*/
+
+@keyframes blurUnblur {
+    0% {
+        opacity: 0;
+        filter: blur(5px);
+        background-size: 0% 100%;
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        background-size: 100% 100%;
+    }
+}
+
+
+
+
+
+
+/* from here the animations for the about page starts*/

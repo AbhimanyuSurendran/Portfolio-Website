@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates</title>
+    <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/certificates.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        function openModal(src) {
+            var modal = document.getElementById("myModal");
+            var img = document.getElementById("img01");
+            img.src = src; // Set the source of the image to the clicked image
+            modal.classList.add("show"); // Show the modal with animation
+            modal.style.display = "block"; // Ensure it's displayed
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.classList.remove("show"); // Hide the modal with animation
+            // Wait for the opacity transition to finish before setting display to none
+            setTimeout(() => {
+                modal.style.display = "none"; // Actually hide the modal after animation
+            }, 500); // Match this time with the transition duration
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const images = document.querySelectorAll('.image-grid img');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target); // Stop observing after it is shown
+                    }
+                });
+            });
+
+            // Delay execution of image animations for 3 seconds
+            setTimeout(() => {
+                images.forEach((img, index) => {
+                    // Animate images on load with a delay
+                    setTimeout(() => {
+                        img.classList.add('show');
+                    }, index * 300); // 300ms delay for each image
+                    observer.observe(img); // Observe each image for scroll animation
+                });
+            }, 3000); // 3-second delay before starting animations
+        });
+    </script>
+</head>
+
+<body oncontextmenu="return false;">
+ <script>
+    document.onkeydown = function (e) {
+        const key = e.key.toLowerCase(); // Normalize to lowercase
+
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
+            (e.ctrlKey && key === "u")
+        ) {
+            alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
+            return false;
+        }
+    };
+</script>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    <header>
+        <!-- GIF Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="home_elements/logo.gif" alt="Logo">
+            </a>
+        </div>
+        <nav class="nav-desktop">
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-mobile">
+            <button id="menu-btn" class="menu-btn">☰</button>
+
+            <div id="nav-overlay" class="nav-overlay">
+                <button id="close-btn" class="close-btn">&times;</button>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Toggle Switch -->
+        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <label for="toggle" class="toy-toggle">
+            <span class="border1"></span>
+            <span class="border2"></span>
+            <span class="border3"></span>
+            <span class="handle">
+                <span class="handle-off"></span>
+                <span class="handle-on"></span>
+            </span>
+        </label>
+        <script>
+            // Initialize theme based on local storage
+            const initializeTheme = () => {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                const toggle = document.getElementById('toggle');
+
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    toggle.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggle.checked = false;
+                }
+            };
+
+            // Save theme preference to local storage
+            const saveThemePreference = (isDarkMode) => {
+                localStorage.setItem('darkMode', isDarkMode);
+            };
+
+            // Add event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('toggle');
+                initializeTheme();
+
+                toggle.addEventListener('change', () => {
+                    const isDarkMode = toggle.checked;
+                    if (isDarkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    saveThemePreference(isDarkMode);
+                });
+            });
+        </script>
+    </header>
+
+    <script>
+        // JavaScript for Mobile Navigation
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        menuBtn.addEventListener('click', () => {
+            navOverlay.classList.add('visible');
+            menuBtn.style.display = 'none';  // Hide the menu button
+            closeBtn.style.display = 'block'; // Show the close button
+        });
+
+        closeBtn.addEventListener('click', () => {
+            navOverlay.classList.remove('visible');
+            closeBtn.style.display = 'none';  // Hide the close button
+            menuBtn.style.display = 'block';  // Show the menu button
+        });
+
+        // Optional: Close the overlay when clicking outside of the nav links
+        navOverlay.addEventListener('click', (event) => {
+            if (event.target === navOverlay) {
+                navOverlay.classList.remove('visible');
+                closeBtn.style.display = 'none';  // Hide the close button
+                menuBtn.style.display = 'block';  // Show the menu button
+            }
+        });
+    </script>
+
+
+    <div class="container"></div>
+    <div class="main-content">
+        <div class="title">
+            <h2>Check Out</h2>
+            <h1>My Certificates</h1>
+            <h4>I've completed various courses to sharpen my programming expertise and boost personal growth. Here are
+                some of the key certifications I've earned along the way.</h4>
+        </div>
+        <div class="certificates">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <script>
+                // Update the progress bar width on scroll
+                document.querySelector('.certificates').addEventListener('scroll', (e) => {
+                    const progressBar = document.getElementById("progress-bar");
+                    const element = e.target;
+
+                    const scrollTop = element.scrollTop;
+                    const scrollHeight = element.scrollHeight - element.clientHeight;
+                    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+
+                    progressBar.style.width = scrollPercentage + "%";
+                });
+            </script>
+            <h1>Certificates</h1>
+            <div class="image-grid">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Fundamentals%20of%20Docker%20%26%20Kubernetes.png?alt=media&token=7fc09890-1a05-4207-af5e-6b6b42076bec"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Demystifying%20AI%20and%20ML%20Roles-%20How%20to%20build%20a%20career%20in%20AI.png?alt=media&token=5583a4bc-97b9-4f2a-8c1c-625c517a4125"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Become%20a%20MAANG%20Engineer.png?alt=media&token=60a365fb-29d3-4a0d-9e9c-7529c2eca527"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Roadmap%20to%20Become%20a%20Machine%20Learning%20Engineer.png?alt=media&token=ceb2931e-5cff-49b1-b939-ba47726873b9"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Roadmap%20to%20Full%20stack%20Development.png?alt=media&token=91a81860-3942-49e1-b9c0-13de6da96315"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/SCALAR%20MASTERCLASS%2FSCALER%20MASTERCLASS%20-%20Data%20Science%20using%20Cen%20Al%20and%20Python.jpg?alt=media&token=6f6f2955-cb97-4138-9331-ba9f36c8cecd"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Great%20Learning%2FDigital%20Marketing%2C%20Data%20Visualization%20using%20PowerBl%2C%20BlockChain%2C%20Internet%20of%20Things%2C%20Artificial%20Intelligence.jpg?alt=media&token=57f4145c-b6cb-42f5-94b2-4086b1c1577d"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/CLOUDSTRATS%2FOffer%20Letter%20CLOUDSTRATS.png?alt=media&token=dee7a6bc-d90c-4f03-98ea-381168df714f"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Oasis%20Infobyte%2FAbhimanyu%20Surendran%20Certificate.jpg?alt=media&token=26769f60-81b1-4bdc-8005-ee0804e135d7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/TechnoHacks%20EduTech%2FAbhimanyu%20Surendran.png?alt=media&token=72e33733-b66c-4e76-89e6-e4cfce68d7f4"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/TechnoHacks%20EduTech%2F(Offer%20Letter)TechnoHacks%20EduTech.jpg?alt=media&token=1c460c24-7e4d-483e-a398-bc3419b1d513"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Oasis%20Infobyte%2FAbhimanyu%20Surendran%20Offer%20Letter.jpg?alt=media&token=b0b0c8ef-4edf-437d-9935-5fcdb36dbe46"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/AICTE%2FAbhimanyu%20%20Surendran%2094798.jpg?alt=media&token=0b514fc0-5554-4c21-af8b-ab460e2f6560"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/own%2FAbhimanyu%20Surendran.jpg?alt=media&token=7b1da497-09fa-4592-8e66-1ae8ce6e6582"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/own%2FIRJET-Abhimanyu%20Surendran.jpg?alt=media&token=4022b0d2-6790-463e-9c35-178e8e07c909"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/own%2FGrapric%20Designer.jpg?alt=media&token=508e715c-50f1-4be9-ac07-02111e1b5b93"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/own%2FICEESEN.jpg?alt=media&token=51e5b6ba-c372-40fc-95f6-14d7b6bb128c"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ACMEGRADE%20(2mos)%2FAbhimanyu%20Surendran_Internship%20Completion.jpg?alt=media&token=d05f4479-4411-4686-8378-2a5891b7a44c"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ACMEGRADE%20(2mos)%2FAbhimanyu%20Surendran_Training%20Completion.jpg?alt=media&token=3fbebe6e-3b5e-42db-8020-a774a2d1e7a1"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/CORIZO%20(2mos)%2FInternship%20certificate.jpg?alt=media&token=c4cf421a-bd55-4322-9f27-92c645a5e635"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/CORIZO%20(2mos)%2FInternship%20training%20certificate%20.jpg?alt=media&token=c4534548-910b-42b4-b6f8-c3babc5eb1be"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FCorporateSalesFundamentals-AbhimanyuSurendran-604331.jpg?alt=media&token=c4bc4b1a-5ae8-4c69-8e00-acf7d2b047c0"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FDigitalMarketingFundamentals-AbhimanyuSurendran-609073.jpg?alt=media&token=a25e338b-e57a-4254-a057-59f4e98b6de7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FMarketingResearchFundamentals-AbhimanyuSurendran-604145.jpg?alt=media&token=f5411df5-7758-4b5c-8fff-c3bcdd1ca427"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FMarketingStrategyFundamentals-AbhimanyuSurendran-606544.jpg?alt=media&token=03150791-e399-4fcd-82e4-fd3cd2b05629"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FNegotiationAssociate-AbhimanyuSurendran-592121.jpg?alt=media&token=531aa8b5-fe97-44e5-81e1-c730583c1b4f"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FScrumFundamentalsCertified-AbhimanyuSurendran-1050600.jpg?alt=media&token=6516bd63-4018-4a58-b5f8-9385bbbad39b"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/6-sigma%2FSixSigmaYellowBelt-AbhimanyuSurendran-868652.jpg?alt=media&token=5914d0bd-b867-487d-91fc-0bac8742352c"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/HP%2FInventory%20Management.jpg?alt=media&token=039d4d30-0078-4a3d-a792-ed368659b2f2"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/HP%2FStrategic%20Planning.jpg?alt=media&token=d4b28e63-8ae1-4006-bfea-11d8162ddbb0"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/COURSERA%2FCOURSERA%20-%20Cloud%20Practitioner%20Essentials%20Certificate.jpg?alt=media&token=3ee5b202-e9e0-43b4-9198-42c3d12e1073"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/COURSERA%2FCOURSERA%20-%20Introduction%20to%20Android%20Mobile%20Application.jpg?alt=media&token=ebaeee37-5785-41cd-beef-ed4b060bb85d"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F1)%20job%20roles%20in%20the%20cloud.jpg?alt=media&token=e434bc5a-4eec-4dc9-9a8e-ac10dcf51995"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F2)%20AWS%20practioner%20essentials.jpg?alt=media&token=b53209ff-12f0-4167-9378-2bfd75f0a07a"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F3)%20Getting%20Started%20with%20Cloud%20Acquisition.jpg?alt=media&token=075fe5fd-4b20-4cc0-90ec-d630467ac336"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F4)%20AWS%20Billing%20and%20Cost%20Management.jpg?alt=media&token=6d731e12-a023-447a-920c-a7ac450200a9"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F5)%20AWS%20Well-Architected.jpg?alt=media&token=8ed53741-5d23-48ea-82fa-889293d5298e"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F6)%20AWS%20Foundations%20Getting%20Started%20with%20the%20AWS%20Cloud%20Essentials.jpg?alt=media&token=a9f07f1f-1e93-4ca3-9eb8-6a6ecd0505cd"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2F7)%20Exam%20Prep%20AWS%20Certified%20Cloud%20Practitioner%20(CLF-C01).jpg?alt=media&token=13e24ef2-31dd-4ea8-8db0-e28ab500dd8d"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%201%20Cloud%20essential%20learning%20plan%2FMain%20Cloud%20Essentials%20Learning%20Plan.jpg?alt=media&token=a3004d95-d527-432c-91cb-0a7ea4938bdb"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%202%20AWS%20Best%20Practices%20for%20Hybrid%20Cloud%20Adoption%2FAWS%20Best%20Practices%20for%20Hybrid%20Cloud%20Adoption.jpg?alt=media&token=bbf2791f-1b2c-4eee-be4b-0dd96a0e26fc"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F1)%20Getting%20Started%20with%20AWS%20for%20Games%20%E2%80%93%20Part%20I.jpg?alt=media&token=b8062d87-1007-4e57-a8ec-cc0ce36af115"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F10)%20Deploying%20Serverless%20Applications.jpg?alt=media&token=9098c022-93c6-4255-b4d7-6a6750467cdd"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F11)%20Introduction%20to%20AWS%20CodePipeline.jpg?alt=media&token=9f0f5139-2360-4c62-8d0e-6694e88678b7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F12)%20Cloud%20Game%20Development%20Learning%20Plan%20Badge%20Assessment.jpg?alt=media&token=c837162a-8e5b-472c-9c58-ee19302e0edc"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F13)%20AWS%20Cloud%20Quest%20Cloud%20Practitioner.jpg?alt=media&token=e8c2011e-45ae-4a77-81c7-3c109f562ce7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F2)%20Getting%20Started%20with%20AWS%20for%20Games%20%E2%80%93%20Part%20II.jpg?alt=media&token=b1be7641-d04d-4e73-b30c-3de20b0ac919"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F3)%20Introduction%20to%20AWS%20Cloud%20Game%20Development.jpg?alt=media&token=636eacfb-a6f6-4fff-a0e6-18f74ecab544"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F4)%20Amazon%20EC2%20Basics.jpg?alt=media&token=744153d2-4e10-4aba-be13-8ea352c088f3"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F5)%20Introduction%20to%20Serverless%20Development.jpg?alt=media&token=bea48733-4181-42dd-9eb6-b05cbb70536a"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F6)%20AWS%20Lambda%20Foundations.jpg?alt=media&token=cdb8ff0b-ed78-4975-b5e7-ad9683b6de37"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F7)%20Getting%20Started%20with%20.NET%20on%20AWS.jpg?alt=media&token=424ec240-a599-4893-b4aa-e157011f3f6a"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F8)%20Getting%20Started%20with%20AWS%20CloudFormation.jpg?alt=media&token=a49ec310-1426-49a7-9915-d80e7f0e28aa"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2F9)%20AWS%20Cloud%20Development%20Kit%20Primer.jpg?alt=media&token=8728fa71-1088-4077-a99a-bb2cfc2ae84b"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Course%203%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development%2FMain%20AWS%20for%20Games%20Learning%20Plan%20Cloud%20Game%20Development.jpg?alt=media&token=ce414a48-ed73-44c5-9d5a-a527a0a1d17f"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FAzure%20Masterclass-%20Analyze%20Data%20With%20Azure%20Stream%20Analytics.png?alt=media&token=18433cb1-e3d4-4bed-8bff-149b48b01b20"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FBeginner%20VMware%20vSphere%205.5%20-%20Virtualization%20Technologies.png?alt=media&token=c8cbe853-8905-41db-a2c6-39979c01a832"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FCompTIA%20Cloud%2B%20Basic.png?alt=media&token=ed1d7b35-48e9-4d11-b97a-2409ffc99cb5"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FCopywriting%20for%20Conversions_%20How%20to%20Write%20Persuasive%20Content.png?alt=media&token=5ea43841-3649-4e5a-843d-a162dcf8b788"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Databases%20and%20T-SQL.png?alt=media&token=7f579d52-6d76-44b4-a408-28c73cdf2ac7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Environmental%20Quality%20Monitoring%20and%20Analysis.png?alt=media&token=3a09f9dd-7d8b-451d-845a-4e62072105a0"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Software%20Testing.png?alt=media&token=9d2f1d7a-1dc7-4963-a690-3c54391a614d"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Virtualization%20Security%20-%20Advanced%20VMware%20Security.png?alt=media&token=373b67df-180f-40c7-bc02-1e5f35870917"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FEnglish%20Course%20-%20Perfect%20Tenses%20(Upper-%20Intermediate%20Level).png?alt=media&token=a11288cd-3aa4-43f7-9cd6-0dd7d50627aa"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FEnglish%20Writing%20Skills.png?alt=media&token=5f71c7ee-4f19-47a8-baa9-639d8f7e795b"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FFundamentals%20of%20English%20Grammar.png?alt=media&token=ad543db0-95d8-4694-9032-10e7ce28ec99"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FAzure%20Masterclass-%20Analyze%20Data%20With%20Azure%20Stream%20Analytics.png?alt=media&token=18433cb1-e3d4-4bed-8bff-149b48b01b20"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FBeginner%20VMware%20vSphere%205.5%20-%20Virtualization%20Technologies.png?alt=media&token=c8cbe853-8905-41db-a2c6-39979c01a832"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FCompTIA%20Cloud%2B%20Basic.png?alt=media&token=ed1d7b35-48e9-4d11-b97a-2409ffc99cb5"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FCopywriting%20for%20Conversions_%20How%20to%20Write%20Persuasive%20Content.png?alt=media&token=5ea43841-3649-4e5a-843d-a162dcf8b788"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Databases%20and%20T-SQL.png?alt=media&token=7f579d52-6d76-44b4-a408-28c73cdf2ac7"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Environmental%20Quality%20Monitoring%20and%20Analysis.png?alt=media&token=3a09f9dd-7d8b-451d-845a-4e62072105a0"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Software%20Testing.png?alt=media&token=9d2f1d7a-1dc7-4963-a690-3c54391a614d"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FDiploma%20in%20Virtualization%20Security%20-%20Advanced%20VMware%20Security.png?alt=media&token=373b67df-180f-40c7-bc02-1e5f35870917"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FEnglish%20Course%20-%20Perfect%20Tenses%20(Upper-%20Intermediate%20Level).png?alt=media&token=a11288cd-3aa4-43f7-9cd6-0dd7d50627aa"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FEnglish%20Writing%20Skills.png?alt=media&token=5f71c7ee-4f19-47a8-baa9-639d8f7e795b"
+                    onclick="openModal(this.src)">
+                <img src="https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/ALISON%2FFundamentals%20of%20English%20Grammar.png?alt=media&token=ad543db0-95d8-4694-9032-10e7ce28ec99"
+                    onclick="openModal(this.src)">
+            </div>
+        </div>
+        <div id="myModal" class="modal" onclick="closeModal()">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="img01">
+        </div>
+    </div>
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 200,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#fff" },
+                "shape": {
+                    "type": "circle",
+                    "stroke": { "width": 0, "color": "#000000" },
+                    "polygon": { "nb_sides": 5 }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": true,
+                    "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 10,
+                    "random": true,
+                    "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false }
+                },
+                "line_linked": { "enable": false },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "top-left",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "bounce"
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": false },
+                    "resize": true
+                },
+                "modes": {
+                    "repulse": { "distance": 200, "duration": 0.4 }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+
+</body>
+
+</html>

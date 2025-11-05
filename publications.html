@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications</title>
+    <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/publications.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+</head>
+
+<body oncontextmenu="return false;">
+<script>
+    document.onkeydown = function (e) {
+        const key = e.key.toLowerCase(); // Normalize to lowercase
+
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
+            (e.ctrlKey && key === "u")
+        ) {
+            alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
+            return false;
+        }
+    };
+</script>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    <header>
+        <!-- GIF Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="home_elements/logo.gif" alt="Logo">
+            </a>
+        </div>
+        <nav class="nav-desktop">
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="certificates.html">Certificates</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-mobile">
+            <button id="menu-btn" class="menu-btn">☰</button>
+
+            <div id="nav-overlay" class="nav-overlay">
+                <button id="close-btn" class="close-btn">&times;</button>
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="skills.html">Skills</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Toggle Switch -->
+        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <label for="toggle" class="toy-toggle">
+            <span class="border1"></span>
+            <span class="border2"></span>
+            <span class="border3"></span>
+            <span class="handle">
+                <span class="handle-off"></span>
+                <span class="handle-on"></span>
+            </span>
+        </label>
+        <script>
+            // Initialize theme based on local storage
+            const initializeTheme = () => {
+                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                const toggle = document.getElementById('toggle');
+
+                if (isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    toggle.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggle.checked = false;
+                }
+            };
+
+            // Save theme preference to local storage
+            const saveThemePreference = (isDarkMode) => {
+                localStorage.setItem('darkMode', isDarkMode);
+            };
+
+            // Add event listeners
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('toggle');
+                initializeTheme();
+
+                toggle.addEventListener('change', () => {
+                    const isDarkMode = toggle.checked;
+                    if (isDarkMode) {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    saveThemePreference(isDarkMode);
+                });
+            });
+        </script>
+    </header>
+
+    <script>
+        // JavaScript for Mobile Navigation
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        menuBtn.addEventListener('click', () => {
+            navOverlay.classList.add('visible');
+            menuBtn.style.display = 'none';  // Hide the menu button
+            closeBtn.style.display = 'block'; // Show the close button
+        });
+
+        closeBtn.addEventListener('click', () => {
+            navOverlay.classList.remove('visible');
+            closeBtn.style.display = 'none';  // Hide the close button
+            menuBtn.style.display = 'block';  // Show the menu button
+        });
+
+        // Optional: Close the overlay when clicking outside of the nav links
+        navOverlay.addEventListener('click', (event) => {
+            if (event.target === navOverlay) {
+                navOverlay.classList.remove('visible');
+                closeBtn.style.display = 'none';  // Hide the close button
+                menuBtn.style.display = 'block';  // Show the menu button
+            }
+        });
+    </script>
+
+
+    <div class="container"></div>
+    <div class="main-content">
+        <div class="research-paper">
+            <img src="publications_elements/publication-logo-IJCRT.png" alt="Research Image">
+            <div class="text-content">
+                <h1>Publication :- International Journal of Creative Research Thoughts - IJCRT</h1>
+                <h1>Paper Title :-
+                    FuelUpFit: Crafting Wellness - A Holistic Approach to Fitness, Nutrition, and Mindfulness through an
+                    Integrated Android Application</h1>
+                <h1>Published on :- 4th April 2024</h1>
+                <p>The gym-tracking Android app, built with Java and Firebase, is your all-in-one fitness companion. It
+                    offers a diverse range of exercises, yoga routines, and meditation practices tailored to your unique
+                    fitness goals. With a built-in water reminder, you'll stay hydrated throughout the day, while the
+                    activity tracker monitors your physical progress and helps you fine-tune your workouts. The app goes
+                    a step further with an AI-powered nutrition chatbot, providing personalized meal plans to align with
+                    your fitness objectives. By integrating these features, the app delivers a complete fitness
+                    experience, empowering users to stay active, hydrated, and nourished—all in one seamless platform.
+                    It's the perfect tool for anyone aiming to elevate their health and wellness.
+                </p>
+                <div class="visit-paper">
+                    <a href="https://www.ijcrt.org/papers/IJCRT24A4726.pdf" target="_blank" class="paper-link">Visit
+                        paper</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="research-paper">
+            <img src="publications_elements/publication-logo-IRJET.png" alt="Research Image">
+            <div class="text-content">
+                <h1>Publication :- International Research Journal of Engineering and Technology - IRJET</h1>
+                <h1>Paper Title :-
+                    Rental Property System Based on Review System Based Review Analysis</h1>
+                <h1>Published on :- 25th December 2022</h1>
+                <p>While platforms like Trivago, TripAdvisor, and Expedia offer robust hotel recommendation services,
+                    finding a similar system for local rental homes remains a challenge. Often, homeowners don't
+                    advertise their properties online, promoting them only to locals. This creates difficulties for
+                    students and others trying to find rentals near universities or other specific areas. Our project
+                    aims to bridge this gap by creating an efficient platform that benefits both property owners and
+                    tenants. This virtual system will allow homeowners to easily connect with potential tenants through
+                    a pre-arranged rental agreement, and tenants can explore nearby rental properties using graphical
+                    maps and sorted locations. The platform's goal is to simplify the rental search process, making it
+                    easier for users to find the perfect match based on their preferences. Unlike existing rental sites,
+                    this system will offer a well-organized and user-friendly solution to meet the needs of both
+                    parties.
+                </p>
+                <div class="visit-paper">
+                    <a href="https://www.irjet.net/archives/V9/i12/IRJET-V9I12251.pdf" target="_blank"
+                        class="paper-link">Visit paper</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 200,
+                    "density": {
+                        "enable": true,
+                        "value_area": 1000
+                    }
+                },
+                "color": {
+                    "value": ["#ef233c", "#7fff00", "#00ffff"]
+                },
+                "shape": {
+                    "type": ["star", "circle", "triangle", "polygon"],
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.9,
+                    "random": true
+                },
+                "size": {
+                    "value": 5,
+                    "random": true
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 4,
+                    "direction": "none",
+                    "random": true,
+                    "out_mode": "out"
+                },
+                "line_linked": {
+                    "enable": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "bubble"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "bubble": {
+                        "distance": 150,
+                        "size": 10,
+                        "duration": 2,
+                        "opacity": 1
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.5
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

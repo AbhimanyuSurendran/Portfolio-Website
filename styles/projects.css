@@ -1,0 +1,1041 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courgette&family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S&display=swap');
+
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(to right, #000000, #3533cd);
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2; /* Content z-index */
+    --on: #055daf;
+    --off: #f0f0f0;
+    --transDur: 1s;
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%2300F9FF" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>')16 16, auto; /* 16 16 centers the cursor */
+}
+body.dark-mode {
+    background: linear-gradient(to right, #000000, #495057);
+  }
+  input {
+    position:absolute;
+    transform: translateX(-100%);
+    opacity: 0; /* Completely hide the checkbox */
+    pointer-events: none; /* Disable interaction with the hidden checkbox */
+  }
+  .toy-toggle {
+    background: radial-gradient(at top left, #fff 10%, #fff0 20%),
+      radial-gradient(at top right, #fff 20%, #e4e4e4 35%);
+    border-radius: 6em;
+    box-shadow: 0 0 0.25em #0002, 0 3em 1.5em 0.5em #0002;
+    cursor: pointer;
+    display: block;
+    font-size: 8px;
+    position: absolute;
+    margin: auto;
+    top: 120px; /* Distance from the top of the viewport */
+    left: 50px; /* Distance from the left of the viewport */
+    width: 6em; /* Smaller width */
+    height: 3.5em; /* Smaller height */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .toy-toggle span {
+    display: block;
+    position: absolute;
+  }
+
+  .toy-toggle > span {
+    top: 50%;
+    left: 50%;
+  }
+
+  .toy-toggle > span:not(.handle) {
+    transform: translate(-50%, -50%);
+  }
+
+  .border1 {
+    background: #f0f0f0;
+    border-radius: 5.5em;
+    box-shadow: 0 0 0.2em 0.1em #f0f0f0;
+    width: 9.5em; /* Reduced from 19em */
+    height: 5.5em; /* Reduced from 11em */
+  }
+
+  .border2 {
+    background: linear-gradient(0deg, #fff 33%, #ccc 45%);
+    border-radius: 4.75em;
+    box-shadow: 0 0 0.2em 0.3em #f0f0f0 inset;
+    width: 8.25em; /* Reduced from 16.5em */
+    height: 4.75em; /* Reduced from 9.5em */
+  }
+
+  .border3, .handle {
+    background: linear-gradient(90deg, var(--on) 50%, var(--off) 0);
+  }
+
+  .border3 {
+    background-position: 75% 0;
+    background-size: 200% 100%;
+    border-radius: 4.25em;
+    box-shadow: 0 0 0.1em 0.1em #ddd inset, 0 1.5em 1.5em 1em #0004 inset, 0 0 0 4.25em #0002 inset;
+    width: 7.75em; /* Reduced from 15.5em */
+    height: 4.25em; /* Reduced from 8.5em */
+    transition: background-position var(--transDur) ease-in-out;
+  }
+
+  .handle {
+    border-radius: 50%;
+    box-shadow: 0 0 0.5em 0 #0007;
+    width: 4.25em; /* Reduced from 8.5em */
+    height: 4.25em; /* Reduced from 8.5em */
+    transform: translate(-90%, -50%);
+    transition: transform var(--transDur) ease-in-out;
+    z-index: 0;
+  }
+
+  .handle:before {
+    background: radial-gradient(2em 1.5em at 50% 35%, #fff6 15%, #fff0),
+      radial-gradient(1.5em 2.5em at 75% 40%, #fff6 15%, #fff0),
+      radial-gradient(100% 100% at 50% 33%, #0000 25%, #0003 50%);
+    border-radius: 50%;
+    box-shadow: 0 0 0.3em 0.1em #0003 inset;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+  }
+
+  .handle-off, .handle-on {
+    width: 50%;
+    height: 100%;
+    transition: transform calc(var(--transDur)/2);
+    z-index: 2;
+  }
+
+  .handle-off {
+    background: var(--off);
+    border-radius: 100% 0 0 100% / 50% 50% 50% 50%;
+    right: 50%;
+    transform-origin: 100% 50%;
+    transition-delay: calc(var(--transDur)/2);
+    transition-timing-function: ease-out;
+  }
+
+  .handle-on {
+    background: var(--on);
+    border-radius: 0 100% 100% 0 / 50% 50% 50% 50%;
+    left: 50%;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition-timing-function: ease-in;
+  }
+
+  /* On */
+  input:checked + .toy-toggle .border3 {
+    background-position: 25% 0;
+  }
+  input:checked + .toy-toggle .handle {
+    transform: translate(-10%, -50%);
+  }
+  input:checked + .toy-toggle .handle-off {
+    transform: scaleX(0);
+    transition-delay: 0s;
+    transition-timing-function: ease-in;
+  }
+  input:checked + .toy-toggle .handle-on {
+    transform: scaleX(1);
+    transition-delay: calc(var(--transDur)/2);
+    transition-timing-function: ease-out;
+  }
+a:hover {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%23FFFFFF" stroke-width="2" d="M16.95 3h-9.9a2.06 2.06 0 0 0-1.34 3.62L11.99 12l6.28-5.38A2.06 2.06 0 0 0 16.93 3ZM7.05 21h9.89c1.9 0 2.78-2.38 1.34-3.62L12 12l-6.28 5.38A2.06 2.06 0 0 0 7.06 21Z"></path></svg>')16 16, pointer; /* 16 16 centers the cursor */
+}
+/* Particle background styling */
+#particles-js {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    animation: fade-in 5s ease-out forwards;
+    animation-delay: 2s;
+    z-index: 0; /* Behind the content but above the background */
+}
+header {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    z-index: 1;
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    /* Space between the items */
+    position: relative;
+    /* For positioning pseudo-elements */
+}
+
+.navbar li {
+    display: inline-block;
+    position: relative;
+    font-family: "Playwrite GB S", cursive;
+    font-size: 2rem;
+    font-weight: 400;}
+
+.navbar li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.5s;
+}
+
+.navbar li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Underline effect */
+.navbar li a::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    /* Start in the middle */
+    bottom: 0;
+    /* Position it at the bottom */
+    width: 0;
+    /* Start with no width */
+    height: 2px;
+    /* Height of the underline */
+    background: #ffffff;
+    /* Color of the underline */
+    transition: width 0.5s ease, left 0.5s ease;
+    /* Animate width and left position */
+}
+
+.navbar li a:hover::before {
+    width: 100%;
+    /* Expand to full width on hover */
+    left: 0;
+    /* Align to the left */
+}
+
+
+.nav-mobile .menu-btn, .nav-mobile .close-btn {
+    position: relative;
+    right: 20px;
+    font-size: 24px;
+    height: 50px;
+    width: 50px;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.nav-mobile .close-btn {
+    display: none; /* Initially hidden */
+}
+
+.nav-mobile .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1;
+}
+
+.nav-mobile .nav-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+}
+
+.nav-mobile .nav-links {
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-mobile .nav-links li {
+    margin: 20px 0;
+}
+
+.nav-mobile .nav-links a {
+    font-size: 2.5rem;
+    color: white;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 0.5s forwards;
+}
+
+.nav-mobile .nav-overlay.visible .nav-links a {
+    opacity: 1;
+    transform: translateY(0);
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-mobile .nav-links a:hover {
+    transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+    .nav-mobile {
+        display: none; /* Hide mobile nav on desktop */
+    }
+
+    .nav-desktop {
+        display: block; /* Show desktop nav */
+    }
+}
+
+/* For screens smaller than 768px (mobile devices) */
+@media (max-width: 767px) {
+    .nav-desktop {
+        display: none; /* Hide desktop nav on mobile */
+    }
+
+    .nav-mobile {
+        display: block; /* Show mobile nav */
+    }
+    .toy-toggle {
+        top: 35px;
+        left: 220px;
+    }
+}
+
+
+/* Container */
+.container {
+    position: static;
+    padding-top: 80px;
+    /* Give space for the fixed header */
+}
+
+/* GIF logo */
+.logo {
+
+    width: clamp(120px, 20vw, 200px);
+    height: clamp(80px, 8vh, 100px);
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.top-projects-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    background-color: #ffffff;
+    padding: 2%;
+    z-index: 1;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 30px;
+    height: fit-content;
+    background: linear-gradient(45deg, #ffa4a4, #ffecb8, #56fcff);
+    background-size: 200% 200%; /* Size for gradient animation */
+    animation: slideUpFromBottom 2s ease-out forwards, gradientAnimation 5s linear infinite;
+}
+body.dark-mode .top-projects-container {
+    background: linear-gradient(45deg, #000000, #27212c, #404140);
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    border: 5px solid #584183;
+}
+.top-projects-container h1 {
+    font-size: 3rem;
+    color: #000000;
+    font-weight: bold;
+    font-family: "Courgette", cursive;  
+    margin-bottom: 20px;
+}
+body.dark-mode .top-projects-container h1 {
+    color: #ffffff;
+}
+
+.card-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    max-width: 1200px;
+    overflow: hidden;
+    width: 100%;
+}
+.card-wrapper:hover > .top-projects:not(:hover) {
+    filter: blur(3px) grayscale(100%);
+    opacity: 0.5;
+       transition: all 1s ease;
+}
+.top-projects {
+    width: 200px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+    border: 3px solid #000000;
+    box-shadow: 0 4px 8px rgb(24, 6, 104);
+    animation: slideUpFromBottom 1s ease-out forwards;
+    opacity: 0;
+}
+.top-projects:nth-child(1) {
+    animation-delay: 2s;
+}
+.top-projects:nth-child(2) {
+    animation-delay: 2.25s;
+}
+.top-projects:nth-child(3) {
+    animation-delay: 2.5s;
+}
+.top-projects:nth-child(4) {
+    animation-delay: 2.75s;
+}
+.top-projects:nth-child(5) {
+    animation-delay: 3s;
+}
+body.dark-mode .top-projects {
+    background-color: #313131;
+    border: 3px solid #e4e4e4;
+    box-shadow: 0 4px 8px rgb(145, 145, 184);
+}
+
+.main-img,
+.expanded-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.expanded-img {
+    height: 180px;
+    display: none;
+    opacity: 0;
+}
+
+.top-projects.expanded {
+    width: 400px;
+    height: 360px;
+    background-color: #ffffff;
+    padding-bottom: 20px;
+}
+body.dark-mode .top-projects.expanded {
+    background-color: #000000;
+
+}
+
+.top-projects.expanded .main-img {
+    display: none;
+}
+
+.top-projects.expanded .expanded-img {
+    display: block;
+    opacity: 1;
+}
+
+.details {
+    color: white;
+    padding: 0 15px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.top-projects.expanded .details {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+    padding-top: 10px;
+}
+
+.details .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #000000;
+
+}
+body.dark-mode .details .title {
+    color: #ffffff;
+}
+
+.details .top-projects-desc {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #000000;
+}
+body.dark-mode .details .top-projects-desc {
+    color: #ffffff;
+}
+
+.details .button {
+    background-color: #0078d7;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+}
+body.dark-mode .details .button {
+    background-color: #1e0546;  
+}
+@media (max-width: 767px) {
+    .top-projects-container {
+      display: none;
+    }
+  }
+  
+
+
+/* Main content */
+.main-content {
+    max-height: 100vh;
+    /* Set max height to exactly 100% of the viewport */
+    display: flex;
+    flex-direction: row;
+    /* Ensure children are laid out in a row */
+    margin-left: 2%;
+    margin-right: 2%;
+    overflow: hidden;
+    /* Prevent overflow if child elements exceed height */
+    margin-bottom: 20px;
+}
+
+/* Card container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 1%;
+    width: 60%;
+    background: linear-gradient(45deg, #52b788, #2d2ae9, #f293ff);
+    background-size: 200% 200%; /* Size for gradient animation */
+    border-radius: 30px;
+    animation: slideInFromLeft 2s ease-out forwards, gradientAnimation 5s linear infinite;
+}
+
+body.dark-mode .card-container {
+    background: linear-gradient(45deg, #140027, #1c4231, #363d41);
+}
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 100%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 0%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Card styling */
+.card {
+    width: 220px;
+    /* Set a fixed width */
+    height: 250px;
+    /* Set a fixed height for consistency */
+    background-color: white;
+    /* Padding inside the card */
+    border-radius: 20px;
+    /* Rounded corners for cards */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    grid-template-columns: repeat(4, 1fr);
+    transition: transform 1s, box-shadow 1s ease;
+    /* Smooth transition effect */
+    animation: popIn 0.5s ease-in-out forwards;
+    opacity: 0;
+    /* Start invisible */
+}
+body.dark-mode .card {
+    background-color: #313131;
+}
+
+.card:nth-child(1) {
+    animation-delay: 2s;
+}
+.card:nth-child(2) {
+    animation-delay: 2.25s;
+}
+.card:nth-child(3) {
+    animation-delay: 2.5s;
+}
+.card:nth-child(4) {
+    animation-delay: 2.75s;
+}
+.card:nth-child(5) {
+    animation-delay: 3s;
+}
+.card:nth-child(6) {
+    animation-delay: 3.25s;
+}
+.card:nth-child(7) {
+    animation-delay: 3.5s;
+}
+.card:nth-child(8) {
+    animation-delay: 3.75s;
+}
+.card:nth-child(9) {
+    animation-delay: 4s;
+}
+.card:nth-child(10) {
+    animation-delay: 4.25s;
+}
+.card:nth-child(11) {
+    animation-delay: 4.50s;
+}
+.card:nth-child(12) {
+    animation-delay: 4.75s;
+}
+.card:nth-child(13) {
+    animation-delay: 5s;
+}
+.card:nth-child(14) {
+    animation-delay: 5.25s;
+}
+.card:nth-child(15) {
+    animation-delay: 5.5s;
+}
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+    /* Lift and slight zoom */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 1);
+    /* Enhanced shadow for depth */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+body.dark-mode .card:hover {
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 1);
+}
+
+.card img {
+    width: 120px;
+    height: 120px;
+    /* Maintain aspect ratio */
+    max-height: 150px;
+    /* Maximum height for images */
+    object-fit: cover;
+    /* Ensure the image covers the space */
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: #000000;
+    font-family: "Oswald", sans-serif;
+}
+body.dark-mode .card h3 {
+    color: #e4e4e4;
+}
+
+.card h1 {
+    font-size: 2rem;
+    color: #000000;
+    font-weight: bold;
+    font-family: "Bebas Neue", sans-serif;
+}
+body.dark-mode .card h1 {
+    color: #e4e4e4;
+}
+
+/* Description section */
+.description {
+    background: linear-gradient(45deg, #ffa4a4, #ffecb8, #56fcff);
+    background-size: 200% 200%; /* Size for gradient animation */
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+    height: auto;
+    max-height: calc(100vh - 100px);
+    margin-left: 5%;
+    overflow: hidden;
+    overflow-y: auto;
+    animation: slideInFromRight 2s ease-out forwards, gradientAnimation 5s linear infinite;
+}
+body.dark-mode .description {
+    background: linear-gradient(45deg, #000000, #27212c, #404140);
+}
+
+/* Title styling */
+.description h1 {
+    font-size: 2.5rem;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 30px;
+    max-width: 100%;
+    text-align: center;
+    text-decoration: underline;
+    font-family: "Courgette", cursive;
+}
+body.dark-mode .description h1 {
+    color: #e4e4e4;
+}
+
+/* Image styling */
+.description-image img {
+    width: auto;
+    height: fit-content;
+    max-height: fit-content;
+    object-fit: cover;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    max-width: 100%;
+    text-align: center;
+    border: 5px solid #3533cd;
+    box-shadow: 5px 5px 20px #3533cd;
+}
+body.dark-mode .description-image img {
+    border: 5px solid #e4e4e4;
+    box-shadow: 5px 5px 20px #e4e4e4;
+}
+
+.description-text {
+    font-size: 1.5rem;
+    color: #000000;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 20px;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    text-align: justify;
+    font-weight: bold;
+}
+body.dark-mode .description-text {
+    color: #e4e4e4;
+    background-color: #313131;
+}
+
+.description-btn {
+    background-color: #6e5494;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
+    transition: transform 1s, background-color 1s ease, color 1s ease,box-shadow 1s ease;
+    margin-bottom: 15px;
+    max-width: 100%;
+    text-align: center;
+}
+
+.description-btn img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    border: 5px solid #ffffff;
+}
+
+.description-btn:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 12px 12px 50px #6e5494; /* Deepen the shadow */
+
+}
+
+.card-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background-color: #cba135;
+    border-radius: 10px;
+}
+
+.description::-webkit-scrollbar {
+    width: 10px;
+}
+
+.description::-webkit-scrollbar-thumb {
+    background-color: #cba135;
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #cba135;
+    border-radius: 10px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /* Ensures consistent sizing for all elements */
+}
+
+@media (max-width: 480px) {
+    body {
+        height: 100%; /* Ensure body takes full viewport height */
+        overflow-y: auto; /* Allow scrolling for the entire page */
+        padding: 0; /* Remove padding to maximize space */
+        margin: 0; /* Remove margin to avoid overflow issues */
+    }
+
+    /* Adjust navbar for smaller screens */
+    .navbar {
+        flex-direction: row; /* Arrange links in a row */
+        justify-content: center; /* Center the navbar */
+        width: 100%; /* Full width to avoid overlap */
+        padding: 10px 0; /* Add some padding */
+        margin-top: 15%; /* Space between logo and navbar */
+    }
+
+    .navbar li {
+        margin: 0 10px; /* Space between the items */
+    }
+
+    .navbar li a {
+        padding: 8px 15px; /* Ensure clickable area remains comfortable */
+        font-size: 14px; /* Reduce font size slightly */
+    }
+
+    /* Adjust logo for smaller screens */
+    .logo {
+        top: 10px; /* Adjust logo positioning */
+        width: clamp(100px, 40vw, 150px); /* Scale logo for mobile */
+        height: clamp(60px, 10vw, 80px);
+        margin-bottom: 20px; /* Add some margin to separate from navbar */
+    }
+    .container {
+        padding-top: 10px; /* Give space for the fixed header */
+    }
+    .main-content {
+        flex-direction: column; /* Stack items vertically */
+        margin: 0; /* Remove margins for better fit */
+        align-items: center; /* Center the content */
+        overflow-y: auto; /* Allow scrolling within the main content */
+        height: 100vh; /* Full viewport height for main content */
+        padding: 10px;
+    }
+
+    .card-container {
+        width: 100%; /* Full width for mobile */
+        padding: 0; /* Remove padding for better fit */
+        display: flex; /* Use flexbox to center items */
+        flex-direction: row; /* Stack items vertically */
+        align-items: center; /* Center align */
+        margin-bottom: 20px; /* Add margin between card container and description */
+        height: 50%; /* Fixed height for card container */
+        overflow-y: auto; /* Allow card container to scroll if content overflows */
+    }
+
+    .card {
+        width: 100%; /* Make cards full width */
+        margin-bottom: 15px; /* Add space between cards */
+    }
+
+    .description {
+        padding: 15px; /* Adjust padding for smaller screens */
+        text-align: center; /* Center text in the description */
+        overflow-y: auto; /* Allow scrolling within the description */
+        margin: 0;
+        width: 100%; /* Ensure full width */
+        height: 100%; /* Fixed height for description */
+    }
+
+
+    .description h1 {
+        font-size: 1.5rem; /* Adjust title font size */
+    }
+
+    .description-text {
+        font-size: 1rem; /* Adjust text font size */
+    }
+
+    .description-btn {
+        font-size: 1.2rem; /* Adjust button font size */
+        padding: 8px 15px; /* Adjust padding for button */
+    }
+
+    .card img {
+        width: 80px; /* Adjust image size */
+        height: 80px; /* Adjust image height */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        height: 100%; /* Ensure body takes full viewport height */
+        overflow-y: auto; /* Allow scrolling for the entire page */
+        padding: 0; /* Remove padding to maximize space */
+        margin: 0; /* Remove margin to avoid overflow issues */
+    }
+
+    /* Adjust navbar for medium screens */
+    .navbar {
+        flex-direction: row; /* Keep links in a row */
+        justify-content: center; /* Center the navbar */
+        width: 100%; /* Full width to avoid overlap */
+        padding: 10px 0; /* Add some padding */
+        margin-top: 15%; /* Space between logo and navbar */
+    }
+
+    .navbar li {
+        margin: 0 15px; /* Add more space between items */
+    }
+
+    .navbar li a {
+        padding: 8px 15px; /* Ensure clickable area remains comfortable */
+        font-size: 16px; /* Slightly larger font size for better readability */
+    }
+
+    /* Adjust logo for medium screens */
+    .logo {
+        top: 10px; /* Keep logo positioning */
+        width: clamp(120px, 40vw, 180px); /* Scale logo for medium screens */
+        height: clamp(70px, 10vw, 90px);
+        margin-bottom: 20px; /* Add some margin to separate from navbar */
+    }
+    .container {
+        padding-top: 10px; /* Give space for the fixed header */
+    }
+    .main-content {
+        flex-direction: column; /* Stack items vertically */
+        margin: 0; /* Remove margins for better fit */
+        align-items: center; /* Center the content */
+        overflow-y: auto; /* Allow scrolling within the main content */
+        height: 100vh; /* Full viewport height for main content */
+        padding: 10px;
+    }
+
+    .card-container {
+        width: 100%; /* Full width for mobile */
+        padding: 10px; /* Remove padding for better fit */
+        display: flex; /* Use flexbox to center items */
+        flex-direction: row; /* Stack items vertically */
+        align-items: center; /* Center align */
+        margin-bottom: 50px; /* Add margin between card container and description */
+        height: 100%; /* Fixed height for card container */
+        overflow-y: auto; /* Allow card container to scroll if content overflows */
+    }
+
+    .card {
+        width: 100%; /* Make cards full width */
+        margin-bottom: 15px; /* Add space between cards */
+    }
+
+    .description {
+        padding: 15px; /* Adjust padding for smaller screens */
+        text-align: center; /* Center text in the description */
+        overflow-y: auto; /* Allow scrolling within the description */
+        margin: 0;
+        width: 100%; /* Ensure full width */
+        height: 100%; /* Fixed height for description */
+    }
+
+    .description h1 {
+        font-size: 1.8rem; /* Adjust title font size */
+    }
+
+    .description-text {
+        font-size: 1.2rem; /* Adjust text font size */
+    }
+
+    .description-btn {
+        font-size: 1.5rem; /* Adjust button font size */
+        padding: 10px 20px; /* Adjust padding for button */
+    }
+
+    .card img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .card {
+        width: calc(50% - 10px);
+    }
+}
