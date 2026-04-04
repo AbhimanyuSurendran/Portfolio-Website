@@ -670,7 +670,8 @@ body.dark-mode .contact-sources {
     box-sizing: border-box;
     opacity: 0;
     transition: opacity 1s ease, transform 1s ease;
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-1.png?alt=media&token=1fc1da87-267c-4b41-a0f5-4d7dfd4723cf');
+    
+    background-image: url('../Profile Pictures/Profile-pic-1.png');
     animation: border-transform 15s linear infinite alternate forwards;
 }
 
@@ -688,23 +689,23 @@ body.dark-mode .profile-container ul li {
 
 /* Specific background images for list items */
 .profile-container ul li:nth-child(2) {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-2.png?alt=media&token=8b03ead7-ede5-4399-a86c-de400571c5e0');
+    background-image: url('../Profile Pictures/Profile-pic-2.png');
 }
 
 .profile-container ul li:nth-child(3) {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-3.png?alt=media&token=173f1734-b949-44a0-90a5-d3134413666e');
+    background-image: url('../Profile Pictures/Profile-pic-3.png');
 }
 
 .profile-container ul li:nth-child(4) {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-4.png?alt=media&token=f7bf0e73-0733-4811-8ed5-1ec37d1e5523');
+    background-image: url('../Profile Pictures/Profile-pic-4.png');
 }
 
 .profile-container ul li:nth-child(5) {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-5.png?alt=media&token=2efa0a07-6c5b-480a-bfba-44d64034d801');
+    background-image: url('../Profile Pictures/Profile-pic-5.png');
 }
 
 .profile-container ul li:nth-child(6) {
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/portfolio-certificates-1875b.appspot.com/o/Profile%20Images%2FProfile-pic-6.png?alt=media&token=19700d0a-6e97-4a7b-82bf-3e3b9d3b8381');
+    background-image: url('../Profile Pictures/Profile-pic-6.png');
 }
 
 @keyframes border-transform {
