@@ -7,8 +7,15 @@
     <title>Skills</title>
     <link rel="icon" href="title_logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/creative.css">
     <link rel="stylesheet" href="styles/skills.css">
     <link rel="stylesheet" href="styles/animation.css">
+    <script src="scripts/glass.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 
@@ -47,10 +54,10 @@
             </ul>
         </nav>
         <nav class="nav-mobile">
-            <button id="menu-btn" class="menu-btn">☰</button>
+            <button id="menu-btn" class="menu-btn" aria-label="Open menu">☰</button>
 
             <div id="nav-overlay" class="nav-overlay">
-                <button id="close-btn" class="close-btn">&times;</button>
+                <button id="close-btn" class="close-btn" aria-label="Close menu">&times;</button>
                 <ul class="nav-links">
                     <li><a href="home.html">Home</a></li>
                     <li><a href="projects.html">Projects</a></li>
@@ -63,7 +70,7 @@
         </nav>
 
         <!-- Toggle Switch -->
-        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <input type="checkbox" id="toggle" name="toggle" value="is_on" aria-label="Dark mode">
         <label for="toggle" class="toy-toggle">
             <span class="border1"></span>
             <span class="border2"></span>
@@ -76,7 +83,8 @@
         <script>
             // Initialize theme based on local storage
             const initializeTheme = () => {
-                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                // Dark is the default; light only when the visitor chose it.
+                const isDarkMode = localStorage.getItem('darkMode') !== 'false';
                 const toggle = document.getElementById('toggle');
 
                 if (isDarkMode) {
@@ -92,6 +100,9 @@
             const saveThemePreference = (isDarkMode) => {
                 localStorage.setItem('darkMode', isDarkMode);
             };
+
+            // Apply the saved theme right away so the page never flashes the wrong theme.
+            initializeTheme();
 
             // Add event listeners
             document.addEventListener('DOMContentLoaded', () => {
@@ -142,45 +153,45 @@
 
     <div class="container"></div>
     <div class="main-content">
-        <div class="top-skill-sets">
-            <h1>Top Skill Sets</h1>
+        <div class="top-skill-sets glass-panel">
+            <h1 class="section-heading">Top Skill Sets</h1>
             <div class="skills-gallery">
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-Java.png" alt="Skill 1">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95"
                             aria-valuemin="0" aria-valuemax="100">95%</div>
                     </div>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-JavaScript.png" alt="Skill 2">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
                             aria-valuemin="0" aria-valuemax="100">85%</div>
                     </div>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-C++.png" alt="Skill 3">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
                             aria-valuemin="0" aria-valuemax="100">70%</div>
                     </div>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-NodeJS.png" alt="Skill 4">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
                             aria-valuemin="0" aria-valuemax="100">75%</div>
                     </div>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-Python.png" alt="Skill 5">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
                             aria-valuemin="0" aria-valuemax="100">75%</div>
                     </div>
                 </div>
-                <div class="skill-item">
+                <div class="skill-item glass-card">
                     <img src="skills_elements/top_skills/top-skills-SQL.png" alt="Skill 6">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
@@ -190,43 +201,43 @@
             </div>
         </div>
         <div class="fullstack">
-            <div class="frontend">
-                <h1>Frontend Languages</h1>
+            <div class="frontend glass-panel">
+                <h1 class="section-heading">Frontend Languages</h1>
                 <div class="image-gallery">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-JavaScript.png" alt="Frontend 1">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-React.png" alt="Frontend 2">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-HTML.png" alt="Frontend 3">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-CSS.png" alt="Frontend 4">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-NuxtJS.png" alt="Frontend 5">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-Vue.JS.png" alt="Frontend 6">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-Bootstrap.png" alt="Frontend 7">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-Flutter.png" alt="Frontend 8">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-Android-Studio.png" alt="Frontend 9">
-                    <img class="skill-img" src="skills_elements/frontend/frontend-XML.png" alt="Frontend 10">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-JavaScript.png" alt="Frontend 1">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-React.png" alt="Frontend 2">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-HTML.png" alt="Frontend 3">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-CSS.png" alt="Frontend 4">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-NuxtJS.png" alt="Frontend 5">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-Vue.JS.png" alt="Frontend 6">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-Bootstrap.png" alt="Frontend 7">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-Flutter.png" alt="Frontend 8">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-Android-Studio.png" alt="Frontend 9">
+                    <img class="skill-img" loading="lazy" src="skills_elements/frontend/frontend-XML.png" alt="Frontend 10">
                 </div>
             </div>
-            <div class="backend">
-                <h1>Backend Languages</h1>
+            <div class="backend glass-panel">
+                <h1 class="section-heading">Backend Languages</h1>
                 <div class="image-gallery">
-                    <img class="skill-img" src="skills_elements/backend/backend-Java.png" alt="Backend 1">
-                    <img class="skill-img" src="skills_elements/backend/backend-NodeJS.png" alt="Backend 2">
-                    <img class="skill-img" src="skills_elements/backend/backend-Python.png" alt="Backend 3">
-                    <img class="skill-img" src="skills_elements/backend/backend-SQL.png" alt="Backend 4">
-                    <img class="skill-img" src="skills_elements/backend/backend-C++.png" alt="Backend 5">
-                    <img class="skill-img" src="skills_elements/backend/backend-Kotlin.png" alt="Backend 6">
-                    <img class="skill-img" src="skills_elements/backend/backend-Dart.png" alt="Backend 7">
-                    <img class="skill-img" src="skills_elements/backend/backend-spring-boot.png" alt="Backend 8">
-                    <img class="skill-img" src="skills_elements/backend/backend-rest-API.png" alt="Backend 9">
-                    <img class="skill-img" src="skills_elements/backend/backend-mongo DB.png" alt="Backend 10">
-                    <img class="skill-img" src="skills_elements/backend/backend-MySQL.png" alt="Backend 11">
-                    <img class="skill-img" src="skills_elements/backend/backend-PostgreSQL.png" alt="Backend 12">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-Java.png" alt="Backend 1">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-NodeJS.png" alt="Backend 2">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-Python.png" alt="Backend 3">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-SQL.png" alt="Backend 4">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-C++.png" alt="Backend 5">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-Kotlin.png" alt="Backend 6">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-Dart.png" alt="Backend 7">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-spring-boot.png" alt="Backend 8">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-rest-API.png" alt="Backend 9">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-mongo DB.png" alt="Backend 10">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-MySQL.png" alt="Backend 11">
+                    <img class="skill-img" loading="lazy" src="skills_elements/backend/backend-PostgreSQL.png" alt="Backend 12">
 
                 </div>
             </div>
         </div>
-        <div id="techStackGame">
+        <div id="techStackGame" class="glass-panel">
 
-            <h1>🚀 Tech Stack Builder Game 🚀</h1>
+            <h1 class="section-heading">🚀 Tech Stack Builder Game 🚀</h1>
             <p class="instructions">Drag technologies below into the box to build your own Stack! 🎯</p>
 
             <div class="drag-zone" id="dragZone">
@@ -355,7 +366,22 @@
                 dropArea.classList.remove("highlight");
 
                 const techId = e.dataTransfer.getData("text/plain");
+                addTechToStack(techId);
+            });
 
+            // Tap/click a technology to add it. Phones don't support HTML5
+            // drag and drop, so this is how the game works on touch screens.
+            document.querySelectorAll('#dragZone .tech').forEach(item => {
+                item.addEventListener("click", () => {
+                    addTechToStack(item.dataset.id);
+                    // Brief glow on the drop box so the user sees where it went
+                    dropArea.classList.add("highlight");
+                    setTimeout(() => dropArea.classList.remove("highlight"), 350);
+                });
+            });
+
+            // Adds a technology to the stack (shared by drag-drop and tap)
+            function addTechToStack(techId) {
                 if (!currentStack.includes(techId)) {
                     currentStack.push(techId);
 
@@ -375,7 +401,7 @@
                 }
 
                 checkCombo();
-            });
+            }
 
             function checkCombo() {
                 const stackSet = new Set(currentStack.map(item => item.toLowerCase()));
@@ -408,15 +434,15 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 20,
+                    "value": 45,
                     "density": {
                         "enable": true,
                         "value_area": 800
                     }
                 },
-                "color": { "value": "#ffffff" },
+                "color": { "value": ["#a9c1ff", "#c4b5fd", "#ffffff"] },
                 "shape": {
-                    "type": "edge",
+                    "type": "circle",
                     "stroke": { "width": 2, "color": "#000" },
                     "polygon": { "nb_sides": 3 },
                     "image": { "src": "img/github.svg", "width": 100, "height": 100 }
@@ -432,10 +458,10 @@
                     }
                 },
                 "size": {
-                    "value": 100,
+                    "value": 3,
                     "random": true,
                     "anim": {
-                        "enable": true,
+                        "enable": false,
                         "speed": 10,
                         "size_min": 40,
                         "sync": false
@@ -450,7 +476,7 @@
                 },
                 "move": {
                     "enable": true,
-                    "speed": 8,
+                    "speed": 0.7,
                     "direction": "none",
                     "random": true,
                     "straight": false,

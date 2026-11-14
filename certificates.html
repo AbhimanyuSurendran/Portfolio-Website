@@ -7,8 +7,15 @@
     <title>Certificates</title>
     <link rel="icon" href="title_logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/creative.css">
     <link rel="stylesheet" href="styles/certificates.css">
     <link rel="stylesheet" href="styles/animation.css">
+    <script src="scripts/glass.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <script>
@@ -39,16 +46,23 @@
                 });
             });
 
-            // Delay execution of image animations for 3 seconds
+            // Short pause so the page fade-in finishes before images cascade in
             setTimeout(() => {
                 images.forEach((img, index) => {
-                    // Animate images on load with a delay
+                    // Stagger the first dozen images; the rest appear together
                     setTimeout(() => {
                         img.classList.add('show');
-                    }, index * 300); // 300ms delay for each image
+                    }, Math.min(index, 12) * 70);
                     observer.observe(img); // Observe each image for scroll animation
                 });
-            }, 3000); // 3-second delay before starting animations
+            }, 400);
+
+            // Close the image viewer with the Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && document.getElementById('myModal').classList.contains('show')) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </head>
@@ -88,10 +102,10 @@
             </ul>
         </nav>
         <nav class="nav-mobile">
-            <button id="menu-btn" class="menu-btn">☰</button>
+            <button id="menu-btn" class="menu-btn" aria-label="Open menu">☰</button>
 
             <div id="nav-overlay" class="nav-overlay">
-                <button id="close-btn" class="close-btn">&times;</button>
+                <button id="close-btn" class="close-btn" aria-label="Close menu">&times;</button>
                 <ul class="nav-links">
                     <li><a href="home.html">Home</a></li>
                     <li><a href="projects.html">Projects</a></li>
@@ -104,7 +118,7 @@
         </nav>
 
         <!-- Toggle Switch -->
-        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <input type="checkbox" id="toggle" name="toggle" value="is_on" aria-label="Dark mode">
         <label for="toggle" class="toy-toggle">
             <span class="border1"></span>
             <span class="border2"></span>
@@ -117,7 +131,8 @@
         <script>
             // Initialize theme based on local storage
             const initializeTheme = () => {
-                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                // Dark is the default; light only when the visitor chose it.
+                const isDarkMode = localStorage.getItem('darkMode') !== 'false';
                 const toggle = document.getElementById('toggle');
 
                 if (isDarkMode) {
@@ -133,6 +148,9 @@
             const saveThemePreference = (isDarkMode) => {
                 localStorage.setItem('darkMode', isDarkMode);
             };
+
+            // Apply the saved theme right away so the page never flashes the wrong theme.
+            initializeTheme();
 
             // Add event listeners
             document.addEventListener('DOMContentLoaded', () => {
@@ -183,13 +201,13 @@
 
     <div class="container"></div>
     <div class="main-content">
-        <div class="title">
+        <div class="title glass-panel">
             <h2>Check Out</h2>
-            <h1>My Certificates</h1>
+            <h1 class="section-heading">My Certificates</h1>
             <h4>I've completed various courses to sharpen my programming expertise and boost personal growth. Here are
                 some of the key certifications I've earned along the way.</h4>
         </div>
-        <div class="certificates">
+        <div class="certificates glass-panel">
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -206,143 +224,143 @@
                     progressBar.style.width = scrollPercentage + "%";
                 });
             </script>
-            <h1>Certificates</h1>
+            <h1 class="section-heading">Certificates</h1>
             <div class="image-grid">
                 <!-- scaler certificates -->
-                <img src="Certifications/SCALER/1745677635706.jpg" onclick="openModal(this.src)">
-                <img src="Certifications/SCALER/1745997391911.jpg" onclick="openModal(this.src)">
-                <img src="Certifications/SCALER/1746439679501.jpg" onclick="openModal(this.src)">
-                <img src="Certifications/SCALER/1746439757575.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/SCALER/1745677635706.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/SCALER/1745997391911.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/SCALER/1746439679501.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/SCALER/1746439757575.jpg" onclick="openModal(this.src)">
 
                 <!-- internship certificates -->
-                <img src="Certifications/INTERNSHIP/ACMEGRADE (2mos)/Abhimanyu Surendran_Internship Completion.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/ACMEGRADE (2mos)/Abhimanyu Surendran_Internship Completion.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/ACMEGRADE (2mos)/Abhimanyu Surendran_Training Completion.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/ACMEGRADE (2mos)/Abhimanyu Surendran_Training Completion.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/AICTE/Abhimanyu  Surendran 94798.jpg" onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/CLOUDSTRATS/Offer Letter CLOUDSTRATS.png"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/AICTE/Abhimanyu  Surendran 94798.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/CLOUDSTRATS/Offer Letter CLOUDSTRATS.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/CORIZO (2mos)/Internship certificate.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/CORIZO (2mos)/Internship certificate.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/CORIZO (2mos)/Internship training certificate .jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/CORIZO (2mos)/Internship training certificate .jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/Oasis Infobyte/Abhimanyu Surendran Certificate.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/Oasis Infobyte/Abhimanyu Surendran Certificate.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/Oasis Infobyte/Abhimanyu Surendran Offer Letter.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/Oasis Infobyte/Abhimanyu Surendran Offer Letter.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/INTERNSHIP/TechnoHacks EduTech/Abhimanyu Surendran.png"
+                <img loading="lazy" decoding="async" src="Certifications/INTERNSHIP/TechnoHacks EduTech/Abhimanyu Surendran.png"
                     onclick="openModal(this.src)">
 
 
                 <!-- hp certificates -->
-                <img src="Certifications/HP/Inventory Management.jpg" onclick="openModal(this.src)">
-                <img src="Certifications/HP/Strategic Planning.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/HP/Inventory Management.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/HP/Strategic Planning.jpg" onclick="openModal(this.src)">
 
                 <!-- coursera certificates -->
-                <img src="Certifications/COURSERA/COURSERA - Cloud Practitioner Essentials Certificate.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/COURSERA/COURSERA - Cloud Practitioner Essentials Certificate.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/COURSERA/COURSERA - Introduction to Android Mobile Application.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/COURSERA/COURSERA - Introduction to Android Mobile Application.jpg"
                     onclick="openModal(this.src)">
 
                 <!-- journal certificates -->
-                <img src="Certifications/certificates IRJET/IRJET-Abhimanyu Surendran.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/certificates IRJET/IRJET-Abhimanyu Surendran.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/certificates IRCRT/Abhimanyu Surendran.jpg" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/certificates IRCRT/Abhimanyu Surendran.jpg" onclick="openModal(this.src)">
 
 
                 <!-- AWS certificates -->
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/1) job roles in the cloud.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/1) job roles in the cloud.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/2) AWS practioner essentials.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/2) AWS practioner essentials.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/3) Getting Started with Cloud Acquisition.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/3) Getting Started with Cloud Acquisition.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/4) AWS Billing and Cost Management.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/4) AWS Billing and Cost Management.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/5) AWS Well-Architected.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/5) AWS Well-Architected.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/6) AWS Foundations Getting Started with the AWS Cloud Essentials.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/6) AWS Foundations Getting Started with the AWS Cloud Essentials.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/7) Exam Prep AWS Certified Cloud Practitioner (CLF-C01).jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/7) Exam Prep AWS Certified Cloud Practitioner (CLF-C01).jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 1 Cloud essential learning plan/Main Cloud Essentials Learning Plan.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 1 Cloud essential learning plan/Main Cloud Essentials Learning Plan.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 2 AWS Best Practices for Hybrid Cloud Adoption/AWS Best Practices for Hybrid Cloud Adoption.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 2 AWS Best Practices for Hybrid Cloud Adoption/AWS Best Practices for Hybrid Cloud Adoption.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/1) Getting Started with AWS for Games – Part I.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/1) Getting Started with AWS for Games – Part I.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/2) Getting Started with AWS for Games – Part II.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/2) Getting Started with AWS for Games – Part II.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/3) Introduction to AWS Cloud Game Development.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/3) Introduction to AWS Cloud Game Development.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/4) Amazon EC2 Basics.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/4) Amazon EC2 Basics.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/5) Introduction to Serverless Development.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/5) Introduction to Serverless Development.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/6) AWS Lambda Foundations.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/6) AWS Lambda Foundations.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/7) Getting Started with .NET on AWS.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/7) Getting Started with .NET on AWS.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/8) Getting Started with AWS CloudFormation.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/8) Getting Started with AWS CloudFormation.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/9) AWS Cloud Development Kit Primer.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/9) AWS Cloud Development Kit Primer.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/10) Deploying Serverless Applications.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/10) Deploying Serverless Applications.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/11) Introduction to AWS CodePipeline.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/11) Introduction to AWS CodePipeline.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/12) Cloud Game Development Learning Plan Badge Assessment.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/12) Cloud Game Development Learning Plan Badge Assessment.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/13) AWS Cloud Quest Cloud Practitioner.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/13) AWS Cloud Quest Cloud Practitioner.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/Main AWS for Games Learning Plan Cloud Game Development.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/AWS/Course 3 AWS for Games Learning Plan Cloud Game Development/Main AWS for Games Learning Plan Cloud Game Development.jpg"
                     onclick="openModal(this.src)">
 
 
                 <!-- 6 sigma certificates -->
-                <img src="Certifications/6-sigma/CorporateSalesFundamentals-AbhimanyuSurendran-604331.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/CorporateSalesFundamentals-AbhimanyuSurendran-604331.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/DigitalMarketingFundamentals-AbhimanyuSurendran-609073.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/DigitalMarketingFundamentals-AbhimanyuSurendran-609073.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/MarketingResearchFundamentals-AbhimanyuSurendran-604145.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/MarketingResearchFundamentals-AbhimanyuSurendran-604145.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/MarketingStrategyFundamentals-AbhimanyuSurendran-606544.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/MarketingStrategyFundamentals-AbhimanyuSurendran-606544.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/NegotiationAssociate-AbhimanyuSurendran-592121.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/NegotiationAssociate-AbhimanyuSurendran-592121.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/ScrumFundamentalsCertified-AbhimanyuSurendran-1050600.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/ScrumFundamentalsCertified-AbhimanyuSurendran-1050600.jpg"
                     onclick="openModal(this.src)">
-                <img src="Certifications/6-sigma/SixSigmaYellowBelt-AbhimanyuSurendran-868652.jpg"
+                <img loading="lazy" decoding="async" src="Certifications/6-sigma/SixSigmaYellowBelt-AbhimanyuSurendran-868652.jpg"
                     onclick="openModal(this.src)">
 
 
                 <!-- alison certificates -->
-                <img src="Certifications/ALISON/Azure Masterclass- Analyze Data With Azure Stream Analytics.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Azure Masterclass- Analyze Data With Azure Stream Analytics.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Beginner VMware vSphere 5.5 - Virtualization Technologies.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Beginner VMware vSphere 5.5 - Virtualization Technologies.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/CompTIA Cloud+ Basic.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Copywriting for Conversions_ How to Write Persuasive Content.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/CompTIA Cloud+ Basic.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Copywriting for Conversions_ How to Write Persuasive Content.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Diploma in Databases and T-SQL.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Diploma in Environmental Quality Monitoring and Analysis.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Diploma in Databases and T-SQL.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Diploma in Environmental Quality Monitoring and Analysis.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Diploma in Software Testing.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Diploma in Virtualization Security - Advanced VMware Security.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Diploma in Software Testing.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Diploma in Virtualization Security - Advanced VMware Security.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/English Course - Perfect Tenses (Upper- Intermediate Level).png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/English Course - Perfect Tenses (Upper- Intermediate Level).png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/English Writing Skills.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Fundamentals of English Grammar.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Introduction to Azure Stream Analytics.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/English Writing Skills.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Fundamentals of English Grammar.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Introduction to Azure Stream Analytics.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Introduction to Environmental Issues.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Introduction to Mobile Application Testing.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Introduction to Environmental Issues.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Introduction to Mobile Application Testing.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Introduction to Software Quality Management.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Introduction to Software Quality Management.png"
                     onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Microsoft Azure Administrator.png" onclick="openModal(this.src)">
-                <img src="Certifications/ALISON/Number Operations and Algebra for General Studies.png"
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Microsoft Azure Administrator.png" onclick="openModal(this.src)">
+                <img loading="lazy" decoding="async" src="Certifications/ALISON/Number Operations and Algebra for General Studies.png"
                     onclick="openModal(this.src)">
 
 
@@ -358,13 +376,13 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": {
-                    "value": 200,
+                    "value": 60,
                     "density": {
                         "enable": true,
                         "value_area": 800
                     }
                 },
-                "color": { "value": "#fff" },
+                "color": { "value": ["#a9c1ff", "#c4b5fd", "#ffffff"] },
                 "shape": {
                     "type": "circle",
                     "stroke": { "width": 0, "color": "#000000" },
@@ -376,14 +394,14 @@
                     "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false }
                 },
                 "size": {
-                    "value": 10,
+                    "value": 3,
                     "random": true,
                     "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false }
                 },
                 "line_linked": { "enable": false },
                 "move": {
                     "enable": true,
-                    "speed": 6,
+                    "speed": 0.6,
                     "direction": "top-left",
                     "random": true,
                     "straight": false,
