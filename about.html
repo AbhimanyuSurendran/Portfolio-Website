@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About</title>
     <link rel="icon" href="title_logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/creative.css">
     <link rel="stylesheet" href="styles/about.css">
     <link rel="stylesheet" href="styles/animation.css">
+    <script src="scripts/glass.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
 </head>
@@ -49,10 +56,10 @@
             </ul>
         </nav>
         <nav class="nav-mobile">
-            <button id="menu-btn" class="menu-btn">☰</button>
+            <button id="menu-btn" class="menu-btn" aria-label="Open menu">☰</button>
 
             <div id="nav-overlay" class="nav-overlay">
-                <button id="close-btn" class="close-btn">&times;</button>
+                <button id="close-btn" class="close-btn" aria-label="Close menu">&times;</button>
                 <ul class="nav-links">
                     <li><a href="home.html">Home</a></li>
                     <li><a href="projects.html">Projects</a></li>
@@ -65,7 +72,7 @@
         </nav>
 
         <!-- Toggle Switch -->
-        <input type="checkbox" id="toggle" name="toggle" value="is_on">
+        <input type="checkbox" id="toggle" name="toggle" value="is_on" aria-label="Dark mode">
         <label for="toggle" class="toy-toggle">
             <span class="border1"></span>
             <span class="border2"></span>
@@ -78,7 +85,8 @@
         <script>
             // Initialize theme based on local storage
             const initializeTheme = () => {
-                const isDarkMode = localStorage.getItem('darkMode') === 'true';
+                // Dark is the default; light only when the visitor chose it.
+                const isDarkMode = localStorage.getItem('darkMode') !== 'false';
                 const toggle = document.getElementById('toggle');
 
                 if (isDarkMode) {
@@ -94,6 +102,9 @@
             const saveThemePreference = (isDarkMode) => {
                 localStorage.setItem('darkMode', isDarkMode);
             };
+
+            // Apply the saved theme right away so the page never flashes the wrong theme.
+            initializeTheme();
 
             // Add event listeners
             document.addEventListener('DOMContentLoaded', () => {
@@ -144,10 +155,11 @@
 
     <div class="container"></div>
     <div class="main-content">
-        <div class="resume-profile">
+        <div class="resume-profile glass-panel">
             <img src="about_elements/profile_photo.JPG" alt="image" class="personal-photo">
             <h1>Abhimanyu Surendran</h1>
             <h2>Software Developer</h2>
+            <p class="about-tagline">Full Stack · JavaScript · TypeScript · Java · React.js · Node.js · PostgreSQL</p>
             <div class="detail-item">
                 <img src="about_elements/about-calendar-logo.png" alt="image">
                 <p><b>Date of Birth:</b> 01/09/2003</p>
@@ -165,10 +177,10 @@
                 <p><b>Phone:</b> +91 8839261551</p>
             </div>
             <div class="resume-button">
-                <a href="about_elements/CV REBUILD (PHYSICAL).pdf" target="_blank" class="resume-link">Download Resume</a>
+                <a href="about_elements/CV REBUILD (UPDATED).pdf" target="_blank" class="resume-link glass-btn">Download Resume</a>
             </div>
         </div>
-        <div class="main-profile">
+        <div class="main-profile glass-panel">
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -185,208 +197,342 @@
                     progressBar.style.width = scrollPercentage + "%";
                 });
             </script>
-            <div class="about-me">
+            <div class="about-me glass-card">
                 <h1>About Me</h1>
-                <p>I’m a developer with a strong focus on creating smooth, responsive web and Android applications. My
-                    expertise spans JavaScript, React, Java, and SQL, with experience in both full-stack development and
-                    mobile solutions. I take pride in delivering clean, functional, and user-friendly code that brings
-                    ideas to life. Whether it's developing dynamic websites or building mobile apps, I enjoy solving
-                    complex problems with practical, effective solutions. With a passion for detail and a love for
-                    coding, I aim to craft digital experiences that are seamless and engaging for users.</p>
+                <p>I’m a Software Developer at PUNON Technologies, where I build and upgrade enterprise applications,
+                    and a developer with a strong focus on creating smooth, responsive web and Android applications.
+                    My expertise spans JavaScript, React, Java, and SQL, extended today by TypeScript, Node.js,
+                    Express.js, and PostgreSQL/MySQL, with hands-on experience in both full-stack development and
+                    mobile solutions, including three deployed projects covering REST APIs, authentication, and
+                    role-based workflows.</p>
+                <p>I take pride in delivering clean, functional, and user-friendly code that brings ideas to life.
+                    Whether it's developing dynamic websites or building mobile apps, I enjoy solving complex problems
+                    with practical, effective solutions, and along the way I’ve built strong debugging and API
+                    optimization experience. I’ve also mentored 100+ learners in software development fundamentals.
+                    With a passion for detail and a love for coding, I aim to craft digital experiences that are
+                    seamless and engaging for users.</p>
             </div>
-            <div class="my-mission">
-                <img src="about_elements/about_mission.gif" alt="Image">
+            <div class="my-mission glass-card">
+                <img loading="lazy" src="about_elements/about_mission.gif" alt="Image">
                 <div class="my-mission-text-content">
                     <h1>My Mission</h1>
-                    <p>As a software developer, my vision is to leverage technology to create innovative solutions that
+                    <p>As a software developer, my vision is to use technology to create innovative solutions that
                         enhance user experiences and solve real-world problems. I aim to stay at the forefront of
                         emerging technologies, continually refining my skills in full-stack development, mobile
-                        applications, and cloud computing. My goal is to contribute to projects that prioritize
-                        user-centric design, seamless functionality, and scalability. I aspire to collaborate with
-                        diverse teams, fostering a culture of creativity and continuous learning. Ultimately, I envision
-                        building applications that not only meet user needs but also inspire and empower them in their
+                        applications, and cloud computing. I want to contribute to projects that prioritize
+                        user-centric design, seamless functionality, and scalability, and to collaborate with diverse
+                        teams in a culture of creativity and continuous learning. Ultimately, I want to build
+                        applications that not only meet people’s needs but also inspire and empower them in their
                         everyday lives.</p>
                 </div>
             </div>
-            <h1 class="title">My Experience</h1>
+            <h1 class="title section-heading">My Experience</h1>
             <div class="card-container">
-                <div class="card">
+                <!-- Added from the updated resume. Kept to a short summary so it sits alongside the
+                     S-TEK card. Client names and business figures are intentionally left out
+                     (company confidentiality); products are described generically. -->
+                <div class="card glass-card">
+                    <div class="card-content">
+                        <img src="about_elements/Experience-PUNON.jpg" alt="PUNON Technologies logo">
+                        <div class="card-text">
+                            <h3>PUNON Technologies</h3>
+                            <h3>Junior Software Developer</h3>
+                            <h3>May 2026 - Present</h3>
+                            <p>Developing, upgrading, and maintaining three enterprise-oriented products: an Android and
+                                Apple device management platform, a government project management system, and a family
+                                device-monitoring platform. I build backend modules and REST APIs, optimize API
+                                performance, resolve bugs, and integrate Firebase Cloud Messaging, working with Node.js,
+                                TypeScript, PostgreSQL, TypeORM, and Sequelize.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card glass-card">
                     <div class="card-content">
                         <img src="about_elements/Experience-S-TEK_IT.png" alt="Image 1">
                         <div class="card-text">
                             <h3>S-TEK IT Education</h3>
                             <h3>Full-Stack Development Trainer</h3>
-                            <h3>January 2025 - Present</h3>
-                            <p>Training students in Full Stack Development using HTML, CSS, JavaScript, React.js,
-                                Node.js, MongoDB, MySQL, Express.js along with C, C++, Java, Python. Also guiding on AI
-                                integration to enhance coding efficiency and project development.</p>
+                            <h3>January 2025 - March 2026</h3>
+                            <p>Trained students in full-stack development using HTML, CSS, JavaScript, React.js,
+                                Node.js, MongoDB, MySQL, and Express.js, along with C, C++, Java, and Python. I
+                                trained 100+ students across 8+ technologies through 200+ hours of live coding,
+                                debugging workshops, and practical projects, covering Git, Agile, CI/CD, cloud deployment,
+                                and security fundamentals. Also guided students on AI integration and prompt engineering
+                                to enhance coding efficiency and project development.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <h1 class="title">My Internships</h1>
+            <h1 class="title section-heading">My Internships</h1>
             <div class="card-container">
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-Cloudstrats.png" alt="Image 1">
+                        <img loading="lazy" src="about_elements/internship-Cloudstrats.png" alt="Image 1">
                         <div class="card-text">
                             <h3>Cloudstrats</h3>
                             <h3>Data Analyst and AI Intern</h3>
                             <h3>Duration :- 6 Months</h3>
-                            <p>Completed a 6-month remote internship at CLOUDSTRATS, gaining hands-on experience in Data
-                                Analytics and AI, collaborating with a team to solve real-world challenges and drive
-                                data-driven business decisions.</p>
+                            <p>Completed a 6-month paid remote internship at CLOUDSTRATS, gaining hands-on experience in
+                                Data Analytics and AI while collaborating with a team to solve real-world challenges and
+                                drive data-driven business decisions.</p>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-AICTE.png" alt="Image 2">
+                        <img loading="lazy" src="about_elements/internship-AICTE.png" alt="Image 2">
                         <div class="card-text">
                             <h3>AICTE</h3>
                             <h3>Android Developer Intern</h3>
                             <h3>Duration :- 3 Months</h3>
                             <p>Worked as an Android Development Intern with AICTE under Google for Developers, building
-                                user-friendly mobile apps using Java, focusing on performance optimization and gaining
-                                industry best practices.</p>
+                                user-friendly mobile apps in Java with a focus on performance optimization, and learning
+                                industry best practices along the way.</p>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-OASISinfobyte.png" alt="Image 3">
+                        <img loading="lazy" src="about_elements/internship-OASISinfobyte.png" alt="Image 3">
                         <div class="card-text">
                             <h3>Oasis Infobyte</h3>
                             <h3>Android App Development Intern</h3>
                             <h3>Duration :- 2 Months</h3>
-                            <p>Completed a remote internship at Oasis Infobyte, developing Android apps using Java and
-                                Android Studio, focusing on UI optimization, bug fixing, and team collaboration.</p>
+                            <p>Completed a remote internship at Oasis Infobyte, developing Android apps with Java and
+                                Android Studio and focusing on UI optimization, bug fixing, and team collaboration.</p>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-Technohacks.png" alt="Image 4">
+                        <img loading="lazy" src="about_elements/internship-Technohacks.png" alt="Image 4">
                         <div class="card-text">
                             <h3>TechnoHacks Solutions Pvt. Ltd.</h3>
                             <h3>Java Developer Intern</h3>
                             <h3>Duration :- 2 Months</h3>
-                            <p>Completed a 1-month internship at Technohacks, enhancing Java development skills by
-                                optimizing code, implementing features, and gaining experience in software development,
-                                debugging, and performance optimization.</p>
+                            <p>Completed a 1-month internship at Technohacks, strengthening my Java development skills by
+                                optimizing code and implementing features, and gaining experience in software
+                                development, debugging, and performance optimization.</p>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-Acmegrade.png" alt="Image 5">
+                        <img loading="lazy" src="about_elements/internship-Acmegrade.png" alt="Image 5">
                         <div class="card-text">
                             <h3>Acmegrade</h3>
                             <h3>Android App Development Intern</h3>
                             <h3>Duration :- 2 Months</h3>
-                            <p>Completed a 2-month remote internship at ACMEGRADE, developing Android applications using
-                                Java, focusing on UI/UX enhancement, performance optimization, and bug fixing, while
+                            <p>Completed a 2-month remote internship at ACMEGRADE, developing Android applications in Java
+                                with a focus on UI/UX enhancement, performance optimization, and bug fixing, while
                                 gaining experience in mobile development and team collaboration.</p>
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="card-content">
-                        <img src="about_elements/internship-Corizo.png" alt="Image 6">
+                        <img loading="lazy" src="about_elements/internship-Corizo.png" alt="Image 6">
                         <div class="card-text">
                             <h3>Corizo</h3>
                             <h3>Web Developer Intern</h3>
                             <h3>Duration :- 2 Months</h3>
-                            <p>Completed a 2-month remote internship at CORIZO, designing responsive web interfaces
-                                using HTML, CSS, JavaScript, optimizing code, fixing issues, and gaining experience in
+                            <p>Completed a 2-month remote internship at CORIZO, designing responsive web interfaces with
+                                HTML, CSS, and JavaScript, optimizing code and fixing issues, and gaining experience with
                                 Git and agile methodologies.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Added from the updated resume (listed there under "Internships and Freelance Experience"). -->
+                <div class="card glass-card">
+                    <div class="card-content">
+                        <div class="about-logo-tile" aria-hidden="true">G</div>
+                        <div class="card-text">
+                            <h3>Grapedawn</h3>
+                            <h3>Freelance Web Developer</h3>
+                            <h3>Duration :- 1 Year</h3>
+                            <p>Worked with Grapedawn as a freelance web developer for one year.</p>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="my-skills">
+            <!-- Added from the updated resume. Live demo links are taken from the resume PDF. -->
+            <h1 class="title section-heading">Featured Projects</h1>
+            <div class="card-container">
+                <div class="card glass-card about-project">
+                    <h3>TRINETRA – Centralized Bank Management System</h3>
+                    <p class="about-project-meta">Multi-Bank, Role-Based Platform</p>
+                    <ul class="about-highlights">
+                        <li>Developed a full-stack platform where Super Admins and Admins create and manage multiple
+                            banks, and each bank manages its own Bank Admins, employees, and customers.</li>
+                        <li>Implemented authentication and role-based access control across five user levels, with
+                            desktop-optimized admin, audit, and employee consoles.</li>
+                        <li>Built simulated (virtual) payment processing and transaction analytics dashboards across
+                            multiple banks. Deployed on Render.</li>
+                    </ul>
+                    <a href="https://centralized-bank-system.onrender.com/" target="_blank" rel="noopener noreferrer"
+                        class="glass-btn about-project-link">Live Demo</a>
+                </div>
+                <div class="card glass-card about-project">
+                    <h3>EVOLVE – Social Media Platform</h3>
+                    <p class="about-project-meta">React.js · Node.js · Express.js · MySQL</p>
+                    <ul class="about-highlights">
+                        <li>Developed a full-stack social platform with post creation, social feeds, messaging, profile
+                            search, and likes, comments, and follows.</li>
+                        <li>Built a responsive React.js interface with a dark/light theme and an analytics dashboard,
+                            integrated with RESTful backend APIs.</li>
+                        <li>Implemented JWT authentication, session management, bcrypt password hashing, and CORS, and
+                            optimized database queries. Deployed on Render.</li>
+                    </ul>
+                    <a href="https://evolve-social-platform.onrender.com/" target="_blank" rel="noopener noreferrer"
+                        class="glass-btn about-project-link">Live Demo</a>
+                </div>
+                <div class="card glass-card about-project">
+                    <h3>Garam Masala – Multi-Vendor Restaurant Application</h3>
+                    <p class="about-project-meta">Node.js · Express.js · MySQL · HTML · CSS · JavaScript</p>
+                    <ul class="about-highlights">
+                        <li>Developed a multi-user ordering platform with Admin, Restaurant, and User roles, covering
+                            restaurant onboarding, menu management, order tracking, and sales monitoring.</li>
+                        <li>Built a responsive HTML, CSS, and JavaScript interface for browsing dishes, managing the
+                            cart, and placing orders, backed by RESTful APIs and session-based authentication. Deployed
+                            on Render.</li>
+                    </ul>
+                    <a href="https://garam-masala-restaurant-project01.onrender.com/" target="_blank"
+                        rel="noopener noreferrer" class="glass-btn about-project-link">Live Demo</a>
+                </div>
+            </div>
+            <div class="my-skills glass-card">
                 <div class="my-skills-text-content">
                     <h1>Skills & Strength</h1>
-                    <p>I am skilled in web development, with proficiency in HTML, CSS, JavaScript, and React, allowing
-                        me to build responsive and user-friendly websites and web applications. I also have expertise in
-                        Android app development using Java, creating intuitive mobile experiences. My knowledge extends
-                        to backend technologies, including server-side programming, databases like SQL, and API
-                        integration for dynamic applications. I excel in problem-solving, with a strong ability to find
-                        efficient solutions to complex challenges. Adaptable and quick to learn, I stay updated with the
-                        latest industry trends, and I thrive in collaborative environments with strong communication and
-                        teamwork skills.</p>
+                    <p>I’m skilled in web development, with proficiency in HTML, CSS, JavaScript, TypeScript, and React,
+                        which lets me build responsive, user-friendly websites and web applications. I also have
+                        expertise in Android app development using Java, creating intuitive mobile experiences, and I
+                        now work with Android DPC, Apple MDM, and Firebase Cloud Messaging on enterprise device
+                        management.</p>
+                    <p>My knowledge extends to backend technologies: server-side programming with Node.js and
+                        Express.js, databases like SQL, PostgreSQL, and MySQL, and API integration for dynamic
+                        applications, including RESTful API development, ORMs, JWT authentication, and role-based
+                        access. I excel at problem-solving, with a strong ability to find efficient solutions to complex
+                        challenges. Adaptable and quick to learn, I stay up to date with the latest industry trends, and
+                        I thrive in collaborative environments with strong communication and teamwork skills.</p>
                 </div>
-                <img src="about_elements/about_skills.gif" alt="Image">
+                <img loading="lazy" src="about_elements/about_skills.gif" alt="Image">
             </div>
-            <div class="my-achievements">
-                <img src="about_elements/about_achievements.gif" alt="Image">
+            <!-- Added from the updated resume ("Technical Skills"). -->
+            <h1 class="title section-heading">Technical Skills</h1>
+            <div class="about-skill-grid">
+                <div class="about-skill-group glass-card">
+                    <h3>Languages</h3>
+                    <p>JavaScript, TypeScript, Java, Python, C, C++, SQL</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>Frontend</h3>
+                    <p>React.js, HTML5, CSS3, JavaScript, Bootstrap</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>Backend</h3>
+                    <p>Node.js, Express.js, RESTful API Development, ORMs (Sequelize, TypeORM), JWT Authentication,
+                        Session Management, Role-Based Access, Middleware, API Integration, Error Handling</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>Databases</h3>
+                    <p>PostgreSQL, MySQL, SQL, T-SQL, Database Design, Query Optimization; working knowledge of
+                        MongoDB</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>Device Management &amp; Mobile</h3>
+                    <p>Android Development (Android Studio), Android DPC, Apple MDM, Enterprise Mobility Management,
+                        Firebase Cloud Messaging</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>Tools &amp; Cloud</h3>
+                    <p>Git, GitHub, Postman, Render, AWS (Cloud Essentials), CI/CD concepts</p>
+                </div>
+                <div class="about-skill-group glass-card">
+                    <h3>AI-Assisted Development</h3>
+                    <p>GitHub Copilot, Cursor, ChatGPT, Claude, Gemini, Prompt Engineering</p>
+                </div>
+            </div>
+            <div class="my-achievements glass-card">
+                <img loading="lazy" src="about_elements/about_achievements.gif" alt="Image">
                 <div class="my-achievements-text-content">
                     <h1>My Achievements</h1>
                     <p>
-                        I have completed my Bachelor's in Computer Applications (BCA), specializing in mobile
-                        applications and cloud technology, and I am currently pursuing a Master's in Computer
+                        I completed my Bachelor's in Computer Applications (BCA), specializing in mobile applications
+                        and cloud technology, as a Gold Medalist, and I am currently pursuing a Master's in Computer
                         Applications (MCA) with a focus on full-stack development. Along the way, I’ve earned multiple
-                        certifications in programming and web development, mastering technologies like JavaScript,
-                        React, HTML, CSS, and SQL. I have also gained proficiency in Android development using Java,
-                        allowing me to create functional and user-friendly mobile apps. Throughout my journey, I’ve
-                        honed strong problem-solving and teamwork skills, consistently delivering high-quality solutions
-                        in collaborative projects and learning environments.</p>
+                        certifications in programming, web development, and cloud, including the AWS Cloud Essentials
+                        Learning Plan, mastering technologies like JavaScript, React, HTML, CSS, and SQL. I have also
+                        gained proficiency in Android development using Java, allowing me to create functional and
+                        user-friendly mobile apps.</p>
+                    <p>Throughout my journey, I’ve honed strong problem-solving and teamwork skills, consistently
+                        delivering high-quality solutions in collaborative projects and learning environments, and
+                        I’ve gone on to mentor 100+ learners and to deploy three full-stack projects.</p>
                 </div>
             </div>
-            <h1 class="title">Education</h1>
-            <div class="education">
+            <h1 class="title section-heading">Education</h1>
+            <div class="education glass-card">
                 <h1>2024-2026</h1>
                 <div class="education-description">
                     <h2>Masters in Computer Applications - MCA</h2>
                     <h3>Jain (Deemed-to-be University)</h3>
                     <p>I am currently pursuing my Master's in Computer Applications (MCA) with a focus on Full-Stack
-                        Development at Jain University, where I am gaining advanced skills in software engineering and
-                        web development.</p>
+                        Development at Jain University, Bengaluru, Karnataka, with a CGPA of 8.5+, gaining advanced
+                        skills in software engineering and web development.</p>
                 </div>
             </div>
-            <div class="education">
+            <div class="education glass-card">
                 <h1>2021-2024</h1>
                 <div class="education-description">
                     <h2>Bachelors in Computer Applications - BCA (Gold Medalist)</h2>
                     <h3>Ajeenkya D.Y. Patil University</h3>
                     <p>I completed my Bachelor's in Computer Applications (BCA) with a specialization in Mobile
-                        Applications & Cloud Technology from Ajeenkya D.Y. Patil University, graduating as the batch
-                        topper with a Gold Medal and achieving a CGPA of 8.37 in 2024, which laid the groundwork for my
-                        journey in Android development.</p>
+                        Applications & Cloud Technology from Ajeenkya D.Y. Patil University, Pune, Maharashtra,
+                        graduating in 2024 as the batch topper with a Gold Medal and a CGPA of 8.37. It laid the
+                        groundwork for my journey in Android development.</p>
                 </div>
             </div>
-            <div class="education">
+            <div class="education glass-card">
                 <h1>2020-2021</h1>
                 <div class="education-description">
                     <h2>Higher Secondary Certificate - 12th - NIOS</h2>
                     <h3>Nidaan School</h3>
-                    <p>I completed my 12th standard at Nidaan School with 81.9% in 2021, building a solid foundation
+                    <p>I completed my 12th standard at Nidaan School in 2021 with 81.9%, building a solid foundation
                         for my higher education and career.</p>
                 </div>
             </div>
-            <div class="education">
+            <div class="education glass-card">
                 <h1>2018-2019</h1>
                 <div class="education-description">
                     <h2> Secondary School Certificate - 10th - CBSE</h2>
                     <h3>Holy cross Sr. Sec. School</h3>
-                    <p>I finished my 10th standard at Holy cross Sr. Sec. School with 64.7% in 2019, which gave me a
-                        strong base
-                        for my further studies.</p>
+                    <p>I finished my 10th standard at Holy cross Sr. Sec. School in 2019 with 64.7%, which gave me a
+                        strong base for my further studies.</p>
                 </div>
+            </div>
+            <!-- Added from the updated resume ("Certifications"). -->
+            <h1 class="title section-heading">Certifications</h1>
+            <div class="about-certs glass-card">
+                <ul>
+                    <li><span>Cloud Essentials Learning Plan</span><span class="about-cert-issuer">AWS</span></li>
+                    <li><span>Diploma in Database and T-SQL</span><span class="about-cert-issuer">Alison</span></li>
+                    <li><span>Introduction to Android Mobile Application</span><span class="about-cert-issuer">Meta</span></li>
+                    <li><span>Software Quality Management</span><span class="about-cert-issuer">Alison</span></li>
+                </ul>
+                <a href="certificates.html" class="about-certs-link">View all certificates →</a>
             </div>
         </div>
     </div>
-    <footer>
+    <footer class="glass-panel">
         <div class="footer-top">
-            <div class="footer-top-items">
+            <div class="footer-top-items glass-card">
                 <img src="about_elements/footer-call-logo.png" alt="image">
                 <div class="footer-top-content">
                     <h1>Call Me</h1>
                     <p>+91 8839261551</p>
                 </div>
             </div>
-            <div class="footer-top-items">
+            <div class="footer-top-items glass-card">
                 <img src="about_elements/footer-message-logo.png" alt="image">
                 <div class="footer-top-content">
                     <h1>Mail Me</h1>
@@ -394,10 +540,10 @@
                     <p>abhiyoyo165@gmail.com</p>
                 </div>
             </div>
-            <div class="footer-top-items">
+            <div class="footer-top-items glass-card">
                 <img src="about_elements/footer-whatsapp-logo.png" alt="image">
                 <div class="footer-top-content">
-                    <button class="btn">
+                    <button class="btn glass-btn">
                         <svg width="150" height="60" viewBox="0 0 150 60" class="border">
                             <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
                             <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
@@ -478,7 +624,7 @@
         particlesJS('particles-js', {
             "particles": {
                 "number": {
-                    "value": 100,  // Increased number of particles
+                    "value": 45,  // Calm, sparse network
                     "density": {
                         "enable": true,
                         "value_area": 800
@@ -498,7 +644,7 @@
                     }
                 },
                 "opacity": {
-                    "value": 0.5,
+                    "value": 0.3,
                     "random": false,
                     "anim": {
                         "enable": false,
@@ -508,7 +654,7 @@
                     }
                 },
                 "size": {
-                    "value": 5,
+                    "value": 2.5,
                     "random": true,
                     "anim": {
                         "enable": false,
@@ -521,12 +667,12 @@
                     "enable": true,
                     "distance": 150,
                     "color": "#ffffff",
-                    "opacity": 0.4,
+                    "opacity": 0.12,
                     "width": 1
                 },
                 "move": {
                     "enable": true,
-                    "speed": 6,
+                    "speed": 0.8,
                     "direction": "none",
                     "random": false,
                     "straight": false,

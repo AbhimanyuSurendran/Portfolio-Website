@@ -1,1090 +1,451 @@
-@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+GB+S:ital@1&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+/* =====================================================================
+   HOME PAGE — hero with name, typed role, intro, contact links and the
+   rotating profile photo slider.
+   Shared tokens/surfaces: glass.css · header: header.css
+   ===================================================================== */
 
-/* General reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    height: 100%;
-    background: linear-gradient(to right, #000000, #3533cd);
-    font-size: 16px;
-    /* Base font size */
-    --on: #055daf;
-    --off: #f0f0f0;
-    --transDur: 1s;
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%2300F9FF" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>')16 16, auto;
-}
-
-body.dark-mode {
-    background: linear-gradient(to right, #000000, #495057);
-}
-
-input {
-    position: absolute;
-    transform: translateX(-100%);
-    opacity: 0;
-    /* Completely hide the checkbox */
-    pointer-events: none;
-    /* Disable interaction with the hidden checkbox */
-
-}
-
-.toy-toggle {
-    background: radial-gradient(at top left, #fff 10%, #fff0 20%),
-        radial-gradient(at top right, #fff 20%, #e4e4e4 35%);
-    border-radius: 6em;
-    box-shadow: 0 0 0.25em #0002, 0 3em 1.5em 0.5em #0002;
-    cursor: pointer;
-    display: block;
-    font-size: 8px;
-    position: absolute;
-    margin: auto;
-    top: 120px;
-    /* Distance from the top of the viewport */
-    left: 50px;
-    /* Distance from the left of the viewport */
-    width: 6em;
-    /* Smaller width */
-    height: 3.5em;
-    /* Smaller height */
-    -webkit-tap-highlight-color: transparent;
-
-}
-
-.toy-toggle span {
-    display: block;
-    position: absolute;
-}
-
-.toy-toggle>span {
-    top: 50%;
-    left: 50%;
-}
-
-.toy-toggle>span:not(.handle) {
-    transform: translate(-50%, -50%);
-}
-
-.border1 {
-    background: #f0f0f0;
-    border-radius: 5.5em;
-    box-shadow: 0 0 0.2em 0.1em #f0f0f0;
-    width: 9.5em;
-    /* Reduced from 19em */
-    height: 5.5em;
-    /* Reduced from 11em */
-}
-
-.border2 {
-    background: linear-gradient(0deg, #fff 33%, #ccc 45%);
-    border-radius: 4.75em;
-    box-shadow: 0 0 0.2em 0.3em #f0f0f0 inset;
-    width: 8.25em;
-    /* Reduced from 16.5em */
-    height: 4.75em;
-    /* Reduced from 9.5em */
-}
-
-.border3,
-.handle {
-    background: linear-gradient(90deg, var(--on) 50%, var(--off) 0);
-}
-
-.border3 {
-    background-position: 75% 0;
-    background-size: 200% 100%;
-    border-radius: 4.25em;
-    box-shadow: 0 0 0.1em 0.1em #ddd inset, 0 1.5em 1.5em 1em #0004 inset, 0 0 0 4.25em #0002 inset;
-    width: 7.75em;
-    /* Reduced from 15.5em */
-    height: 4.25em;
-    /* Reduced from 8.5em */
-    transition: background-position var(--transDur) ease-in-out;
-}
-
-.handle {
-    border-radius: 50%;
-    box-shadow: 0 0 0.5em 0 #0007;
-    width: 4.25em;
-    /* Reduced from 8.5em */
-    height: 4.25em;
-    /* Reduced from 8.5em */
-    transform: translate(-90%, -50%);
-    transition: transform var(--transDur) ease-in-out;
-    z-index: 0;
-}
-
-.handle:before {
-    background: radial-gradient(2em 1.5em at 50% 35%, #fff6 15%, #fff0),
-        radial-gradient(1.5em 2.5em at 75% 40%, #fff6 15%, #fff0),
-        radial-gradient(100% 100% at 50% 33%, #0000 25%, #0003 50%);
-    border-radius: 50%;
-    box-shadow: 0 0 0.3em 0.1em #0003 inset;
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-}
-
-.handle-off,
-.handle-on {
-    width: 50%;
-    height: 100%;
-    transition: transform calc(var(--transDur)/2);
-    z-index: 2;
-}
-
-.handle-off {
-    background: var(--off);
-    border-radius: 100% 0 0 100% / 50% 50% 50% 50%;
-    right: 50%;
-    transform-origin: 100% 50%;
-    transition-delay: calc(var(--transDur)/2);
-    transition-timing-function: ease-out;
-}
-
-.handle-on {
-    background: var(--on);
-    border-radius: 0 100% 100% 0 / 50% 50% 50% 50%;
-    left: 50%;
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-    transition-timing-function: ease-in;
-}
-
-/* On */
-input:checked+.toy-toggle .border3 {
-    background-position: 25% 0;
-}
-
-input:checked+.toy-toggle .handle {
-    transform: translate(-10%, -50%);
-}
-
-input:checked+.toy-toggle .handle-off {
-    transform: scaleX(0);
-    transition-delay: 0s;
-    transition-timing-function: ease-in;
-}
-
-input:checked+.toy-toggle .handle-on {
-    transform: scaleX(1);
-    transition-delay: calc(var(--transDur)/2);
-    transition-timing-function: ease-out;
-}
-
-a:hover {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%2300F9FF" stroke="%23FFFFFF" stroke-width="2" d="M16.95 3h-9.9a2.06 2.06 0 0 0-1.34 3.62L11.99 12l6.28-5.38A2.06 2.06 0 0 0 16.93 3ZM7.05 21h9.89c1.9 0 2.78-2.38 1.34-3.62L12 12l-6.28 5.38A2.06 2.06 0 0 0 7.06 21Z"></path></svg>')16 16, pointer;
-    /* 16 16 centers the cursor */
-}
-
-.bubble-background {
-    position: fixed;
-    /* Fixed position to ensure the background covers the viewport */
-    width: 100vw;
-    height: 100vh;
-    /* Full viewport height */
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    /* Ensure it's behind the content */
-}
+/* ---------- Bubbles (decorative background) --------------------------- */
 
 .bubble {
     position: absolute;
-    bottom: -10%;
-    /* Start just below the visible area */
+    bottom: -30px;
     border-radius: 50%;
-    background-color: rgba(173, 216, 230, 0.5);
-    /* Light blue with transparency */
-    animation: rise 8s linear infinite;
-    /* Adjusted for smooth movement */
-    transition: transform 0.3s ease-out;
-    /* Smooth transition for movement */
-    animation-delay: 3s;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(140, 170, 255, 0.25) 55%, transparent 72%);
+    box-shadow: 0 0 12px rgba(120, 150, 255, 0.25);
+    opacity: 0;
+    animation-name: rise;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
 }
 
-body.dark-mode .bubble {
-    background-color: rgba(95, 110, 247, 0.5);
-    /* Dark blue with transparency */
+body:not(.dark-mode) .bubble {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(90, 120, 255, 0.3) 55%, transparent 72%);
 }
 
-@keyframes rise {
-    0% {
-        transform: translateY(100vh) scale(1);
-        /* Start below the viewport */
-    }
+/* ---------- Hero layout ------------------------------------------------ */
 
-    100% {
-        transform: translateY(-120vh) scale(1.5);
-        /* Move upwards and scale slightly */
-    }
-}
-
-/* Header and Navigation */
-header {
-    width: 100%;
-    padding: 10px 20px;
-    background-color: transparent;
-    display: flex;
-    justify-content: space-between;
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     align-items: center;
-    height: 100px;
-}
-
-.navbar {
-    list-style-type: none;
+    gap: clamp(32px, 5vw, 80px);
+    /* Full viewport width (content still centred via padding) so the
+       orbit decorations around the photo are only ever trimmed at the
+       screen edge; overflow-x:clip stops them causing sideways scroll. */
+    width: 100%;
+    min-height: calc(100vh - 110px);
+    min-height: calc(100dvh - 110px);
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
-    /* Space between the items */
-    position: relative;
-    /* For positioning pseudo-elements */
+    padding-block: clamp(32px, 6vh, 72px) clamp(48px, 8vh, 96px);
+    padding-inline: max(var(--page-gutter), (100% - var(--page-max)) / 2 + var(--page-gutter));
+    overflow-x: clip;
 }
 
-.navbar li {
-    display: inline-block;
-    position: relative;
-    font-family: "Playwrite GB S", cursive;
-    font-size: 2rem;
-    font-weight: 400;
+/* ---------- Text column ------------------------------------------------- */
+
+.profile-title > * {
     opacity: 0;
-    animation: popIn 1s ease-in-out forwards;
+    animation: fadeUp 0.9s var(--ease-out) forwards;
 }
 
-.navbar li:nth-child(1) {
-    animation-delay: 1s;
-}
+.profile-title > :nth-child(1) { animation-delay: 0.10s; }
+.profile-title > :nth-child(2) { animation-delay: 0.22s; }
+.profile-title > :nth-child(3) { animation-delay: 0.34s; }
+.profile-title > :nth-child(4) { animation-delay: 0.46s; }
+.profile-title > :nth-child(5) { animation-delay: 0.54s; }
 
-.navbar li:nth-child(2) {
-    animation-delay: 1.25s;
-}
-
-.navbar li:nth-child(3) {
-    animation-delay: 1.5s;
-}
-
-.navbar li:nth-child(4) {
-    animation-delay: 1.75s;
-}
-
-.navbar li:nth-child(5) {
-    animation-delay: 2s;
-}
-
-.navbar li:nth-child(6) {
-    animation-delay: 2.25s;
-}
-
-.navbar li a {
-    display: block;
-    padding: 10px 15px;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.5s;
-}
-
-.navbar li a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-}
-
-/* Underline effect */
-.navbar li a::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    /* Start in the middle */
-    bottom: 0;
-    /* Position it at the bottom */
-    width: 0;
-    /* Start with no width */
-    height: 2px;
-    /* Height of the underline */
-    background: #ffffff;
-    /* Color of the underline */
-    transition: width 0.5s ease, left 0.5s ease;
-    /* Animate width and left position */
-}
-
-.navbar li a:hover::before {
-    width: 100%;
-    /* Expand to full width on hover */
-    left: 0;
-    /* Align to the left */
-}
-
-
-.nav-mobile .menu-btn,
-.nav-mobile .close-btn {
-    position: relative;
-    right: 20px;
-    font-size: 24px;
-    height: 50px;
-    width: 50px;
-    background: rgb(255, 255, 255);
-    border-radius: 50%;
-    color: rgb(0, 0, 0);
-    cursor: pointer;
-    z-index: 2;
-    transition: transform 0.3s ease;
-}
-
-.nav-mobile .close-btn {
-    display: none;
-    /* Initially hidden */
-}
-
-.nav-mobile .nav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-100%);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    z-index: 1;
-}
-
-.nav-mobile .nav-overlay.visible {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateX(0);
-}
-
-.nav-mobile .nav-links {
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-mobile .nav-links li {
-    margin: 20px 0;
-}
-
-.nav-mobile .nav-links a {
-    font-size: 2.5rem;
-    color: white;
-    text-decoration: none;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInUp 0.5s forwards;
-}
-
-.nav-mobile .nav-overlay.visible .nav-links a {
-    opacity: 1;
-    transform: translateY(0);
-    animation-delay: 0.2s;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.nav-mobile .nav-links a:hover {
-    transform: scale(1.1);
-}
-
-@media (min-width: 768px) {
-    .nav-mobile {
-        display: none;
-        /* Hide mobile nav on desktop */
-    }
-
-    .nav-desktop {
-        display: block;
-        /* Show desktop nav */
-    }
-}
-
-/* For screens smaller than 768px (mobile devices) */
-@media (max-width: 767px) {
-    .nav-desktop {
-        display: none;
-        /* Hide desktop nav on mobile */
-    }
-
-    .nav-mobile {
-        display: block;
-        /* Show mobile nav */
-    }
-
-    .toy-toggle {
-        top: 35px;
-        left: 220px;
-    }
-}
-
-/* Container */
-.container {
-    position: static;
-    padding-top: 80px;
-    /* Give space for the fixed header */
-}
-
-/* GIF logo */
-.logo {
-    width: clamp(120px, 20vw, 200px);
-    height: clamp(80px, 8vh, 100px);
-    overflow: hidden;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: logo-animation 1s ease-out forwards;
-}
-
-.logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-/* Profile title section */
-.profile-title {
-    margin-top: 100px;
-    margin-left: 5%;
-    width: clamp(300px, 40%, 600px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2vw;
-
-}
-
-.profile-title h1,
-.profile-title h2,
-.profile-title h3,
-.profile-title h4 {
-    margin: 0.5em 0;
-    line-height: 1.2;
-    text-align: left;
-    overflow-wrap: break-word;
-    color: #ffffff;
-}
-
-.profile-title h1 {
-font-size: clamp(28px, calc(28px + 1.5vw), 60px);
-    font-family: "Lobster", sans-serif;
-    font-weight: 500;
-
-    font-style: normal;
-    color: #f35626;
-    background-image: -webkit-linear-gradient(92deg, #f35654, #feab3a);
-    animation: hue 5s infinite linear, slideInFromLeft 2s ease-out forwards;
+.profile-title .name {
+    font-size: clamp(2.7rem, 1.4rem + 5vw, 5.6rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    padding-bottom: 0.08em;
+    background: linear-gradient(120deg, var(--text-1) 0%, var(--text-1) 40%, var(--accent) 75%, var(--accent-2) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 5s infinite linear, slideInFromLeft 2s ease-out forwards;
 }
-@-webkit-keyframes hue {
-    from {
-      -webkit-filter: hue-rotate(0deg);
-    }
-    to {
-      -webkit-filter: hue-rotate(-360deg);
-    }
-}
+
 .profile-title h2 {
-    font-size: clamp(18px, calc(18px + 0.5vw), 36px);
-
-    animation: slideInFromLeft 2.5s ease-out forwards;
+    margin-top: 18px;
+    min-height: 1.3em;
+    font-size: clamp(1.25rem, 1rem + 1.1vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-2);
 }
 
-.profile-title h2 .typed-text {
-    font-weight: bold;
-    color: #faa200;
+.typed-text {
+    font-weight: 650;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.profile-title h2 .cursor {
+/* Caret for the typing effect. The existing script adds .typing while
+   letters are being typed; the caret only blinks when idle. */
+.cursor {
     display: inline-block;
-    background-color: #ffffff;
-    margin-left: 0.1rem;
     width: 3px;
-    animation: blink 1s infinite;
+    height: 1.05em;
+    margin-left: 4px;
+    vertical-align: -0.12em;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: blink 1s step-end infinite;
 }
 
-.profile-title h2 .cursor.typing {
+.cursor.typing {
     animation: none;
 }
 
 .profile-title h3 {
-    font-size: clamp(16px, calc(16px + 0.3vw), 28px);
-    animation: slideInFromLeft 3s ease-out forwards;
+    max-width: 34em;
+    margin-top: 22px;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+    color: var(--text-2);
 }
 
+/* "Contact Me" label. The h4 has an inline text-align:center; in the
+   left-aligned desktop layout it must line up with the text above. */
 .profile-title h4 {
-    font-size: clamp(18px, calc(18px + 0.3vw), 36px);
-    animation: slideUpFromBottom 2s ease-out forwards;
-    animation-delay: 2s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    margin-top: 36px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-align: left !important;
 }
 
-/* Contact sources */
+/* ---------- Contact links (glass dock) ------------------------------- */
+
 .contact-sources {
     display: inline-flex;
-    justify-content: center;
-    gap: clamp(10px, 2vw, 30px);
-    background-color: #ffffff;
-    height: clamp(50px, 10vh, 70px);
     align-items: center;
-    border-radius: 25px;
-    padding: 50px clamp(15px, 3vw, 45px);
-    white-space: nowrap;
-    margin-top: 20px;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    border: 5px solid transparent;
-    /* Set a transparent border for the effect */
-    animation: slideUpFromBottom 2s ease-out forwards, rgb-border 3s linear infinite;
-    /* Add border and glow animation */
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--shadow-panel), inset 0 1px 0 var(--glass-highlight);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
 }
 
-body.dark-mode .contact-sources {
-    background-color: #4b4b4b;
+.contact-sources a {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: inset 0 1px 0 var(--glass-highlight);
+    transition: transform var(--dur) var(--ease-spring), background-color var(--dur-fast) ease, box-shadow var(--dur) ease;
 }
 
-@keyframes rgb-border {
-    0% {
-        border-color: rgba(255, 0, 0, 0.5);
-        /* Red */
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 30px rgba(255, 0, 0, 0.5);
-        /* Red glow */
-    }
+.contact-sources a:hover {
+    transform: translateY(-6px) scale(1.08);
+    background: var(--glass-card-hover);
+    box-shadow: 0 14px 26px -12px rgba(80, 110, 255, 0.6), inset 0 1px 0 var(--glass-highlight);
+}
 
-    33% {
-        border-color: rgba(0, 255, 0, 0.5);
-        /* Green */
-        box-shadow: 0 0 20px rgba(0, 255, 0, 0.7), 0 0 30px rgba(0, 255, 0, 0.5);
-        /* Green glow */
-    }
-
-    66% {
-        border-color: rgba(0, 0, 255, 0.5);
-        /* Blue */
-        box-shadow: 0 0 20px rgba(0, 0, 255, 0.7), 0 0 30px rgba(0, 0, 255, 0.5);
-        /* Blue glow */
-    }
-
-    100% {
-        border-color: rgba(255, 0, 0, 0.5);
-        /* Red */
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.5);
-        /* Red glow */
-    }
+.contact-sources a:active {
+    transform: translateY(-2px) scale(0.98);
 }
 
 .circular-image {
-    width: clamp(35px, 6vw, 60px);
-    /* Increased width */
-    height: clamp(35px, 6vw, 60px);
-    /* Increased height */
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Smooth transition for both transform and box-shadow */
 }
 
-.circular-image:hover {
-    transform: translateY(-10px) scale(1.2);
-    /* Moves the image up by 5px */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.8);
-    /* Adds a shadow effect for depth */
-}
+/* ---------- Photo slider ----------------------------------------------- */
 
-/* Profile image section */
 .profile-image {
-    position: absolute;
-    top: 200px;
-    /* Adjusted to be below the nav bar */
-    right: 5vw;
-    text-align: center;
-    width: clamp(250px, 30vw, 500px);
-    animation: slideInFromRight 2s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1.2s var(--ease-out) 0.3s forwards;
+}
+
+/* Neutralise the Bootstrap grid wrappers around the slider. */
+.profile-image .row,
+.profile-image .col-lg-10,
+.profile-image .section {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .profile-container {
-    position: absolute;
-    width: 100%;
-    top: 10px;
-    /* Adjust this to create space for the h1 */
-    text-align: center;
+    position: relative;
+    width: min(440px, 100%);
+    aspect-ratio: 1 / 1;
+    animation: floatY 9s ease-in-out infinite;
 }
 
-.section {
-    position: relative;
-    height: auto;
-    display: block;
+/* Soft coloured glow behind the photo. */
+.profile-container::before {
+    content: "";
+    position: absolute;
+    inset: -14%;
+    z-index: -1;
+    border-radius: 50%;
+    background:
+        radial-gradient(50% 50% at 35% 35%, var(--aurora-1), transparent 70%),
+        radial-gradient(50% 50% at 70% 70%, var(--aurora-2), transparent 70%);
+    filter: blur(20px);
+}
+
+/* Glass frame around the photo. */
+.profile-container::after {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    z-index: -1;
+    border-radius: 34%;
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--shadow-panel), inset 0 1px 0 var(--glass-highlight);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
 }
 
 .profile-container ul {
-    position: relative;
-    /* Changed to relative to avoid issues with absolute positioning */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    padding: 0;
+    position: absolute;
+    inset: 0;
     margin: 0;
+    padding: 0;
     list-style: none;
+    border-radius: 30%;
+    overflow: hidden;
 }
 
+/* Each slide is one profile photo; the existing script toggles .active. */
 .profile-container ul li {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 500px;
-    border: 5px solid #ffffff;
+    inset: 0;
     background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-    box-sizing: border-box;
+    background-position: center top;
     opacity: 0;
-    transition: opacity 1s ease, transform 1s ease;
-    
-    background-image: url('../Profile Pictures/Profile-pic-1.png');
-    animation: border-transform 15s linear infinite alternate forwards;
-}
-
-body.dark-mode .profile-container ul li {
-    border: 5px solid #000000;
+    transform: scale(1.06);
+    transition: opacity 1.4s var(--ease-out), transform 6s var(--ease-out);
 }
 
 .profile-container ul li.active {
     opacity: 1;
-    transform: scale(1.3);
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.6),
-        0 0 40px rgba(255, 255, 255, 0.8);
-    animation-play-state: running;
+    transform: scale(1);
 }
 
-/* Specific background images for list items */
-.profile-container ul li:nth-child(2) {
-    background-image: url('../Profile Pictures/Profile-pic-2.png');
+.profile-container ul li:nth-child(1) { background-image: url('../Profile Pictures/Profile-pic-1.png'); }
+.profile-container ul li:nth-child(2) { background-image: url('../Profile Pictures/Profile-pic-2.png'); }
+.profile-container ul li:nth-child(3) { background-image: url('../Profile Pictures/Profile-pic-3.png'); }
+.profile-container ul li:nth-child(4) { background-image: url('../Profile Pictures/Profile-pic-4.png'); }
+.profile-container ul li:nth-child(5) { background-image: url('../Profile Pictures/Profile-pic-5.png'); }
+.profile-container ul li:nth-child(6) { background-image: url('../Profile Pictures/Profile-pic-6.png'); }
+
+/* Name caption under the photo. */
+.profile-image > h1 {
+    margin-top: 40px;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-align: center;
 }
 
-.profile-container ul li:nth-child(3) {
-    background-image: url('../Profile Pictures/Profile-pic-3.png');
-}
+/* ---------- Responsive -------------------------------------------------- */
 
-.profile-container ul li:nth-child(4) {
-    background-image: url('../Profile Pictures/Profile-pic-4.png');
-}
-
-.profile-container ul li:nth-child(5) {
-    background-image: url('../Profile Pictures/Profile-pic-5.png');
-}
-
-.profile-container ul li:nth-child(6) {
-    background-image: url('../Profile Pictures/Profile-pic-6.png');
-}
-
-@keyframes border-transform {
-    0% {
-        border-top-left-radius: 0%;
-        border-top-right-radius: 50%;
-        border-bottom-right-radius: 0%;
-        border-bottom-left-radius: 50%;
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        min-height: auto;
+        padding-top: 40px;
+        text-align: center;
     }
 
-    25% {
-        border-top-left-radius: 50%;
-        border-top-right-radius: 0%;
-        border-bottom-right-radius: 50%;
-        border-bottom-left-radius: 0%;
+    /* Photo first on narrow screens. */
+    .profile-image {
+        order: -1;
     }
 
-    50% {
-        border-top-left-radius: 50%;
-        border-top-right-radius: 50%;
-        border-bottom-right-radius: 0%;
-        border-bottom-left-radius: 0%;
+    .profile-container {
+        width: min(300px, 70vw);
     }
 
-    75% {
-        border-top-left-radius: 0%;
-        border-top-right-radius: 50%;
-        border-bottom-right-radius: 50%;
-        border-bottom-left-radius: 0%;
+    .profile-title h3 {
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    100% {
-        border-top-left-radius: 0%;
-        border-top-right-radius: 0%;
-        border-bottom-right-radius: 50%;
-        border-bottom-left-radius: 50%;
+    .profile-title h4 {
+        text-align: center !important;
     }
 }
-
-/* Styles for h1 inside the profile-image */
-.profile-image h1 {
-    color: #ffffff;
-    margin-top: 10px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    transform: translateY(500%);
-    /* Start off-screen */
-    animation: rollIn 1s forwards;
-    /* Roll-in animation */
-    animation-delay: 4s;
-    font-family: "Great Vibes", cursive;
-    font-weight: 400;
-    font-size: 4rem;
-    position: absolute;
-    /* Change to absolute */
-    top: 600px;
-    /* Adjust this value to position below profile-container */
-}
-
-
 
 @media (max-width: 480px) {
-
-    /* Adjust navbar for smaller screens */
-    .navbar {
-        flex-direction: row;
-        /* Arrange links in a row */
-        justify-content: center;
-        /* Center the navbar */
-        width: 100%;
-        /* Full width to avoid overlap */
-        padding: 10px 0;
-        /* Add some padding */
-        margin-top: 15%;
-        /* Space between logo and navbar */
-    }
-
-    .navbar li {
-        margin: 0 10px;
-        /* Space between the items */
-    }
-
-    .navbar li a {
-        padding: 8px 15px;
-        /* Ensure clickable area remains comfortable */
-        font-size: 14px;
-        /* Reduce font size slightly */
-    }
-
-    /* Adjust logo for smaller screens */
-    .logo {
-        top: 10px;
-        /* Adjust logo positioning */
-        width: clamp(100px, 40vw, 150px);
-        /* Scale logo for mobile */
-        height: clamp(60px, 10vw, 80px);
-        margin-bottom: 20px;
-        /* Add some margin to separate from navbar */
-    }
-
-    .container {
-        padding-top: 10px;
-        /* Give space for the fixed header */
-    }
-
-    /* Adjust profile image for smaller screens */
-    .profile-image {
-        position: static;
-        /* Let it flow naturally */
-        margin: 30px auto 20px auto;
-        /* Center the image and adjust margins */
-        text-align: center;
-    }
-
-    .profile-image img {
-        width: 80vw;
-        /* Make the image responsive */
-        height: auto;
-        border-radius: 10px;
-        box-shadow: none;
-        /* Remove shadow for simplicity */
-    }
-
-    .profile-image h1 {
-        font-size: 18px;
-        /* Adjust font size */
-        margin-top: 10px;
-    }
-
-    /* Adjust profile title for smaller screens */
-    .profile-title {
-        width: 90%;
-        margin: 50px auto 20px auto;
-        /* Center and adjust margins */
-        padding: 0 10px;
-        /* Add some padding for readability */
-    }
-
-    .profile-title h1 {
-        font-size: 22px;
-    }
-
-    .profile-title h2 {
-        font-size: 18px;
-    }
-
-    .profile-title h3 {
-        font-size: 14px;
-    }
-
-    .profile-title h4 {
-        font-size: 16px;
-    }
-
-    /* Adjust contact sources */
     .contact-sources {
-        display: flex;
-        flex-wrap: wrap;
-        /* Enable wrapping */
-        justify-content: center;
-        /* Center the icons */
-        gap: 10px;
-        /* Space between icons */
-        padding: 10px;
-        height: auto;
-        /* Remove fixed height */
+        gap: 6px;
+        padding: 8px;
     }
 
     .contact-sources a {
-        flex: 0 0 calc(50% - 10px);
-        /* Take up half the width minus gap */
-        text-align: center;
-        /* Center the individual items */
+        width: 46px;
+        height: 46px;
     }
 
     .circular-image {
-        width: 40px;
-        height: 40px;
+        width: 26px;
+        height: 26px;
     }
 
-    .profile-image {
-        top: 100px;
-        /* Reduced top position */
-        right: 2vw;
-        /* More padding from the right */
-        width: clamp(150px, 60vw, 250px);
-        /* Smaller width for mobile */
-        animation: slideInFromRight 2s ease-out forwards;
-    }
-
-    .profile-container {
-        top: 5px;
-        /* Reduced spacing for mobile */
-        padding: 0 10px;
-        /* Centering content with padding */
-    }
-
-    .profile-container ul li {
-        height: 300px;
-        /* Smaller height */
-        border: 4px solid #ffffff;
-        border-radius: 50%;
-        /* Circular shape */
-        box-shadow: 0 0 15px rgba(0, 0, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.6);
-        animation: border-transform 15s linear infinite alternate forwards;
-    }
-
-    .profile-image h1 {
-        font-size: 2rem;
-        /* Smaller font size for mobile */
-        top: 350px;
-        /* Adjusted position */
-        text-align: center;
+    .profile-image > h1 {
+        margin-top: 30px;
+        letter-spacing: 0.14em;
     }
 }
 
-@media (max-width: 768px) {
+/* =====================================================================
+   CREATIVE TOUCHES (uses tokens from creative.css)
+   ===================================================================== */
 
-    /* Adjust navbar for medium screens */
-    .navbar {
-        flex-direction: row;
-        /* Keep links in a row */
-        justify-content: center;
-        /* Center the navbar */
-        width: 100%;
-        /* Full width to avoid overlap */
-        padding: 10px 0;
-        /* Add some padding */
-        margin-top: 15%;
-        /* Space between logo and navbar */
-    }
-
-    .navbar li {
-        margin: 0 15px;
-        /* Add more space between items */
-    }
-
-    .navbar li a {
-        padding: 8px 15px;
-        /* Ensure clickable area remains comfortable */
-        font-size: 16px;
-        /* Slightly larger font size for better readability */
-    }
-
-    /* Adjust logo for medium screens */
-    .logo {
-        top: 10px;
-        /* Keep logo positioning */
-        width: clamp(120px, 40vw, 180px);
-        /* Scale logo for medium screens */
-        height: clamp(70px, 10vw, 90px);
-        margin-bottom: 20px;
-        /* Add some margin to separate from navbar */
-    }
-
-    .container {
-        padding-top: 10px;
-        /* Give space for the fixed header */
-    }
-
-    /* Adjust profile image for medium screens */
-    .profile-image {
-        position: static;
-        /* Let it flow naturally */
-        margin: 40px auto 20px auto;
-        /* Center the image and adjust margins */
-        text-align: center;
-    }
-
-    .profile-image img {
-        width: 70vw;
-        /* Make the image responsive */
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        /* Add a subtle shadow for depth */
-    }
-
-    .profile-image h1 {
-        font-size: 20px;
-        /* Adjust font size */
-        margin-top: 10px;
-    }
-
-    /* Adjust profile title for medium screens */
-    .profile-title {
-        width: 85%;
-        /* Adjust width for better alignment */
-        margin: 40px auto 20px auto;
-        /* Center and adjust margins */
-        padding: 0 10px;
-        /* Add some padding for readability */
-    }
-
-    .profile-title h1 {
-        font-size: clamp(28px, calc(28px + 1.5vw), 60px);
-        /* Slightly larger font size */
-    }
-
-    .profile-title h2 {
-        font-size: 20px;
-        /* Adjust font size */
-    }
-
-    .profile-title h3 {
-        font-size: 16px;
-        /* Adjust font size */
-    }
-
-    .profile-title h4 {
-        font-size: 18px;
-        /* Adjust font size */
-    }
-
-    /* Adjust contact sources */
-    .contact-sources {
-        display: flex;
-        flex-wrap: wrap;
-        /* Enable wrapping */
-        justify-content: center;
-        /* Center the icons */
-        gap: 15px;
-        /* Space between icons */
-        padding: 10px;
-        height: auto;
-        /* Remove fixed height */
-    }
-
-    .contact-sources a {
-        flex: 0 0 calc(50% - 15px);
-        /* Take up half the width minus gap */
-        text-align: center;
-        /* Center the individual items */
-    }
-
-    .circular-image {
-        width: 50px;
-        /* Slightly larger icon size */
-        height: 50px;
-    }
-
-    .profile-image {
-        top: 100px;
-        /* Reduced top position */
-        right: 2vw;
-        /* More padding from the right */
-        width: clamp(150px, 60vw, 250px);
-        /* Smaller width for mobile */
-        animation: slideInFromRight 2s ease-out forwards;
-    }
-
-    .profile-container {
-        top: 5px;
-        /* Reduced spacing for mobile */
-        padding: 0 10px;
-        /* Centering content with padding */
-    }
-
-    .profile-container ul li {
-        height: 300px;
-        /* Smaller height */
-        border: 4px solid #ffffff;
-        border-radius: 50%;
-        /* Circular shape */
-        box-shadow: 0 0 15px rgba(0, 0, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.6);
-        animation: border-transform 15s linear infinite alternate forwards;
-    }
-
-    .profile-image h1 {
-        font-size: 2rem;
-        /* Smaller font size for mobile */
-        top: 350px;
-        /* Adjusted position */
-        text-align: center;
-    }
+/* Name: colour slowly flows through the letters, with a soft glow. */
+.profile-title .name {
+    background: linear-gradient(120deg, var(--text-1) 0%, var(--text-1) 30%, var(--iri-1) 50%, var(--iri-2) 65%, var(--iri-3) 80%, var(--text-1) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 10px 34px var(--rim-a));
+    animation:
+        fadeUp 0.9s var(--ease-out) 0.1s forwards,
+        nameFlow 12s ease-in-out 1s infinite alternate;
 }
 
-::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+@keyframes nameFlow {
+    from { background-position: 0% 0; }
+    to { background-position: 100% 0; }
+}
+
+.typed-text {
+    background: linear-gradient(90deg, var(--iri-4), var(--iri-1), var(--iri-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 14px var(--rim-b));
+}
+
+/* --- Orbit system around the photo -------------------------------------
+   The Bootstrap wrappers inside .profile-container are used as anchors:
+   .row = dashed orbit + cyan orb, .col-lg-10 = pink orb on a wider
+   orbit, .section = iridescent rim hugging the photo frame.
+   An "orb" is a radial-gradient dot drawn at the edge of a rotating box. */
+.profile-image .row {
+    position: absolute;
+    inset: 0;
+}
+
+.profile-image .row::before,
+.profile-image .row::after,
+.profile-image .col-lg-10::before,
+.profile-image .section::before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.profile-image .row::before {
+    inset: -12%;
+    border: 1px dashed color-mix(in srgb, var(--iri-1) 50%, transparent);
+    animation: orbitSpin 70s linear infinite;
+}
+
+.profile-image .row::after {
+    inset: -12%;
+    background: radial-gradient(circle at 50% 0%, #fff 0, var(--iri-4) 5px, color-mix(in srgb, var(--iri-4) 35%, transparent) 10px, transparent 18px);
+    filter: drop-shadow(0 0 10px var(--iri-4));
+    animation: orbitSpin 16s linear infinite;
+}
+
+.profile-image .col-lg-10::before {
+    inset: -21%;
+    border: 1px solid color-mix(in srgb, var(--iri-2) 22%, transparent);
+    background: radial-gradient(circle at 50% 100%, #fff 0, var(--iri-3) 6px, color-mix(in srgb, var(--iri-3) 35%, transparent) 12px, transparent 20px);
+    filter: drop-shadow(0 0 12px var(--iri-3));
+    animation: orbitSpin 28s linear infinite reverse;
+}
+
+/* Rotating iridescent rim around the photo frame. */
+.profile-image .section::before {
+    inset: -15px;
+    border-radius: 35%;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), var(--iri-1), var(--iri-2), var(--iri-3), var(--iri-4), var(--iri-1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    filter: drop-shadow(0 0 12px var(--rim-a));
+    animation: spinAngle 8s linear infinite;
+}
+
+@keyframes orbitSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* Contact icons: iridescent ring lights up on hover. */
+.contact-sources a {
+    position: relative;
+}
+
+.contact-sources a::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), var(--iri-1), var(--iri-2), var(--iri-3), var(--iri-4), var(--iri-1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity var(--dur) ease;
+    animation: spinAngle 3s linear infinite;
+}
+
+.contact-sources a:hover::after {
+    opacity: 1;
+}
+
+/* Name caption under the photo: gradient text. */
+.profile-image > h1 {
+    background: linear-gradient(90deg, var(--text-3), var(--iri-1), var(--text-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 900px) {
+    /* Tighter orbits so nothing pokes past a phone screen. */
+    .profile-image .row::before,
+    .profile-image .row::after {
+        inset: -7%;
+    }
+
+    .profile-image .col-lg-10::before {
+        inset: -11%;
+    }
 }
