@@ -7,8 +7,8 @@ import HoverAnimatedImage from '../components/HoverAnimatedImage'
 import projectsCss from '../styles/projects.css?inline'
 
 // A tile only expands once the pointer has rested on it this long,
-// so sweeping the mouse across the row does not make the tiles jump around.
-const EXPAND_DELAY_MS = 500
+// so sweeping the mouse quickly across the row does not make the tiles flicker.
+const EXPAND_DELAY_MS = 120
 
 // "Top 5 Projects": a row of tiles; hovering one expands it to show details.
 function TopProjects() {
@@ -38,11 +38,24 @@ function TopProjects() {
             <div
               key={project.title}
               className={isExpanded ? 'top-projects glass-card expanded' : 'top-projects glass-card'}
-              onMouseOver={() => expandAfterDelay(index)}
+              style={{ '--tile-index': index }}
+              tabIndex={0}
+              onMouseEnter={() => expandAfterDelay(index)}
               onMouseLeave={() => collapse(index)}
+              onFocus={() => expandAfterDelay(index)}
+              onBlur={() => collapse(index)}
+              // Touch screens have no hover, so a tap opens the tile too.
+              onClick={() => setExpandedIndex(index)}
             >
-              <HoverAnimatedImage className="main-img" src={assetUrl(project.logo)} alt={project.title} />
+              {/* A still picture on purpose: the animated version would be decoded while the tile is opening. */}
+              <img className="main-img" src={assetUrl(project.logo)} alt={project.title} />
               <img className="expanded-img" src={assetUrl(project.poster)} alt="" />
+              <span className="tile-index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span className="tile-label" aria-hidden="true">
+                {project.title}
+              </span>
 
               <div className="details">
                 <div className="title">{project.title}</div>

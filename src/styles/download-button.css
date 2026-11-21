@@ -1,0 +1,117 @@
+/* =====================================================================
+   DOWNLOAD BUTTON (components/DownloadButton.jsx)
+   Built on .glass-btn. data-status on the button is "idle", "downloading"
+   or "done". Only transform and opacity are animated.
+   ===================================================================== */
+
+.download-btn {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Colour that fills the button from left to right (scaleX is set by the
+   component on every frame). Sits behind the text. */
+.download-fill {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c-a) 55%, transparent), color-mix(in srgb, var(--c-b) 60%, transparent));
+    transform: scaleX(0);
+    transform-origin: left center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.download-btn[data-status="downloading"] .download-fill,
+.download-btn[data-status="done"] .download-fill {
+    opacity: 1;
+}
+
+.download-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.download-label {
+    font-variant-numeric: tabular-nums; /* the percentage does not jiggle the width */
+    animation: downloadLabelIn 0.35s var(--ease-out);
+}
+
+@keyframes downloadLabelIn {
+    from { opacity: 0; transform: translateY(6px); }
+}
+
+/* ---- Icon: tray + arrow + check, all drawn with strokes ---- */
+
+.download-icon {
+    width: 20px;
+    height: 20px;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Idle: the arrow nudges down on hover, hinting at the action. */
+.download-arrow {
+    transition: transform 0.35s var(--ease-out), opacity 0.2s ease;
+}
+
+.download-btn[data-status="idle"]:hover .download-arrow {
+    transform: translateY(2px);
+}
+
+/* Downloading: the arrow keeps dropping into the tray. */
+.download-btn[data-status="downloading"] .download-arrow {
+    animation: arrowDrop 0.9s cubic-bezier(0.5, 0, 0.7, 1) infinite;
+}
+
+@keyframes arrowDrop {
+    0% { transform: translateY(-7px); opacity: 0; }
+    35% { opacity: 1; }
+    80% { transform: translateY(4px); opacity: 1; }
+    100% { transform: translateY(6px); opacity: 0; }
+}
+
+/* Done: the arrow goes away and a check mark draws itself. */
+.download-check {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+}
+
+.download-btn[data-status="done"] .download-arrow,
+.download-btn[data-status="done"] .download-tray {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.download-btn[data-status="done"] .download-check {
+    animation: checkDraw 0.5s 0.1s var(--ease-out) forwards;
+}
+
+@keyframes checkDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* Failure: the fill turns red. The next click opens the link in a new tab. */
+.download-btn[data-status="error"] .download-fill {
+    opacity: 1;
+    transform: scaleX(1) !important;
+    background: color-mix(in srgb, #e5484d 60%, transparent);
+}
+
+/* The button does not react to a second click while it is busy. */
+.download-btn[data-status="downloading"],
+.download-btn[data-status="done"] {
+    cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .download-btn[data-status="downloading"] .download-arrow {
+        animation: none;
+    }
+}

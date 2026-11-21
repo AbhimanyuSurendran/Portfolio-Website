@@ -1,7 +1,6 @@
 /* =====================================================================
    PROJECTS PAGE
-   1. "Top 5 Projects" — accordion cards that expand on hover
-      (existing hoverCard() script adds .expanded and fills details).
+   1. "Top 5 Projects": tiles that expand on hover/focus/tap (Projects.jsx adds .expanded).
    2. All projects grid + sticky detail panel
       (existing script fills the panel when a card is clicked).
    Shared tokens/surfaces: glass.css · header: header.css
@@ -20,99 +19,208 @@
     text-align: center;
 }
 
+/* The row is a size container so tiles can know the row width (see --open-w). */
 .card-wrapper {
+    container-type: inline-size;
     display: flex;
-    gap: 16px;
+    gap: 14px;
     width: 100%;
-    height: 420px;
+    height: 440px;
 }
 
-/* Each tile shares the row equally; the expanded one grows wider. */
+/* ---- Tile -----------------------------------------------------------------
+   Why this is built the way it is (smoothness):
+   Only the tile's WIDTH animates. Everything inside is laid out once, at the
+   open width, and the tile just reveals more or less of it (overflow: hidden).
+   So nothing inside re-wraps, re-sizes or re-draws while the tile stretches:
+   the pictures are centred at the open width, the caption is a fixed-width
+   block, and the collapsed title is a vertical label that does not depend on
+   the tile width. There are no filters, no blur and no animated shadows here.
+
+   Layers, back to front:
+     .main-img / .expanded-img   logo and poster, cross-fading
+     ::before                    dark fade at the bottom
+     .tile-index                 "01" badge
+     .tile-label                 vertical title (closed tile)
+     .details                    caption (open tile) */
 .top-projects {
+    /* Width of an open tile: the open tile has 3 shares and the others 1 each. */
+    --open-w: calc((100cqw - 4 * 14px) * 3 / 7);
+    position: relative;
     flex: 1 1 0;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     cursor: pointer;
-    transition:
-        flex-grow 0.9s var(--ease-liquid-soft),
-        opacity var(--dur) ease,
-        box-shadow var(--dur) var(--ease-out),
-        background-color var(--dur) ease;
+    isolation: isolate;
+    /* Rises in one after the other when the page opens. */
+    animation: tileIn 0.9s var(--ease-out) backwards;
+    animation-delay: calc(0.25s + var(--tile-index, 0) * 0.09s);
+    /* Only these two change while hovering. Replaces the glass-card transition
+       on purpose (it also animated shadows and colours). */
+    transition: flex-grow 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+}
+
+@keyframes tileIn {
+    from { opacity: 0; transform: translateY(34px) scale(0.96); }
 }
 
 .top-projects.expanded {
-    flex-grow: 2.8;
+    flex-grow: 3;
+    /* A ring instead of a glow: a blurred shadow would be redrawn every frame. */
+    box-shadow: 0 0 0 1px var(--rim-a);
 }
 
-/* Dim the tiles that are not being hovered. */
+/* The tiles you are not on sink back a little. */
 @media (hover: hover) {
-    .card-wrapper:hover > .top-projects:not(:hover) {
+    .card-wrapper:has(.expanded) > .top-projects:not(.expanded) {
         opacity: 0.55;
     }
 }
 
-.top-projects .main-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s var(--ease-out);
+/* The pointer spotlight of glass cards repaints on every mouse move; not wanted here. */
+.top-projects::after {
+    display: none;
 }
 
-.top-projects:hover .main-img {
-    transform: scale(1.05);
+.top-projects:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Both pictures are as wide as an OPEN tile and centred, so they never resize. */
+.top-projects .main-img,
+.top-projects .expanded-img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--open-w);
+    height: 100%;
+    max-width: none;
+    translate: -50% 0;
+    object-fit: cover;
+    transition: opacity 0.6s ease, transform 1.2s var(--ease-out);
+    will-change: opacity, transform;
 }
 
 .top-projects .expanded-img {
-    display: none;
-    flex: 0 0 auto;
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.top-projects.expanded .main-img {
-    display: none;
+    opacity: 0;
+    transform: scale(1.08);
 }
 
 .top-projects.expanded .expanded-img {
-    display: block;
-    animation: fadeIn 0.6s var(--ease-out);
+    opacity: 1;
+    transform: scale(1);
 }
 
-.top-projects .details {
-    max-height: 0;
-    padding: 0 20px;
+.top-projects.expanded .main-img {
     opacity: 0;
-    transform: translateY(10px);
-    transition:
-        opacity var(--dur) var(--ease-out) 0.15s,
-        transform var(--dur) var(--ease-out) 0.15s;
+}
+
+/* Bottom fade for the text. */
+.top-projects::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(8, 9, 12, 0.88) 0%, rgba(8, 9, 12, 0.45) 34%, transparent 62%);
+    opacity: 1; /* glass-card gives ::before opacity 0 (its spotlight) */
+    pointer-events: none;
+}
+
+/* Number badge in the corner. */
+.tile-index {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(8, 9, 12, 0.55);
+    color: #fff;
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.top-projects.expanded .tile-index {
+    background: var(--accent);
+    color: var(--bg-base);
+}
+
+/* Closed tile: the title runs upward along the tile. Vertical text takes the
+   same room whatever the tile width, so it never re-wraps. */
+.tile-label {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    z-index: 2;
+    max-height: calc(100% - 70px);
+    overflow: hidden;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    writing-mode: vertical-rl;
+    transform: translateX(-50%) rotate(180deg);
+    transition: opacity 0.3s ease;
+}
+
+.top-projects.expanded .tile-label {
+    opacity: 0;
+}
+
+/* Open tile: caption of a fixed width (the open width), pinned bottom-left.
+   While the tile is still narrow the right part is simply cut off. */
+.top-projects .details {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    width: var(--open-w);
+    padding: 20px 24px 24px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .top-projects.expanded .details {
-    max-height: none;
-    padding: 18px 22px 22px;
     opacity: 1;
     transform: none;
+    /* Waits until the tile is partly open, then rises in. */
+    transition: opacity 0.55s ease 0.2s, transform 0.7s var(--ease-out) 0.2s;
 }
 
 .details .title {
-    font-size: 1.15rem;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
     font-weight: 650;
     letter-spacing: -0.02em;
-    color: var(--text-1);
+    line-height: 1.25;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .details .top-projects-desc {
-    margin: 8px 0 16px;
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: var(--text-2);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    margin: 8px 0 14px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.86);
 }
 
 .details .button {
+    display: inline-flex;
     padding: 10px 20px;
     font-size: 0.88rem;
 }
@@ -260,16 +368,48 @@
         height: auto;
     }
 
+    /* Stacked tiles: the height (not the width) opens, and the pictures and
+       caption fill the tile normally instead of using the open width. */
     .top-projects {
+        --open-w: 100%;
         flex: 0 0 auto;
-    }
-
-    .top-projects .main-img {
         height: 150px;
+        transition: height 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+        will-change: height;
     }
 
+    .top-projects.expanded {
+        height: 340px;
+    }
+
+    /* Darker fade behind the text of the open tile, so it reads on any poster. */
+    .top-projects.expanded::before {
+        background: linear-gradient(to top, rgba(8, 9, 12, 0.94) 0%, rgba(8, 9, 12, 0.78) 45%, transparent 85%);
+    }
+
+    .top-projects .main-img,
     .top-projects .expanded-img {
-        height: 180px;
+        left: 0;
+        translate: none;
+    }
+
+    .tile-label {
+        display: none;
+    }
+
+    .top-projects:not(.expanded) .details {
+        /* Closed tile on a phone still shows its title. */
+        opacity: 1;
+        transform: none;
+    }
+
+    .top-projects:not(.expanded) .top-projects-desc,
+    .top-projects:not(.expanded) .button {
+        display: none;
+    }
+
+    .details .title {
+        font-size: 1.1rem;
     }
 
     .card-container {
@@ -295,19 +435,6 @@
 .top-projects-container .section-heading::after {
     margin-left: auto;
     margin-right: auto;
-}
-
-/* Expanded top project glows with an animated iridescent rim. */
-.top-projects.expanded {
-    box-shadow:
-        0 34px 70px -30px var(--iri-2),
-        0 0 0 1px var(--rim-a),
-        inset 0 1px 0 var(--glass-highlight);
-}
-
-.top-projects.expanded::after {
-    opacity: 1;
-    animation: spinAngle 4s linear infinite;
 }
 
 /* "PROJECT 1" label as a glowing glass chip. */

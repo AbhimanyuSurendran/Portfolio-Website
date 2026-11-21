@@ -1,30 +1,89 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { prefersReducedMotion } from '../utils/mediaQueries'
+import { assetUrl } from '../utils/assetUrl'
 import preloaderCss from '../styles/preloader.css?inline'
 
-const SHOW_LOADER_MS = 500
-const FADE_OUT_MS = 500
+const MIN_SHOW_MS = 1300 // the animation always gets to play a little
+const WAITING_PERCENT = 88 // the bar stops here until everything is really ready
+const EXIT_MS = 750 // must match the clip-path transition in preloader.css
+const LOGO_URL = assetUrl('title_logo.png')
 
-// Loading screen shown at "/" for one second, then fades out and opens the Home page.
+function loadImage(url) {
+  return new Promise((resolve) => {
+    const image = new Image()
+    image.onload = resolve
+    image.onerror = resolve // a missing logo must never keep the loader on screen
+    image.src = url
+  })
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+// Loading screen shown at "/". Opening the site and clicking the logo in the
+// navbar (which links to "/") both pass through it before Home.
+// It shows the main logo inside a glowing ring, with a progress bar. The bar is
+// tied to real work: it waits for the fonts, the logo and the Home page's code
+// to finish loading (and for at least MIN_SHOW_MS), then fills up, and the
+// screen closes like an iris to reveal the Home page.
 export default function Preloader() {
   const navigate = useNavigate()
-  const [isFadingOut, setIsFadingOut] = useState(false)
+  const [isLeaving, setIsLeaving] = useState(false)
+  const barRef = useRef(null)
+  const percentRef = useRef(null)
 
   useEffect(() => {
     document.title = 'Loading...'
     document.body.style.overflow = 'hidden' // no scrolling behind the loader
+    // Clicking the logo in the navbar fades the old page out with this class
+    // (see SiteLink.jsx); pages normally remove it themselves, but the loader
+    // is not a page, so it would stay invisible without this.
+    document.body.classList.remove('is-leaving')
+    window.scrollTo(0, 0)
 
-    let redirectTimer
-    const fadeTimer = setTimeout(() => {
-      setIsFadingOut(true)
-      // Wait for the fade-out before leaving. `replace` keeps this screen out
-      // of the browser history, so the Back button does not bounce off it.
-      redirectTimer = setTimeout(() => navigate('/home', { replace: true }), FADE_OUT_MS)
-    }, SHOW_LOADER_MS)
+    let isReady = false
+    let shownPercent = 0
+    let frameId = null
+    let exitTimer = null
+
+    Promise.all([
+      wait(prefersReducedMotion() ? 0 : MIN_SHOW_MS),
+      document.fonts?.ready,
+      import('./Home'), // starts downloading the Home page now, so it opens instantly
+      loadImage(LOGO_URL),
+    ]).then(() => {
+      isReady = true
+    })
+
+    function showPercent(value) {
+      barRef.current.style.transform = `scaleX(${value / 100})`
+      percentRef.current.textContent = Math.round(value) + '%'
+    }
+
+    // Moves the shown number a fraction of the way to its target on every frame:
+    // fast at first, then slower (like a real download), and it only passes
+    // WAITING_PERCENT once everything is ready.
+    function tick() {
+      const target = isReady ? 100 : WAITING_PERCENT
+      shownPercent += (target - shownPercent) * 0.06
+      showPercent(shownPercent)
+
+      if (isReady && shownPercent > 99.3) {
+        showPercent(100)
+        setIsLeaving(true)
+        // `replace` keeps this screen out of the browser history, so Back does not return to it.
+        exitTimer = setTimeout(() => navigate('/home', { replace: true }), prefersReducedMotion() ? 0 : EXIT_MS)
+        return
+      }
+      frameId = requestAnimationFrame(tick)
+    }
+    frameId = requestAnimationFrame(tick)
 
     return () => {
-      clearTimeout(fadeTimer)
-      clearTimeout(redirectTimer)
+      cancelAnimationFrame(frameId)
+      clearTimeout(exitTimer)
       document.body.style.overflow = ''
     }
   }, [navigate])
@@ -32,35 +91,27 @@ export default function Preloader() {
   return (
     <>
       <style>{preloaderCss}</style>
-      <div className={isFadingOut ? 'preloader fade-out' : 'preloader'} id="preloader">
-        <main>
-          <svg className="ip" viewBox="0 0 256 128" width="256px" height="128px" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#5eead4" />
-                <stop offset="33%" stopColor="#7aa7ff" />
-                <stop offset="67%" stopColor="#8b5cf6" />
-                <stop offset="100%" stopColor="#c4b5fd" />
-              </linearGradient>
-              <linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
-                <stop offset="0%" stopColor="#c4b5fd" />
-                <stop offset="33%" stopColor="#8b5cf6" />
-                <stop offset="67%" stopColor="#4f7cff" />
-                <stop offset="100%" stopColor="#5eead4" />
-              </linearGradient>
-            </defs>
-            <g fill="none" strokeLinecap="round" strokeWidth="16">
-              <g className="ip__track" stroke="rgba(255,255,255,0.08)">
-                <path d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
-                <path d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
-              </g>
-              <g strokeDasharray="180 656">
-                <path className="ip__worm1" stroke="url(#grad1)" strokeDashoffset="0" d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
-                <path className="ip__worm2" stroke="url(#grad2)" strokeDashoffset="358" d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
-              </g>
-            </g>
-          </svg>
-        </main>
+      <div className={isLeaving ? 'preloader is-leaving' : 'preloader'} role="status" aria-label="Loading">
+        <div className="loader-stage">
+          <div className="loader-mark">
+            <span className="loader-pulse"></span>
+            <span className="loader-pulse loader-pulse-late"></span>
+            <span className="loader-ring"></span>
+            <span className="loader-orbit">
+              <i></i>
+            </span>
+            <img className="loader-logo" src={LOGO_URL} alt="" />
+          </div>
+
+          <p className="loader-name">Abhimanyu Surendran</p>
+
+          <div className="loader-progress">
+            <span className="loader-bar" ref={barRef}></span>
+          </div>
+          <span className="loader-percent" ref={percentRef}>
+            0%
+          </span>
+        </div>
       </div>
     </>
   )

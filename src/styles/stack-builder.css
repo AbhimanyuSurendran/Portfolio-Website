@@ -1,0 +1,399 @@
+/* =====================================================================
+   TECH STACK BUILDER (components/TechStackGame.jsx)
+   Kept in its own file (not skills.css) so the Skills page stylesheet stays
+   short. Every class starts with "lab-" so it cannot clash with other pages.
+   Layer colours come from the active theme through --iri-* / --c-*.
+   ===================================================================== */
+
+.stack-lab {
+    padding: clamp(22px, 3vw, 40px);
+}
+
+/* Colour of each layer, used by the tabs, chips and rows. */
+.stack-lab [data-layer="frontend"] { --layer: var(--iri-1); }
+.stack-lab [data-layer="backend"] { --layer: var(--iri-4); }
+.stack-lab [data-layer="database"] { --layer: var(--iri-3); }
+.stack-lab [data-layer="cloud"] { --layer: color-mix(in srgb, var(--c-a) 45%, var(--c-b)); }
+
+/* ---------- Header ----------------------------------------------------- */
+
+.lab-header {
+    text-align: center;
+}
+
+.stack-lab .instructions {
+    max-width: 620px;
+    margin: 6px auto 20px;
+    color: var(--text-2);
+}
+
+.lab-progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    background: var(--glass-card-bg);
+    box-shadow: inset 0 0 0 1px var(--glass-stroke);
+    color: var(--text-2);
+    font-size: 0.85rem;
+    white-space: nowrap; /* keep "2 / 34 stacks discovered" on one line */
+}
+
+.lab-progress strong {
+    color: var(--text-1);
+    font-variant-numeric: tabular-nums;
+}
+
+.lab-progress-track {
+    position: relative;
+    width: 120px;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--text-1) 14%, transparent);
+}
+
+.lab-progress-track i {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--iri-3), var(--iri-4));
+    transform-origin: left center;
+    transition: transform 0.9s var(--ease-liquid-soft);
+}
+
+/* ---------- Body: palette (left) and board (right) ------------------------ */
+
+.lab-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(16px, 2.5vw, 28px);
+    margin-top: 28px;
+}
+
+.lab-palette,
+.lab-board {
+    padding: 18px;
+    border-radius: var(--radius-lg);
+    background: var(--glass-card-bg);
+    box-shadow: inset 0 0 0 1px var(--glass-stroke);
+}
+
+/* ---- Tabs ---- */
+
+.lab-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.lab-tab {
+    padding: 6px 14px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-2);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.lab-tab:hover {
+    background: var(--glass-card-hover);
+}
+
+.lab-tab[aria-selected="true"] {
+    background: var(--accent-soft);
+    color: var(--text-1);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* ---- Technology chips ---- */
+
+.lab-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 292px;
+    overflow-y: auto;
+    padding: 2px;
+}
+
+.lab-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px 7px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--glass-card-bg);
+    box-shadow: inset 0 0 0 1px var(--glass-stroke);
+    color: var(--text-1);
+    font-size: 0.85rem;
+    font-weight: 550;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+/* Small dot in the colour of the chip's layer. */
+.lab-chip::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--layer);
+    box-shadow: 0 0 8px var(--layer);
+}
+
+.lab-chip:hover,
+.lab-chip:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 0 1px var(--layer), 0 8px 18px -10px var(--layer);
+}
+
+.lab-chip:active {
+    cursor: grabbing;
+    transform: scale(0.96);
+}
+
+.lab-chip.is-added {
+    opacity: 0.4;
+}
+
+/* ---------- Board: the layers ----------------------------------------------- */
+
+.lab-board {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.lab-board.is-over {
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1.5px var(--accent), 0 0 36px -12px var(--accent);
+}
+
+.lab-layer {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 58px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--layer) 9%, transparent);
+    box-shadow: inset 3px 0 0 var(--layer);
+}
+
+.lab-layer-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.lab-layer-name strong {
+    color: var(--text-1);
+    font-size: 0.85rem;
+}
+
+.lab-layer-name small {
+    color: var(--text-3);
+    font-size: 0.7rem;
+}
+
+.lab-layer-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.lab-empty {
+    color: var(--text-3);
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+/* A technology placed in its layer. It pops in with a spring. */
+.lab-placed {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 8px 5px 12px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--layer);
+    color: #fff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 14px -8px var(--layer);
+    animation: chipPop 0.5s var(--ease-spring);
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.lab-placed:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+.lab-placed span {
+    opacity: 0.75;
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+@keyframes chipPop {
+    from { transform: scale(0.3); opacity: 0; }
+}
+
+.lab-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.lab-action {
+    padding: 6px 14px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--glass-card-bg);
+    box-shadow: inset 0 0 0 1px var(--glass-stroke);
+    color: var(--text-2);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lab-action:hover:not(:disabled) {
+    background: var(--glass-card-hover);
+    color: var(--text-1);
+}
+
+.lab-action:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+/* ---------- Result ------------------------------------------------------------ */
+
+.lab-result {
+    position: relative; /* the unlock sparks are positioned inside it */
+    margin-top: 22px;
+    padding: 22px 26px;
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg-strong);
+    box-shadow: inset 0 0 0 1px var(--glass-stroke);
+    text-align: left;
+    transition: box-shadow 0.5s ease, background-color 0.5s ease;
+}
+
+.lab-result.is-unlocked {
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+        0 18px 40px -26px var(--accent);
+}
+
+.lab-result-content {
+    animation: resultIn 0.55s var(--ease-out);
+}
+
+@keyframes resultIn {
+    from { opacity: 0; transform: translateY(12px); }
+}
+
+.lab-result h3 {
+    margin: 0 0 6px;
+    color: var(--text-1);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+}
+
+.lab-result h3.lab-waiting {
+    color: var(--text-2);
+    font-size: 1.1rem;
+}
+
+.lab-result p {
+    margin: 0 0 8px;
+    color: var(--text-2);
+    line-height: 1.65;
+}
+
+.lab-tagline {
+    color: var(--accent) !important;
+    font-weight: 600;
+}
+
+.lab-badge {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 3px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--bg-base);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* ---------- Collection --------------------------------------------------------- */
+
+.lab-collection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.lab-trophy {
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--text-1) 6%, transparent);
+    color: var(--text-3);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.lab-trophy.is-found {
+    background: var(--accent-soft);
+    color: var(--text-1);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+    animation: chipPop 0.6s var(--ease-spring);
+}
+
+/* ---------- Phones ---------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .lab-body {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* No scroll box inside the page scroll on touch screens: the whole list shows. */
+    .lab-chips {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+/* Phones: the game is not shown at all. Dragging does not work on touch screens,
+   and the two-column board is too cramped for a small screen. */
+@media (max-width: 760px) {
+    #techStackGame {
+        display: none;
+    }
+}

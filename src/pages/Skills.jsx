@@ -1,6 +1,6 @@
 import PageLayout from '../components/PageLayout'
 import SplitHeading from '../components/SplitHeading'
-import CountUp from '../components/CountUp'
+import SkillCard from '../components/SkillCard'
 import TechStackGame from '../components/TechStackGame'
 import { backendSkills, frontendSkills, topSkills } from '../data/skills'
 import { assetUrl } from '../utils/assetUrl'
@@ -27,22 +27,8 @@ export default function Skills() {
         <div className="top-skill-sets glass-panel">
           <SplitHeading text="Top Skill Sets" />
           <div className="skills-gallery">
-            {topSkills.map((skill) => (
-              <div key={skill.image} className="skill-item glass-card">
-                <img src={assetUrl(skill.image)} alt={skill.alt} />
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: `${skill.percent}%` }}
-                    aria-valuenow={skill.percent}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    <CountUp to={skill.percent} suffix="%" />
-                  </div>
-                </div>
-              </div>
+            {topSkills.map((skill, index) => (
+              <SkillCard key={skill.image} skill={skill} index={index} />
             ))}
           </div>
         </div>

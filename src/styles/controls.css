@@ -139,10 +139,11 @@
 .mode-toggle {
     --knob: 28px;
     --pad: 4px;
+    --toggle-w: 68px;
     position: relative;
     flex: 0 0 auto;
-    width: 68px;
-    height: 36px;
+    width: var(--toggle-w);
+    height: calc(var(--knob) + var(--pad) * 2);
     margin: 0 4px 0 0;
     border-radius: 99px;
     cursor: pointer;
@@ -231,7 +232,7 @@
 }
 
 #toggle:checked + .mode-toggle .mode-knob {
-    translate: calc(68px - var(--knob) - var(--pad) * 2) 0;
+    translate: calc(var(--toggle-w) - var(--knob) - var(--pad) * 2) 0;
     background: linear-gradient(180deg, #e9ecf8, #cfd5ea);
 }
 
@@ -241,7 +242,7 @@
 
 #toggle:checked + .mode-toggle:active .mode-knob {
     /* Keep the right edge in place while the knob stretches to the left. */
-    translate: calc(68px - 36px - var(--pad) * 2) 0;
+    translate: calc(var(--toggle-w) - 36px - var(--pad) * 2) 0;
 }
 
 /* Sun -> moon. */
@@ -319,5 +320,30 @@
     .theme-picker-button:hover::before,
     .theme-picker-button[aria-expanded="true"]::before {
         animation: none;
+    }
+}
+
+/* ---------- Very small phones (360px wide and below) -----------------------------
+   The logo badge, theme button, switch and menu button together are wider
+   than a 360px screen, so each one gets a little smaller. */
+@media (max-width: 420px) {
+    .theme-picker {
+        margin-right: 6px;
+    }
+
+    .theme-picker-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .theme-swatch {
+        width: 22px;
+        height: 22px;
+    }
+
+    .mode-toggle {
+        --knob: 24px;
+        --toggle-w: 58px;
+        margin-right: 2px;
     }
 }

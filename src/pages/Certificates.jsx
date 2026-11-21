@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import PageLayout from '../components/PageLayout'
 import SplitHeading from '../components/SplitHeading'
+import CertificateViewer from '../components/CertificateViewer'
 import { certificateImages } from '../data/certificates'
 import { assetUrl } from '../utils/assetUrl'
 import certificatesCss from '../styles/certificates.css?inline'
@@ -8,7 +9,6 @@ import certificatesCss from '../styles/certificates.css?inline'
 const FIRST_IMAGE_DELAY_MS = 400 // lets the page fade-in finish before images cascade in
 const STAGGERED_IMAGE_COUNT = 12 // the first dozen appear one by one, the rest together
 const STAGGER_STEP_MS = 70
-const MODAL_FADE_MS = 500 // must match the opacity transition of .modal in certificates.css
 
 // One certificate thumbnail. It fades in (the .show class) shortly after the page opens.
 function CertificateImage({ src, index, onOpen }) {
@@ -24,7 +24,7 @@ function CertificateImage({ src, index, onOpen }) {
   function openOnEnterOrSpace(event) {
     if (event.key !== 'Enter' && event.key !== ' ') return
     event.preventDefault()
-    onOpen(event.currentTarget.src)
+    onOpen(index, event.currentTarget)
   }
 
   return (
@@ -36,53 +36,31 @@ function CertificateImage({ src, index, onOpen }) {
       alt=""
       tabIndex={0}
       role="button"
-      onClick={(event) => onOpen(event.currentTarget.src)}
+      onClick={(event) => onOpen(index, event.currentTarget)}
       onKeyDown={openOnEnterOrSpace}
     />
-  )
-}
-
-// Full-screen viewer for one certificate. Click anywhere or press Escape to close.
-function ImageViewer({ src, isDisplayed, isShown, onClose }) {
-  useEffect(() => {
-    if (!isShown) return
-    function closeOnEscape(event) {
-      if (event.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
-  }, [isShown, onClose])
-
-  return (
-    <div id="myModal" className={isShown ? 'modal show' : 'modal'} style={isDisplayed ? { display: 'block' } : undefined} onClick={onClose}>
-      <span className="close">&times;</span>
-      <img className="modal-content" id="img01" src={src || undefined} alt="" />
-    </div>
   )
 }
 
 export default function Certificates() {
   const [scrollPercent, setScrollPercent] = useState(0)
 
-  // The viewer needs two flags: it is first displayed, and then the .show class
-  // fades it in. When closing, it fades out first and is hidden afterwards.
-  const [viewerSrc, setViewerSrc] = useState('')
-  const [isViewerDisplayed, setIsViewerDisplayed] = useState(false)
-  const [isViewerShown, setIsViewerShown] = useState(false)
-  const hideTimerRef = useRef(null)
+  // null while closed; otherwise which certificate is open and where its thumbnail is.
+  const [viewer, setViewer] = useState(null)
+  const gridRef = useRef(null)
 
-  useEffect(() => () => clearTimeout(hideTimerRef.current), [])
-
-  function openViewer(src) {
-    clearTimeout(hideTimerRef.current)
-    setViewerSrc(src)
-    setIsViewerDisplayed(true)
-    setIsViewerShown(true)
+  function openViewer(index, thumbnail) {
+    setViewer({ index, originRect: thumbnail.getBoundingClientRect() })
   }
 
-  function closeViewer() {
-    setIsViewerShown(false)
-    hideTimerRef.current = setTimeout(() => setIsViewerDisplayed(false), MODAL_FADE_MS)
+  // Rectangle of a thumbnail, but only if it is actually visible on screen
+  // (the viewer shrinks back into it when closing).
+  function getThumbRect(index) {
+    const thumbnail = gridRef.current?.children[index]
+    if (!thumbnail) return null
+    const rect = thumbnail.getBoundingClientRect()
+    const isVisible = rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
+    return isVisible ? rect : null
   }
 
   // Progress bar at the top of the scrollable gallery.
@@ -108,13 +86,21 @@ export default function Certificates() {
             <div className="progress-bar" id="progress-bar" style={{ width: `${scrollPercent}%` }}></div>
           </div>
           <SplitHeading text="Certificates" />
-          <div className="image-grid">
+          <div className="image-grid" ref={gridRef}>
             {certificateImages.map((src, index) => (
               <CertificateImage key={src} src={src} index={index} onOpen={openViewer} />
             ))}
           </div>
         </div>
-        <ImageViewer src={viewerSrc} isDisplayed={isViewerDisplayed} isShown={isViewerShown} onClose={closeViewer} />
+        {viewer && (
+          <CertificateViewer
+            images={certificateImages}
+            startIndex={viewer.index}
+            originRect={viewer.originRect}
+            getThumbRect={getThumbRect}
+            onClosed={() => setViewer(null)}
+          />
+        )}
       </div>
     </PageLayout>
   )

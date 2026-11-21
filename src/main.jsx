@@ -14,6 +14,10 @@ import './styles/refraction.css'
 import './styles/themes.css'
 // The two header buttons (theme picker + light/dark switch).
 import './styles/controls.css'
+// Animated download button (About page resume).
+import './styles/download-button.css'
+// Tech Stack Builder game (Skills page).
+import './styles/stack-builder.css'
 import App from './App'
 
 // HashRouter keeps the route after the "#" (e.g. /#/projects), so refreshing

@@ -4,32 +4,38 @@
 export const topSkills = [
   {
     "image": "skills_elements/top_skills/top-skills-Java.png",
-    "alt": "Skill 1",
+    "alt": "Java logo",
+    "name": "Java",
     "percent": 95
   },
   {
     "image": "skills_elements/top_skills/top-skills-JavaScript.png",
-    "alt": "Skill 2",
+    "alt": "JavaScript logo",
+    "name": "JavaScript",
     "percent": 85
   },
   {
     "image": "skills_elements/top_skills/top-skills-C++.png",
-    "alt": "Skill 3",
+    "alt": "C++ logo",
+    "name": "C++",
     "percent": 70
   },
   {
     "image": "skills_elements/top_skills/top-skills-NodeJS.png",
-    "alt": "Skill 4",
+    "alt": "Node.js logo",
+    "name": "Node.js",
     "percent": 75
   },
   {
     "image": "skills_elements/top_skills/top-skills-Python.png",
-    "alt": "Skill 5",
+    "alt": "Python logo",
+    "name": "Python",
     "percent": 75
   },
   {
     "image": "skills_elements/top_skills/top-skills-SQL.png",
-    "alt": "Skill 6",
+    "alt": "SQL logo",
+    "name": "SQL",
     "percent": 85
   }
 ];
@@ -131,175 +137,238 @@ export const backendSkills = [
 export const technologies = [
   {
     "id": "html",
-    "label": "HTML"
+    "label": "HTML",
+    "category": "frontend"
   },
   {
     "id": "css",
-    "label": "CSS"
+    "label": "CSS",
+    "category": "frontend"
   },
   {
     "id": "js",
-    "label": "JavaScript"
+    "label": "JavaScript",
+    "category": "frontend"
   },
   {
     "id": "tailwind",
-    "label": "Tailwind CSS"
+    "label": "Tailwind CSS",
+    "category": "frontend"
   },
   {
     "id": "bootstrap",
-    "label": "Bootstrap"
+    "label": "Bootstrap",
+    "category": "frontend"
   },
   {
     "id": "react",
-    "label": "React"
+    "label": "React",
+    "category": "frontend"
   },
   {
     "id": "vue",
-    "label": "Vue.js"
+    "label": "Vue.js",
+    "category": "frontend"
   },
   {
     "id": "angular",
-    "label": "Angular"
+    "label": "Angular",
+    "category": "frontend"
   },
   {
     "id": "nuxt",
-    "label": "Nuxt.js"
+    "label": "Nuxt.js",
+    "category": "frontend"
   },
   {
     "id": "flutter",
-    "label": "Flutter"
+    "label": "Flutter",
+    "category": "frontend"
   },
   {
     "id": "typescript",
-    "label": "TypeScript"
+    "label": "TypeScript",
+    "category": "frontend"
   },
   {
     "id": "node",
-    "label": "Node.js"
+    "label": "Node.js",
+    "category": "backend"
   },
   {
     "id": "express",
-    "label": "Express.js"
+    "label": "Express.js",
+    "category": "backend"
   },
   {
     "id": "php",
-    "label": "PHP"
+    "label": "PHP",
+    "category": "backend"
   },
   {
     "id": "java",
-    "label": "Java"
+    "label": "Java",
+    "category": "backend"
   },
   {
     "id": "spring",
-    "label": "Spring Boot"
+    "label": "Spring Boot",
+    "category": "backend"
   },
   {
     "id": "kotlin",
-    "label": "Kotlin"
+    "label": "Kotlin",
+    "category": "backend"
   },
   {
     "id": "dart",
-    "label": "Dart"
+    "label": "Dart",
+    "category": "backend"
   },
   {
     "id": "swift",
-    "label": "Swift"
+    "label": "Swift",
+    "category": "frontend"
   },
   {
     "id": "go",
-    "label": "Go"
+    "label": "Go",
+    "category": "backend"
   },
   {
     "id": "jquery",
-    "label": "jQuery"
+    "label": "jQuery",
+    "category": "frontend"
   },
   {
     "id": "reactnative",
-    "label": "React Native"
+    "label": "React Native",
+    "category": "frontend"
   },
   {
     "id": "laravel",
-    "label": "Laravel"
+    "label": "Laravel",
+    "category": "backend"
   },
   {
     "id": "flask",
-    "label": "Flask"
+    "label": "Flask",
+    "category": "backend"
   },
   {
     "id": "python",
-    "label": "Python"
+    "label": "Python",
+    "category": "backend"
   },
   {
     "id": "django",
-    "label": "Django"
+    "label": "Django",
+    "category": "backend"
   },
   {
     "id": "ruby",
-    "label": "Ruby"
+    "label": "Ruby",
+    "category": "backend"
   },
   {
     "id": "rails",
-    "label": "Rails"
+    "label": "Rails",
+    "category": "backend"
   },
   {
     "id": "mongodb",
-    "label": "MongoDB"
+    "label": "MongoDB",
+    "category": "database"
   },
   {
     "id": "mysql",
-    "label": "MySQL"
+    "label": "MySQL",
+    "category": "database"
   },
   {
     "id": "postgres",
-    "label": "PostgreSQL"
+    "label": "PostgreSQL",
+    "category": "database"
   },
   {
     "id": "firebase",
-    "label": "Firebase"
+    "label": "Firebase",
+    "category": "database"
   },
   {
     "id": "api",
-    "label": "APIs"
+    "label": "APIs",
+    "category": "backend"
   },
   {
     "id": "markup",
-    "label": "Markup"
+    "label": "Markup",
+    "category": "frontend"
   },
   {
     "id": "linux",
-    "label": "Linux"
+    "label": "Linux",
+    "category": "cloud"
   },
   {
     "id": "apache",
-    "label": "Apache"
+    "label": "Apache",
+    "category": "cloud"
   },
   {
     "id": "nginx",
-    "label": "Nginx"
+    "label": "Nginx",
+    "category": "cloud"
   },
   {
     "id": "csharp",
-    "label": "C#"
+    "label": "C#",
+    "category": "backend"
   },
   {
     "id": "aspnet",
-    "label": "ASP.NET"
+    "label": "ASP.NET",
+    "category": "backend"
   },
   {
     "id": "iis",
-    "label": "IIS"
+    "label": "IIS",
+    "category": "cloud"
   },
   {
     "id": "azure",
-    "label": "Azure"
+    "label": "Azure",
+    "category": "cloud"
   },
   {
     "id": "aws",
-    "label": "AWS"
+    "label": "AWS",
+    "category": "cloud"
   },
   {
     "id": "docker",
-    "label": "Docker"
+    "label": "Docker",
+    "category": "cloud"
+  },
+  {
+    "id": "rest",
+    "label": "REST API",
+    "category": "backend"
+  },
+  {
+    "id": "sqlserver",
+    "label": "SQL Server",
+    "category": "database"
+  },
+  {
+    "id": "next",
+    "label": "Next.js",
+    "category": "frontend"
+  },
+  {
+    "id": "s3",
+    "label": "AWS S3",
+    "category": "cloud"
   }
 ];
 

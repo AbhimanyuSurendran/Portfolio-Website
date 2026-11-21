@@ -110,73 +110,173 @@
     box-shadow: var(--shadow-card-hover);
 }
 
-/* ---------- Modal viewer -------------------------------------------------- */
+/* ---------- Certificate viewer (CertificateViewer.jsx) ---------------------- */
 
-/* Hidden until ImageViewer sets an inline display:block (it adds .show to fade in).
-   Without display:none this invisible layer covers the whole page and blocks every click. */
-.modal {
-    display: none;
+/* Covers the whole screen only while a certificate is open (the component is
+   not rendered otherwise, so it can never block clicks on the page). */
+.viewer {
     position: fixed;
     inset: 0;
     z-index: 2000;
-    width: 100%;
-    height: 100%;
-    background: color-mix(in srgb, var(--bg-base) 72%, transparent);
-    opacity: 0;
-    transition: opacity 0.45s var(--ease-out);
     cursor: zoom-out;
 }
 
-.modal.show {
+.viewer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--bg-base) 68%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.viewer.is-open .viewer-backdrop {
     opacity: 1;
 }
 
-/* A bare image, no card around it. */
-.modal .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: min(1100px, 92vw);
-    max-height: 84vh;
-    object-fit: contain;
-    padding: 0;
+/* The picture is placed and animated by CertificateViewer.jsx (left, top,
+   width and height). object-fit: cover lets it grow out of the thumbnail's crop. */
+.viewer-image {
+    position: fixed;
+    max-width: none;
+    object-fit: cover;
     border: 1px solid var(--glass-stroke);
-    border-radius: var(--radius-lg);
-    background: transparent;
-    box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.8);
-    transform: translate(-50%, -50%) scale(0.94);
-    transition: transform 0.5s var(--ease-spring);
+    border-radius: 20px;
+    background: var(--bg-base);
+    box-shadow: 0 50px 110px -34px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--rim-a);
 }
 
-.modal.show .modal-content {
-    transform: translate(-50%, -50%) scale(1);
+/* Moving to another certificate: the new one slides in from the side it was
+   called from. Starts only once the picture is placed (is-placed). */
+.viewer-image.is-swapped.is-placed {
+    animation: viewerSwap 0.5s var(--ease-out);
 }
 
-.modal .close {
+@keyframes viewerSwap {
+    from { opacity: 0; transform: translateX(calc(var(--swap-direction) * 56px)) scale(0.96); }
+}
+
+/* Buttons and counter fade and drop in a moment after the picture starts to grow. */
+.viewer-close,
+.viewer-nav,
+.viewer-counter {
     position: absolute;
-    top: 20px;
-    right: var(--page-gutter);
     z-index: 1;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: var(--glass-bg-strong);
+    box-shadow: inset 1.5px 1.5px 0 var(--light-warm), inset -1.5px -1.5px 0 var(--light-cool), 0 10px 24px -12px rgba(0, 0, 0, 0.6);
+    color: var(--text-1);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.55s var(--ease-spring), background-color 0.2s ease;
+}
+
+.viewer.is-open .viewer-close,
+.viewer.is-open .viewer-nav,
+.viewer.is-open .viewer-counter {
+    opacity: 1;
+    transition-delay: 0.25s, 0.25s, 0s;
+}
+
+.viewer-close {
+    top: 22px;
+    right: var(--page-gutter);
     width: 46px;
     height: 46px;
-    border-radius: 50%;
-    background-color: var(--glass-bg);
-    border: 1px solid var(--glass-stroke);
-    box-shadow: inset 0 1px 0 var(--glass-highlight);
-    color: var(--text-1);
-    font-size: 1.8rem;
-    line-height: 42px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast) ease;
+    font-size: 1.7rem;
+    line-height: 1;
+    transform: translateY(-14px) rotate(-90deg);
 }
 
-.modal .close:hover {
+.viewer.is-open .viewer-close {
+    transform: none;
+}
+
+.viewer-close:hover {
     transform: rotate(90deg);
-    background-color: var(--glass-card-hover);
+    background: var(--glass-card-hover);
+}
+
+.viewer-nav {
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.viewer-prev {
+    left: max(12px, calc(var(--page-gutter) / 2));
+    transform: translateX(-20px);
+}
+
+.viewer-next {
+    right: max(12px, calc(var(--page-gutter) / 2));
+    transform: translateX(20px);
+}
+
+.viewer.is-open .viewer-prev,
+.viewer.is-open .viewer-next {
+    transform: none;
+}
+
+.viewer-nav:hover:not(:disabled) {
+    background: var(--glass-card-hover);
+}
+
+.viewer-nav:disabled {
+    opacity: 0.25 !important;
+    cursor: default;
+}
+
+.viewer-counter {
+    bottom: 24px;
+    left: 50%;
+    min-width: 76px;
+    padding: 7px 16px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+    cursor: default;
+    transform: translate(-50%, 14px);
+}
+
+.viewer.is-open .viewer-counter {
+    transform: translate(-50%, 0);
+}
+
+@media (max-width: 600px) {
+    /* Phones: arrows would cover the picture, so they sit lower, next to the counter. */
+    .viewer-nav {
+        top: auto;
+        bottom: 20px;
+        margin-top: 0;
+        width: 46px;
+        height: 46px;
+    }
+
+    .viewer-prev {
+        left: calc(50% - 130px);
+    }
+
+    .viewer-next {
+        right: calc(50% - 130px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .viewer-backdrop,
+    .viewer-close,
+    .viewer-nav,
+    .viewer-counter {
+        transition-duration: 0.01ms;
+    }
 }
 
 /* ---------- Responsive ----------------------------------------------------- */

@@ -326,3 +326,32 @@ body:has(.nav-overlay.visible) {
         line-height: 40px;
     }
 }
+
+/* ---------- Very small phones (420px wide and below) -------------------------------
+   Same crop of the logo as above, scaled down (152x56 -> 120x44), and tighter spacing,
+   so the logo, theme button, switch and menu button fit on a 360px screen. */
+@media (max-width: 420px) {
+    header {
+        gap: 6px;
+        padding-right: 8px;
+    }
+
+    .logo a {
+        width: 120px;
+        height: 44px;
+        border-radius: 14px;
+    }
+
+    .logo img {
+        top: -37px;
+        left: -2px;
+        width: 118px;
+        height: 118px;
+    }
+
+    .nav-mobile .menu-btn {
+        width: 38px;
+        height: 38px;
+        line-height: 36px;
+    }
+}

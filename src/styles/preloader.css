@@ -1,109 +1,188 @@
 /* =====================================================================
-   PRELOADER (route "/") — short loading screen before the Home page.
-   Midnight background, loader sitting on a floating glass card.
+   PRELOADER (route "/", Preloader.jsx)
+   The main logo inside a glowing, turning ring, with soft pulses and a
+   progress bar. Colours come from the active theme (--c-a, --c-b, --bg-base,
+   --text-1), so it matches whichever of the 12 themes is selected.
 
-   In the old static site this file styled the whole <body> of index.html.
-   In the React app every page shares one <body>, so every rule here is
-   scoped under .preloader to avoid leaking into the other pages.
+   Every rule is scoped under .preloader, because this stylesheet is only
+   added to the page while the loader is on screen.
+   Only transform and opacity animate (plus one clip-path when closing).
    ===================================================================== */
 
 .preloader {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Midnight glass backdrop */
-    background: radial-gradient(900px 600px at 20% 10%, #101a3d 0%, transparent 60%),
-        radial-gradient(800px 600px at 90% 90%, #1b1240 0%, transparent 60%),
-        #04050a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    inset: 0;
     z-index: 9999;
-    transition: opacity 1s ease;
-    opacity: 1;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+    display: grid;
+    place-items: center;
+    /* Same two coloured lights as the site background (see refraction.css). */
+    background:
+        radial-gradient(900px 600px at 20% 10%, var(--lamp-a) 0%, transparent 60%),
+        radial-gradient(800px 600px at 90% 90%, var(--lamp-b) 0%, transparent 60%),
+        var(--bg-base);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    /* Closes like an iris: the circle shrinks to nothing and shows the page. */
+    clip-path: circle(150% at 50% 50%);
+    transition: clip-path 0.75s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.preloader.is-leaving {
+    clip-path: circle(0% at 50% 50%);
 }
 
 .preloader * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
-.preloader.fade-out {
+.loader-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    animation: stageIn 0.7s var(--ease-out) both;
+    transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.preloader.is-leaving .loader-stage {
+    transform: scale(0.85);
     opacity: 0;
 }
 
-/* Glass card holding the loader. */
-.preloader main {
+@keyframes stageIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+}
+
+/* ---------- The mark ---------------------------------------------------- */
+
+.loader-mark {
+    position: relative;
     display: grid;
     place-items: center;
-    padding: 36px 44px;
-    border-radius: 32px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)), rgba(20, 26, 48, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    -webkit-backdrop-filter: blur(24px) saturate(170%);
-    backdrop-filter: blur(24px) saturate(170%);
-    animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    width: 150px;
+    height: 150px;
 }
 
-.preloader .ip {
-    width: min(200px, 50vw);
-    height: auto;
-    filter: drop-shadow(0 0 14px rgba(110, 140, 255, 0.45));
+/* White disc with the logo (the logo file is a circle on white). */
+.loader-logo {
+    position: relative;
+    z-index: 2;
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.6), 0 0 0 5px color-mix(in srgb, var(--c-a) 22%, transparent);
+    animation: logoBreath 2.4s ease-in-out infinite;
 }
 
-.preloader .ip__worm1,
-.preloader .ip__worm2 {
-    animation: worm1 2s linear infinite;
+@keyframes logoBreath {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
 }
 
-.preloader .ip__worm2 {
-    animation-name: worm2;
+/* Thin ring that turns around the logo. --angle is registered in creative.css,
+   which lets the gradient itself rotate. */
+.loader-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from var(--angle), transparent 0deg, var(--c-a) 110deg, var(--c-b) 220deg, transparent 300deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: spinAngle 1.8s linear infinite;
 }
 
-@keyframes cardIn {
-    from { opacity: 0; transform: translateY(12px) scale(0.97); }
-    to { opacity: 1; transform: none; }
+/* A small light circling on the ring. */
+.loader-orbit {
+    position: absolute;
+    inset: 0;
+    animation: orbit 2.6s linear infinite;
 }
 
-@keyframes worm1 {
-    from {
-        stroke-dashoffset: 0;
-    }
-    50% {
-        animation-timing-function: steps(1);
-        stroke-dashoffset: -358;
-    }
-    50.01% {
-        animation-timing-function: linear;
-        stroke-dashoffset: 358;
-    }
-    to {
-        stroke-dashoffset: 0;
-    }
+.loader-orbit i {
+    position: absolute;
+    top: -4px;
+    left: calc(50% - 5px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--c-b);
+    box-shadow: 0 0 14px 3px var(--c-b);
 }
 
-@keyframes worm2 {
-    from {
-        stroke-dashoffset: 358;
-    }
-    50% {
-        stroke-dashoffset: 0;
-    }
-    to {
-        stroke-dashoffset: -358;
-    }
+@keyframes orbit {
+    to { transform: rotate(360deg); }
+}
+
+/* Soft rings that spread outward from the logo. */
+.loader-pulse {
+    position: absolute;
+    inset: 22px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--c-a) 55%, transparent);
+    opacity: 0;
+    animation: pulseOut 2.4s ease-out infinite;
+}
+
+.loader-pulse-late {
+    animation-delay: 1.2s;
+}
+
+@keyframes pulseOut {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* ---------- Name and progress ------------------------------------------------ */
+
+.loader-name {
+    margin: 0;
+    color: var(--text-1);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    animation: stageIn 0.9s var(--ease-out) 0.2s both;
+}
+
+.loader-progress {
+    position: relative;
+    width: min(220px, 60vw);
+    height: 4px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--text-1) 14%, transparent);
+}
+
+.loader-bar {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--c-a), var(--c-b));
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.loader-percent {
+    color: var(--text-2);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+    margin-top: -10px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .preloader main,
-    .preloader .ip__worm1,
-    .preloader .ip__worm2 {
-        animation-duration: 0.01ms;
-        animation-iteration-count: 1;
+    .loader-ring,
+    .loader-orbit,
+    .loader-pulse,
+    .loader-logo {
+        animation: none;
+    }
+
+    .preloader {
+        transition: none;
     }
 }

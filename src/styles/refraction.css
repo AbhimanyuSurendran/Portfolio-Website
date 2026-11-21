@@ -51,10 +51,10 @@ body {
     --lg-inner-shade: rgba(20, 20, 30, 0.16);
 
     /* ---- Light mode (body without .dark-mode) ---- */
-    --glass-bg: color-mix(in srgb, color-mix(in srgb, white 78%, var(--bg-base)) 52%, transparent);
-    --glass-bg-strong: color-mix(in srgb, color-mix(in srgb, white 78%, var(--bg-base)) 68%, transparent);
-    --glass-card-bg: color-mix(in srgb, color-mix(in srgb, white 78%, var(--bg-base)) 46%, transparent);
-    --glass-card-hover: color-mix(in srgb, color-mix(in srgb, white 78%, var(--bg-base)) 74%, transparent);
+    --glass-bg: color-mix(in srgb, color-mix(in srgb, white 50%, var(--bg-base)) 52%, transparent);
+    --glass-bg-strong: color-mix(in srgb, color-mix(in srgb, white 50%, var(--bg-base)) 68%, transparent);
+    --glass-card-bg: color-mix(in srgb, color-mix(in srgb, white 50%, var(--bg-base)) 46%, transparent);
+    --glass-card-hover: color-mix(in srgb, color-mix(in srgb, white 50%, var(--bg-base)) 74%, transparent);
     --glass-sheen: linear-gradient(160deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 38%);
     --glass-stroke: rgba(255, 255, 255, 0.7);
     --glass-stroke-outer: color-mix(in srgb, var(--text-1) 9%, transparent);
@@ -83,15 +83,15 @@ body {
     --aurora-2: color-mix(in srgb, var(--c-b) 16%, transparent);
     --aurora-3: color-mix(in srgb, var(--c-a) 12%, transparent);
 
-    /* Page background lights (used by html::before and the preloader). */
+    /* Page background lights (used by html::before and by the preloader, see preloader.css). */
     --lamp-a: color-mix(in srgb, var(--c-a) 38%, transparent);
     --lamp-b: color-mix(in srgb, var(--c-b) 28%, transparent);
 }
 
 /* ---- Dark mode ---- */
 body.dark-mode {
-    --glass-bg: color-mix(in srgb, color-mix(in srgb, white 6%, var(--bg-base)) 50%, transparent);
-    --glass-bg-strong: color-mix(in srgb, color-mix(in srgb, white 4%, var(--bg-base)) 74%, transparent);
+    --glass-bg: color-mix(in srgb, color-mix(in srgb, white 8%, var(--bg-base)) 58%, transparent);
+    --glass-bg-strong: color-mix(in srgb, color-mix(in srgb, white 6%, var(--bg-base)) 78%, transparent);
     --glass-card-bg: rgba(255, 244, 230, 0.05);
     --glass-card-hover: rgba(255, 244, 230, 0.09);
     --glass-sheen: linear-gradient(160deg, rgba(255, 235, 210, 0.09) 0%, rgba(255, 235, 210, 0) 36%);
@@ -118,8 +118,8 @@ body.dark-mode {
     --aurora-2: color-mix(in srgb, var(--c-b) 12%, transparent);
     --aurora-3: color-mix(in srgb, var(--c-a) 8%, transparent);
 
-    --lamp-a: color-mix(in srgb, color-mix(in srgb, var(--c-a) 62%, black) 50%, transparent);
-    --lamp-b: color-mix(in srgb, color-mix(in srgb, var(--c-b) 62%, black) 42%, transparent);
+    --lamp-a: color-mix(in srgb, color-mix(in srgb, var(--c-a) 72%, black) 72%, transparent);
+    --lamp-b: color-mix(in srgb, color-mix(in srgb, var(--c-b) 72%, black) 62%, transparent);
 
     --lg-tint: color-mix(in srgb, color-mix(in srgb, white 3%, var(--bg-base)) 66%, transparent);
     --lg-glare: color-mix(in srgb, var(--c-a) 14%, transparent);
@@ -141,15 +141,15 @@ h1, h2, h3, .section-heading {
    html cannot, hence the :has() rule below. */
 html::before {
     background:
-        radial-gradient(900px 620px at 8% -8%, color-mix(in srgb, var(--c-a) 38%, transparent) 0%, transparent 62%),
-        radial-gradient(800px 600px at 104% 108%, color-mix(in srgb, var(--c-b) 28%, transparent) 0%, transparent 60%),
+        radial-gradient(900px 620px at 8% -8%, color-mix(in srgb, var(--c-a) 55%, transparent) 0%, transparent 62%),
+        radial-gradient(800px 600px at 104% 108%, color-mix(in srgb, var(--c-b) 45%, transparent) 0%, transparent 60%),
         linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
 }
 
 html:has(body.dark-mode)::before {
     background:
-        radial-gradient(900px 620px at 8% -8%, color-mix(in srgb, color-mix(in srgb, var(--c-a) 62%, black) 50%, transparent) 0%, transparent 62%),
-        radial-gradient(800px 600px at 104% 108%, color-mix(in srgb, color-mix(in srgb, var(--c-b) 62%, black) 42%, transparent) 0%, transparent 60%),
+        radial-gradient(900px 620px at 8% -8%, color-mix(in srgb, color-mix(in srgb, var(--c-a) 72%, black) 72%, transparent) 0%, transparent 62%),
+        radial-gradient(800px 600px at 104% 108%, color-mix(in srgb, color-mix(in srgb, var(--c-b) 72%, black) 62%, transparent) 0%, transparent 60%),
         linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
 }
 
@@ -290,13 +290,4 @@ header::after {
 .progress-container > .progress-bar {
     background: linear-gradient(90deg, var(--iri-3), var(--iri-4));
     box-shadow: none;
-}
-
-/* ---------- 7. Preloader and small leftovers ----------------------------- */
-
-.preloader {
-    background:
-        radial-gradient(900px 600px at 20% 10%, var(--lamp-a) 0%, transparent 60%),
-        radial-gradient(800px 600px at 90% 90%, var(--lamp-b) 0%, transparent 60%),
-        var(--bg-base);
 }

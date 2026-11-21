@@ -1,10 +1,25 @@
 import { useState } from 'react'
 import PageLayout from '../components/PageLayout'
 import Footer from '../components/Footer'
+import DownloadButton from '../components/DownloadButton'
 import SiteLink from '../components/SiteLink'
 import { certifications, education, experience, featuredProjects, internships, skillGroups } from '../data/about'
 import { assetUrl } from '../utils/assetUrl'
 import aboutCss from '../styles/about.css?inline'
+// Address of the bundled resume file, used as the plain link (new tab / no JavaScript).
+import resumeUrl from '../assets/resume.pdf?url'
+
+// The resume is bundled into the site's own JavaScript (loaded only when the
+// button is clicked) and turned back into a file in the browser. Requesting a
+// ".pdf" address from the server failed on some browsers/machines with
+// "File wasn't available on site", and this avoids that request completely.
+async function loadResume() {
+  const { default: dataUrl } = await import('../assets/resume.pdf?inline')
+  const [header, base64] = dataUrl.split(',')
+  const mimeType = header.slice(header.indexOf(':') + 1, header.indexOf(';'))
+  const bytes = Uint8Array.from(atob(base64), (character) => character.charCodeAt(0))
+  return new Blob([bytes], { type: mimeType })
+}
 
 const PERSONAL_DETAILS = [
   { icon: 'about_elements/about-calendar-logo.png', label: 'Date of Birth', value: '01/09/2003' },
@@ -30,9 +45,12 @@ function ResumeProfile() {
         </div>
       ))}
       <div className="resume-button">
-        <a href={assetUrl('about_elements/CV REBUILD (UPDATED).pdf')} target="_blank" rel="noopener noreferrer" className="resume-link glass-btn">
-          Download Resume
-        </a>
+        <DownloadButton
+          loadFile={loadResume}
+          href={resumeUrl}
+          fileName="resume.pdf"
+          className="resume-link"
+        />
       </div>
     </div>
   )
