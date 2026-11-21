@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages shows this file for any address it cannot find.
+      // The old static site used addresses like /projects.html; the React app
+      // uses /#/projects. Send old links (and any unknown address) to the right page.
+      // (Written for a site served from the domain root, matching `base: '/'` in vite.config.js.)
+      var pages = ['home', 'projects', 'skills', 'certificates', 'publications', 'about']
+      var requestedPage = location.pathname.split('/').pop().replace(/\.html$/i, '')
+      var target = pages.indexOf(requestedPage) !== -1 ? requestedPage : 'home'
+      location.replace('/#/' + target)
+    </script>
+  </head>
+  <body></body>
+</html>
