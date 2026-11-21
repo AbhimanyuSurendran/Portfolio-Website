@@ -1,0 +1,443 @@
+/* =====================================================================
+   HOME PAGE — hero with name, typed role, intro, contact links and the
+   rotating profile photo slider.
+   Shared tokens/surfaces: glass.css · header: header.css
+   ===================================================================== */
+
+/* ---------- Bubbles (decorative background) --------------------------- */
+
+.bubble {
+    position: absolute;
+    bottom: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(140, 170, 255, 0.25) 55%, transparent 72%);
+    opacity: 0;
+    animation-name: rise;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+}
+
+body:not(.dark-mode) .bubble {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(90, 120, 255, 0.3) 55%, transparent 72%);
+}
+
+/* ---------- Hero layout ------------------------------------------------ */
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+    /* Full viewport width (content still centred via padding) so the
+       orbit decorations around the photo are only ever trimmed at the
+       screen edge; overflow-x:clip stops them causing sideways scroll. */
+    width: 100%;
+    min-height: calc(100vh - 110px);
+    min-height: calc(100dvh - 110px);
+    margin: 0;
+    padding-block: clamp(32px, 6vh, 72px) clamp(48px, 8vh, 96px);
+    padding-inline: max(var(--page-gutter), (100% - var(--page-max)) / 2 + var(--page-gutter));
+    overflow-x: clip;
+}
+
+/* ---------- Text column ------------------------------------------------- */
+
+.profile-title > * {
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease-out) forwards;
+}
+
+.profile-title > :nth-child(1) { animation-delay: 0.10s; }
+.profile-title > :nth-child(2) { animation-delay: 0.22s; }
+.profile-title > :nth-child(3) { animation-delay: 0.34s; }
+.profile-title > :nth-child(4) { animation-delay: 0.46s; }
+.profile-title > :nth-child(5) { animation-delay: 0.54s; }
+
+.profile-title .name {
+    font-size: clamp(2.7rem, 1.4rem + 5vw, 5.6rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    padding-bottom: 0.08em;
+    background: linear-gradient(120deg, var(--text-1) 0%, var(--text-1) 40%, var(--accent) 75%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.profile-title h2 {
+    margin-top: 18px;
+    min-height: 1.3em;
+    font-size: clamp(1.25rem, 1rem + 1.1vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-2);
+}
+
+.typed-text {
+    font-weight: 650;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Caret for the typing effect. The existing script adds .typing while
+   letters are being typed; the caret only blinks when idle. */
+.cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1.05em;
+    margin-left: 4px;
+    vertical-align: -0.12em;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: blink 1s step-end infinite;
+}
+
+.cursor.typing {
+    animation: none;
+}
+
+.profile-title h3 {
+    max-width: 34em;
+    margin-top: 22px;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+    color: var(--text-2);
+}
+
+/* "Contact Me" label. The h4 has an inline text-align:center; in the
+   left-aligned desktop layout it must line up with the text above. */
+.profile-title h4 {
+    margin-top: 36px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-align: left !important;
+}
+
+/* ---------- Contact links (glass dock) ------------------------------- */
+
+.contact-sources {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--shadow-panel), inset 0 1px 0 var(--glass-highlight);
+}
+
+.contact-sources a {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: inset 0 1px 0 var(--glass-highlight);
+    transition: transform var(--dur) var(--ease-spring), background-color var(--dur-fast) ease, box-shadow var(--dur) ease;
+}
+
+.contact-sources a:hover {
+    transform: translateY(-6px) scale(1.08);
+    background: var(--glass-card-hover);
+    box-shadow: 0 14px 26px -12px rgba(80, 110, 255, 0.6), inset 0 1px 0 var(--glass-highlight);
+}
+
+.contact-sources a:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.circular-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ---------- Photo slider ----------------------------------------------- */
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1.2s var(--ease-out) 0.3s forwards;
+}
+
+/* Neutralise the Bootstrap grid wrappers around the slider. */
+.profile-image .row,
+.profile-image .col-lg-10,
+.profile-image .section {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    position: relative;
+    width: min(440px, 100%);
+    aspect-ratio: 1 / 1;
+    animation: floatY 9s ease-in-out infinite;
+}
+
+/* Soft coloured glow behind the photo. */
+.profile-container::before {
+    content: "";
+    position: absolute;
+    inset: -14%;
+    z-index: -1;
+    border-radius: 50%;
+    background:
+        radial-gradient(50% 50% at 35% 35%, var(--aurora-1), transparent 70%),
+        radial-gradient(50% 50% at 70% 70%, var(--aurora-2), transparent 70%);
+    filter: blur(20px);
+}
+
+/* Glass frame around the photo. */
+.profile-container::after {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    z-index: -1;
+    border-radius: 34%;
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--shadow-panel), inset 0 1px 0 var(--glass-highlight);
+}
+
+.profile-container ul {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-radius: 30%;
+    overflow: hidden;
+}
+
+/* Each slide is one profile photo; the existing script toggles .active. */
+.profile-container ul li {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.4s var(--ease-out), transform 6s var(--ease-out);
+}
+
+.profile-container ul li.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile-container ul li:nth-child(1) { background-image: url('/Profile Pictures/Profile-pic-1.webp'); }
+.profile-container ul li:nth-child(2) { background-image: url('/Profile Pictures/Profile-pic-2.webp'); }
+.profile-container ul li:nth-child(3) { background-image: url('/Profile Pictures/Profile-pic-3.webp'); }
+.profile-container ul li:nth-child(4) { background-image: url('/Profile Pictures/Profile-pic-4.webp'); }
+.profile-container ul li:nth-child(5) { background-image: url('/Profile Pictures/Profile-pic-5.webp'); }
+.profile-container ul li:nth-child(6) { background-image: url('/Profile Pictures/Profile-pic-6.webp'); }
+
+/* Name caption under the photo. */
+.profile-image > h1 {
+    margin-top: 40px;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-align: center;
+}
+
+/* ---------- Responsive -------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        min-height: auto;
+        padding-top: 40px;
+        text-align: center;
+    }
+
+    /* Photo first on narrow screens. */
+    .profile-image {
+        order: -1;
+    }
+
+    .profile-container {
+        width: min(300px, 70vw);
+    }
+
+    .profile-title h3 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile-title h4 {
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-sources {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .contact-sources a {
+        width: 46px;
+        height: 46px;
+    }
+
+    .circular-image {
+        width: 26px;
+        height: 26px;
+    }
+
+    .profile-image > h1 {
+        margin-top: 30px;
+        letter-spacing: 0.14em;
+    }
+}
+
+/* =====================================================================
+   CREATIVE TOUCHES (uses tokens from creative.css)
+   ===================================================================== */
+
+/* Name: colour slowly flows through the letters, with a soft glow. */
+.profile-title .name {
+    background: linear-gradient(120deg, var(--text-1) 0%, var(--text-1) 30%, var(--iri-1) 50%, var(--iri-2) 65%, var(--iri-3) 80%, var(--text-1) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 10px 34px var(--rim-a));
+    animation: fadeUp 0.9s var(--ease-out) 0.1s forwards;
+}
+
+@keyframes nameFlow {
+    from { background-position: 0% 0; }
+    to { background-position: 100% 0; }
+}
+
+.typed-text {
+    background: linear-gradient(90deg, var(--iri-4), var(--iri-1), var(--iri-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 14px var(--rim-b));
+}
+
+/* --- Orbit system around the photo -------------------------------------
+   The Bootstrap wrappers inside .profile-container are used as anchors:
+   .row = dashed orbit + cyan orb, .col-lg-10 = pink orb on a wider
+   orbit, .section = iridescent rim hugging the photo frame.
+   An "orb" is a radial-gradient dot drawn at the edge of a rotating box. */
+.profile-image .row {
+    position: absolute;
+    inset: 0;
+}
+
+.profile-image .row::before,
+.profile-image .row::after,
+.profile-image .col-lg-10::before,
+.profile-image .section::before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.profile-image .row::before {
+    inset: -12%;
+    border: 1px dashed color-mix(in srgb, var(--iri-1) 50%, transparent);
+    animation: orbitSpin 70s linear infinite;
+}
+
+.profile-image .row::after {
+    inset: -12%;
+    background: radial-gradient(circle at 50% 0%, #fff 0, var(--iri-4) 5px, color-mix(in srgb, var(--iri-4) 35%, transparent) 10px, transparent 18px);
+    filter: drop-shadow(0 0 10px var(--iri-4));
+    animation: orbitSpin 16s linear infinite;
+}
+
+.profile-image .col-lg-10::before {
+    inset: -21%;
+    border: 1px solid color-mix(in srgb, var(--iri-2) 22%, transparent);
+    background: radial-gradient(circle at 50% 100%, #fff 0, var(--iri-3) 6px, color-mix(in srgb, var(--iri-3) 35%, transparent) 12px, transparent 20px);
+    filter: drop-shadow(0 0 12px var(--iri-3));
+    animation: orbitSpin 28s linear infinite reverse;
+}
+
+/* Rotating iridescent rim around the photo frame. */
+.profile-image .section::before {
+    inset: -15px;
+    border-radius: 35%;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), var(--iri-1), var(--iri-2), var(--iri-3), var(--iri-4), var(--iri-1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: spinAngle 8s linear infinite;
+}
+
+@keyframes orbitSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* Contact icons: iridescent ring lights up on hover. */
+.contact-sources a {
+    position: relative;
+}
+
+.contact-sources a::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), var(--iri-1), var(--iri-2), var(--iri-3), var(--iri-4), var(--iri-1));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity var(--dur) ease;
+}
+
+.contact-sources a:hover::after {
+    opacity: 1;
+    animation: spinAngle 3s linear infinite;
+}
+
+/* Name caption under the photo: gradient text. */
+.profile-image > h1 {
+    background: linear-gradient(90deg, var(--text-3), var(--iri-1), var(--text-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 900px) {
+    /* Tighter orbits so nothing pokes past a phone screen. */
+    .profile-image .row::before,
+    .profile-image .row::after {
+        inset: -7%;
+    }
+
+    .profile-image .col-lg-10::before {
+        inset: -11%;
+    }
+}

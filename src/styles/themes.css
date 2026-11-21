@@ -1,0 +1,323 @@
+/* =====================================================================
+   COLOUR THEMES: 6 dark + 6 light
+   Loaded after refraction.css (see main.jsx), which derives every other
+   colour of the glass design from the six values set here:
+
+     --c-a                     main light colour (accent, warm edge light)
+     --c-b                     second light colour (cool edge light)
+     --bg-base / --bg-top / --bg-bottom   page background
+     --text-1                  text colour
+
+   The selector is [data-theme="<id>"], not html[...]: useTheme.js puts the
+   attribute on <html>, and the colour swatches in ThemePicker carry the same
+   attribute so they can show their own palette.
+
+   The ids must match src/data/themes.js. Dark themes are used while
+   body has .dark-mode, light themes otherwise (the hook handles that).
+   A chip with white text sits on --c-a, so keep --c-a mid-to-dark.
+   ===================================================================== */
+
+/* ---------- Dark themes ------------------------------------------------ */
+
+[data-theme="ember"] {
+    --c-a: #ec6a2c;
+    --c-b: #0f9d8c;
+    --bg-base: #08090b;
+    --bg-top: #0b0b0d;
+    --bg-bottom: #08090b;
+    --text-1: #f6f1e9;
+}
+
+[data-theme="lagoon"] {
+    --c-a: #12a3a6;
+    --c-b: #e8964a;
+    --bg-base: #060d0e;
+    --bg-top: #081213;
+    --bg-bottom: #060d0e;
+    --text-1: #e9f5f4;
+}
+
+[data-theme="rosewood"] {
+    --c-a: #d9476a;
+    --c-b: #e0a93a;
+    --bg-base: #0d0709;
+    --bg-top: #130a0d;
+    --bg-bottom: #0d0709;
+    --text-1: #f8eced;
+}
+
+[data-theme="moss"] {
+    --c-a: #6ea23a;
+    --c-b: #d6a03c;
+    --bg-base: #070b06;
+    --bg-top: #0a0f08;
+    --bg-bottom: #070b06;
+    --text-1: #eef3e6;
+}
+
+[data-theme="glacier"] {
+    --c-a: #3d8fe0;
+    --c-b: #3fc2ac;
+    --bg-base: #060a12;
+    --bg-top: #09101b;
+    --bg-bottom: #060a12;
+    --text-1: #e8f0fa;
+}
+
+[data-theme="graphite"] {
+    --c-a: #7d7f86;
+    --c-b: #d99a1f;
+    --bg-base: #09090a;
+    --bg-top: #0e0e10;
+    --bg-bottom: #09090a;
+    --text-1: #f1f1f2;
+}
+
+/* ---------- Light themes ----------------------------------------------- */
+
+[data-theme="sandstone"] {
+    --c-a: #ec6a2c;
+    --c-b: #0f9d8c;
+    --bg-base: #e7e2d9;
+    --bg-top: #efeae1;
+    --bg-bottom: #e2dcd0;
+    --text-1: #1a1612;
+}
+
+[data-theme="seafoam"] {
+    --c-a: #0e9aa0;
+    --c-b: #e08a3c;
+    --bg-base: #dfeceb;
+    --bg-top: #e9f4f2;
+    --bg-bottom: #d6e6e4;
+    --text-1: #0f1f1e;
+}
+
+[data-theme="blush"] {
+    --c-a: #d6456a;
+    --c-b: #d99a1e;
+    --bg-base: #f1e1e3;
+    --bg-top: #f7ebec;
+    --bg-bottom: #ead8db;
+    --text-1: #2a1317;
+}
+
+[data-theme="meadow"] {
+    --c-a: #5a8f2a;
+    --c-b: #c58a1a;
+    --bg-base: #e3e9d9;
+    --bg-top: #ecf1e3;
+    --bg-bottom: #dce3d0;
+    --text-1: #172010;
+}
+
+[data-theme="frost"] {
+    --c-a: #2d7fd1;
+    --c-b: #2bb59f;
+    --bg-base: #dde6f0;
+    --bg-top: #e8eff7;
+    --bg-bottom: #d4dfeb;
+    --text-1: #101a28;
+}
+
+[data-theme="pearl"] {
+    --c-a: #5f5d58;
+    --c-b: #c4742c;
+    --bg-base: #e9e9e7;
+    --bg-top: #f2f2f0;
+    --bg-bottom: #e1e1de;
+    --text-1: #1a1a1a;
+}
+
+/* ---------- Theme picker menu (the header buttons are in controls.css) ----- */
+
+.theme-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    right: -8px;
+    z-index: 70;
+    width: 336px;
+    padding: 16px;
+    border: 1px solid var(--glass-stroke);
+    border-radius: 24px;
+    background: var(--glass-bg-strong);
+    box-shadow:
+        var(--shadow-panel),
+        inset 1.5px 1.5px 0 var(--light-warm),
+        inset -1.5px -1.5px 0 var(--light-cool);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    transform-origin: top right;
+    animation: themeMenuIn 0.28s var(--ease-out);
+}
+
+@keyframes themeMenuIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+}
+
+.theme-menu-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.theme-menu-title {
+    margin: 0;
+    color: var(--text-1);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.theme-menu-subtitle {
+    margin: 2px 0 0;
+    color: var(--text-3);
+    font-size: 0.78rem;
+}
+
+.theme-menu-close {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--glass-stroke);
+    border-radius: 50%;
+    background: var(--glass-card-bg);
+    color: var(--text-2);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+
+.theme-menu-close:hover {
+    background: var(--glass-card-hover);
+    color: var(--text-1);
+}
+
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+/* One palette: a miniature of the page, with its name underneath.
+   The card itself uses the page's current colours; only .theme-preview
+   carries data-theme, so only the miniature shows the palette's colours. */
+.theme-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.theme-card:hover {
+    background: var(--glass-card-hover);
+    transform: translateY(-2px);
+}
+
+.theme-card:active {
+    transform: scale(0.97);
+}
+
+.theme-preview {
+    position: relative;
+    display: block;
+    height: 54px;
+    overflow: hidden;
+    border-radius: 11px;
+    /* The palette's own page background, with its two lights in the corners. */
+    background:
+        radial-gradient(70px 50px at 0% 0%, color-mix(in srgb, var(--c-a) 55%, transparent), transparent 70%),
+        radial-gradient(70px 50px at 100% 100%, color-mix(in srgb, var(--c-b) 45%, transparent), transparent 70%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-1) 16%, transparent);
+}
+
+/* A tiny glass bar, like the header. */
+.theme-preview-bar {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    height: 9px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--text-1) 22%, transparent);
+}
+
+.theme-preview-dots {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    display: flex;
+    gap: 5px;
+}
+
+.theme-preview-dots i {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--c-a);
+    box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--text-1) 30%, transparent);
+}
+
+.theme-preview-dots i + i {
+    background: var(--c-b);
+}
+
+.theme-card-name {
+    color: var(--text-1);
+    font-size: 0.78rem;
+    font-weight: 560;
+    text-align: center;
+}
+
+/* Selected: ring in the page accent colour plus a check mark. */
+.theme-card[aria-checked="true"] {
+    border-color: var(--accent);
+    background: var(--glass-card-hover);
+}
+
+.theme-card[aria-checked="true"]::after {
+    content: "\2713";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg-base);
+    font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 1024px) {
+    /* Phones: the panel spans the screen under the header instead of hanging off the button. */
+    .theme-picker {
+        position: static;
+    }
+
+    .theme-menu {
+        position: fixed;
+        top: 96px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+    }
+}

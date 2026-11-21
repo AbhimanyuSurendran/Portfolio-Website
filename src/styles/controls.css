@@ -1,0 +1,323 @@
+/* =====================================================================
+   HEADER CONTROLS: the theme picker button and the light/dark switch
+   Components: ThemePicker.jsx, ThemeToggle.jsx.
+
+   Shared ideas (inspired by React Bits "Click Spark" and "Star Border"):
+     - sparks:  a burst of lines on click (utils/sparks.js, .spark below)
+     - ring:    a thin light that travels around the edge on hover
+   Only transform, opacity and clip/mask are animated, so it stays smooth.
+   ===================================================================== */
+
+/* Bouncy easing. Browsers that support linear() get a real spring;
+   the rest get a cubic-bezier with a similar overshoot. */
+:root {
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+    :root {
+        --spring: linear(0, 0.18 6%, 0.62 14%, 0.98 24%, 1.1 32%, 1.08 40%, 1.02 52%, 0.995 66%, 1);
+    }
+}
+
+/* Click sparks (created by playSparks). */
+.spark {
+    position: absolute;
+    z-index: 3;
+    width: 9px;
+    height: 2px;
+    margin: -1px 0 0 -4px;
+    border-radius: 2px;
+    background: var(--c-a);
+    pointer-events: none;
+    box-shadow: 0 0 6px var(--c-a);
+}
+
+.spark:nth-of-type(even) {
+    background: var(--c-b);
+    box-shadow: 0 0 6px var(--c-b);
+}
+
+/* ---------- Theme picker button ------------------------------------------- */
+
+.theme-picker {
+    position: relative;
+    flex: 0 0 auto;
+    margin-right: 12px;
+}
+
+.theme-picker-button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--glass-card-bg);
+    box-shadow:
+        inset 1.5px 1.5px 0 var(--light-warm),
+        inset -1.5px -1.5px 0 var(--light-cool),
+        0 8px 18px -10px rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Travelling light around the edge: a conic gradient (--angle is registered
+   in creative.css) cut into a thin ring with a mask. */
+.theme-picker-button::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), transparent 0deg, var(--c-a) 70deg, transparent 150deg, var(--c-b) 250deg, transparent 330deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.3s ease, transform 0.4s var(--spring);
+    pointer-events: none;
+}
+
+.theme-picker-button:hover::before,
+.theme-picker-button[aria-expanded="true"]::before,
+.theme-picker-button:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+    animation: spinAngle 3.2s linear infinite;
+}
+
+.theme-picker-button:active {
+    scale: 0.92;
+}
+
+/* The two-colour disc. Gloss on top, ring in the palette's own background. */
+.theme-swatch {
+    position: relative;
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), transparent 45%),
+        linear-gradient(135deg, var(--c-a) 50%, var(--c-b) 50%);
+    box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 3px color-mix(in srgb, var(--text-1) 25%, transparent);
+}
+
+/* Replays whenever the palette changes (the element is re-created per palette). */
+.theme-picker-button .theme-swatch {
+    animation: swatchPop 0.6s var(--spring);
+    transition: rotate 0.5s var(--spring);
+}
+
+.theme-picker-button:hover .theme-swatch {
+    rotate: 25deg;
+}
+
+.theme-picker-button[aria-expanded="true"] .theme-swatch {
+    rotate: 180deg;
+}
+
+@keyframes swatchPop {
+    from { transform: scale(0.3) rotate(-120deg); opacity: 0; }
+}
+
+/* ---------- Light / dark switch -------------------------------------------- */
+
+.mode-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mode-toggle {
+    --knob: 28px;
+    --pad: 4px;
+    position: relative;
+    flex: 0 0 auto;
+    width: 68px;
+    height: 36px;
+    margin: 0 4px 0 0;
+    border-radius: 99px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow:
+        inset 1.5px 1.5px 0 var(--light-warm),
+        inset -1.5px -1.5px 0 var(--light-cool),
+        0 8px 18px -10px rgba(0, 0, 0, 0.55);
+}
+
+/* Bigger tap area for fingers, invisible. */
+.mode-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -6px -4px;
+}
+
+.mode-track {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+/* Gradients cannot be transitioned, so day and night are two layers that
+   cross-fade. */
+.mode-sky {
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.6s ease;
+}
+
+.mode-sky-day {
+    background:
+        radial-gradient(14px 9px at 62% 82%, rgba(255, 255, 255, 0.95), transparent 70%),
+        radial-gradient(18px 10px at 84% 70%, rgba(255, 255, 255, 0.8), transparent 70%),
+        linear-gradient(135deg, color-mix(in srgb, var(--c-b) 38%, white), color-mix(in srgb, var(--c-a) 42%, white));
+}
+
+.mode-sky-night {
+    opacity: 0;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--c-b) 32%, #0a0d18), color-mix(in srgb, var(--c-a) 24%, #060812));
+}
+
+#toggle:checked + .mode-toggle .mode-sky-night {
+    opacity: 1;
+}
+
+#toggle:checked + .mode-toggle .mode-sky-day {
+    opacity: 0;
+}
+
+/* Stars, twinkling out of step. */
+.mode-sky-night i {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    animation: starTwinkle 2.4s ease-in-out infinite;
+}
+
+.mode-sky-night i:nth-child(1) { left: 12px; top: 9px; }
+.mode-sky-night i:nth-child(2) { left: 22px; top: 22px; width: 2px; height: 2px; animation-delay: 0.7s; }
+.mode-sky-night i:nth-child(3) { left: 30px; top: 11px; width: 2px; height: 2px; animation-delay: 1.3s; }
+.mode-sky-night i:nth-child(4) { left: 17px; top: 15px; width: 2px; height: 2px; animation-delay: 1.9s; }
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0.25; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* The knob rides on a spring and stretches while pressed. */
+.mode-knob {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    display: grid;
+    place-items: center;
+    width: var(--knob);
+    height: var(--knob);
+    border-radius: 99px;
+    background: linear-gradient(180deg, #ffffff, #eef0f4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.32), inset 0 -2px 3px rgba(0, 0, 0, 0.08);
+    transition: translate 0.7s var(--spring), width 0.25s var(--ease-out), background 0.5s ease;
+}
+
+#toggle:checked + .mode-toggle .mode-knob {
+    translate: calc(68px - var(--knob) - var(--pad) * 2) 0;
+    background: linear-gradient(180deg, #e9ecf8, #cfd5ea);
+}
+
+.mode-toggle:active .mode-knob {
+    width: 36px;
+}
+
+#toggle:checked + .mode-toggle:active .mode-knob {
+    /* Keep the right edge in place while the knob stretches to the left. */
+    translate: calc(68px - 36px - var(--pad) * 2) 0;
+}
+
+/* Sun -> moon. */
+.mode-icon {
+    width: 20px;
+    height: 20px;
+    overflow: visible;
+}
+
+.mode-sun-core {
+    fill: var(--c-a);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.6s var(--spring), fill 0.5s ease;
+}
+
+.mode-sun-rays {
+    stroke: var(--c-a);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    transform-origin: 12px 12px;
+    transition: transform 0.7s var(--spring), opacity 0.3s ease;
+}
+
+/* A dark disc slides across the sun and leaves a crescent. */
+.mode-moon-cut {
+    transition: transform 0.6s var(--ease-out);
+}
+
+#toggle:checked + .mode-toggle .mode-sun-core {
+    fill: color-mix(in srgb, var(--c-b) 55%, #263052);
+    transform: scale(1.65);
+}
+
+#toggle:checked + .mode-toggle .mode-sun-rays {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.4);
+}
+
+#toggle:checked + .mode-toggle .mode-moon-cut {
+    transform: translate(-6px, 8px);
+}
+
+.mode-input:focus-visible + .mode-toggle {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.mode-toggle:hover .mode-sun-rays {
+    animation: raysSpin 6s linear infinite;
+}
+
+@keyframes raysSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- Phones ----------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+    /* Both controls sit to the right, before the menu button. */
+    .theme-picker {
+        order: 2;
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
+    .mode-toggle {
+        order: 2;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mode-sky-night i,
+    .mode-toggle:hover .mode-sun-rays,
+    .theme-picker-button:hover::before,
+    .theme-picker-button[aria-expanded="true"]::before {
+        animation: none;
+    }
+}

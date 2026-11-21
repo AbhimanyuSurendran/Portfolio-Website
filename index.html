@@ -1,112 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Optimized Description for SEO and Click-Through -->
-    <meta name="description"
-        content="Abhimanyu Surendran - Full-Stack Developer and Trainer with expertise in Android, Java, MERN stack, and AI-driven development. Proven track record in building scalable web and mobile applications.">
-
+    <meta
+      name="description"
+      content="Abhimanyu Surendran - Full-Stack Developer and Trainer with expertise in Android, Java, MERN stack, and AI-driven development. Proven track record in building scalable web and mobile applications."
+    />
     <!-- Strategic Keywords for Better Visibility -->
-    <meta name="keywords"
-        content="Abhimanyu Surendran, Full-Stack Developer, Android Developer, Java Developer, MERN Stack, React Developer, Node.js, MongoDB, Web Development, App Development, Git, Full Stack Trainer, AI in development, Portfolio, Bhopal Developer, MCA Developer, S-TEK IT, Internship Experience, Mobile Developer India, Full Stack Projects, Code Optimization, CI/CD, Agile Developer, Software Trainer, Modern Web Developer, Firebase, Android Studio, REST APIs, Responsive Design, Cloud Deployment">
-
-        
+    <meta
+      name="keywords"
+      content="Abhimanyu Surendran, Full-Stack Developer, Android Developer, Java Developer, MERN Stack, React Developer, Node.js, MongoDB, Web Development, App Development, Git, Full Stack Trainer, AI in development, Portfolio, Bhopal Developer, MCA Developer, S-TEK IT, Internship Experience, Mobile Developer India, Full Stack Projects, Code Optimization, CI/CD, Agile Developer, Software Trainer, Modern Web Developer, Firebase, Android Studio, REST APIs, Responsive Design, Cloud Deployment"
+    />
     <title>Loading...</title>
-    <link rel="icon" href="/title_logo.png" type="image/png">
-    <link rel="stylesheet" href="styles/preloader.css">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            /* Prevent scrolling */
-        }
-
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Midnight glass backdrop (see styles/preloader.css) */
-            background: radial-gradient(900px 600px at 20% 10%, #101a3d 0%, transparent 60%),
-                radial-gradient(800px 600px at 90% 90%, #1b1240 0%, transparent 60%),
-                #04050a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease;
-            /* Transition effect */
-            opacity: 1;
-        }
-
-        .preloader.fade-out {
-            opacity: 0;
-            /* Fade out effect */
-        }
-    </style>
-</head>
-
-<body oncontextmenu="return false;">
-<script>
-    document.onkeydown = function (e) {
-        const key = e.key.toLowerCase(); // Normalize to lowercase
-
-        if (
-            e.key === "F12" ||
-            (e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")) ||
-            (e.ctrlKey && key === "u")
-        ) {
-            alert("😂😂 Error 404: Inspect powers not found. Try again never. 🚫😂😂\n🛑 ACCESS DENIED 🛑\nYou really thought you could inspect this? 😂💻💀");
-            return false;
-        }
-    };
-</script>
-    <div class="preloader" id="preloader">
-        <main>
-            <svg class="ip" viewBox="0 0 256 128" width="256px" height="128px" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#5eead4" />
-                        <stop offset="33%" stop-color="#7aa7ff" />
-                        <stop offset="67%" stop-color="#8b5cf6" />
-                        <stop offset="100%" stop-color="#c4b5fd" />
-                    </linearGradient>
-                    <linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
-                        <stop offset="0%" stop-color="#c4b5fd" />
-                        <stop offset="33%" stop-color="#8b5cf6" />
-                        <stop offset="67%" stop-color="#4f7cff" />
-                        <stop offset="100%" stop-color="#5eead4" />
-                    </linearGradient>
-                </defs>
-                <g fill="none" stroke-linecap="round" stroke-width="16">
-                    <g class="ip__track" stroke="rgba(255,255,255,0.08)">
-                        <path d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
-                        <path d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
-                    </g>
-                    <g stroke-dasharray="180 656">
-                        <path class="ip__worm1" stroke="url(#grad1)" stroke-dashoffset="0"
-                            d="M8,64s0-56,60-56,60,112,120,112,60-56,60-56" />
-                        <path class="ip__worm2" stroke="url(#grad2)" stroke-dashoffset="358"
-                            d="M248,64s0-56-60-56-60,112-120,112S8,64,8,64" />
-                    </g>
-                </g>
-            </svg>
-        </main>
-    </div>
+    <link rel="icon" href="/title_logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Instrument+Sans:wght@400..700&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" />
+  </head>
+  <body>
+    <!-- Apply the saved theme before React starts, so a visitor who chose dark
+         mode never sees a flash of the light theme while the page loads.
+         (useTheme.js keeps it in sync afterwards.) -->
     <script>
-        setTimeout(() => {
-            // Add fade-out class
-            document.getElementById('preloader').classList.add('fade-out');
-
-            // Redirect after the fade-out transition ends
-            setTimeout(() => {
-                window.location.href = 'home.html'; // Change 'home.html' to your main page
-            }, 500); // Wait for the fade-out effect (1 second)
-        }, 500); // 2 seconds initial delay
+      // Same keys as hooks/useTheme.js. The hook later checks the saved palette
+      // against the real theme list and corrects it if needed.
+      (function () {
+        var isDark = true
+        var themeId = null
+        try {
+          isDark = localStorage.getItem('darkMode') !== 'false'
+          themeId = localStorage.getItem(isDark ? 'themeDark' : 'themeLight')
+        } catch (error) {
+          // Storage blocked: use the defaults.
+        }
+        if (isDark) document.body.classList.add('dark-mode')
+        if (!/^[a-z]+$/.test(themeId || '')) themeId = isDark ? 'ember' : 'sandstone'
+        document.documentElement.setAttribute('data-theme', themeId)
+      })()
     </script>
-</body>
-
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

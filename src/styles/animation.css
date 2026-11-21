@@ -1,0 +1,147 @@
+/* =====================================================================
+   MOTION SYSTEM
+   Page transitions, scroll reveals and shared keyframes.
+   Rules: animate only transform / opacity (cheap for the GPU), keep
+   movement small, and switch everything off for prefers-reduced-motion.
+   ===================================================================== */
+
+/* ---------- Page enter / leave ---------------------------------------- */
+
+/* Moving between pages only changes the page CONTENT. The header and the
+   decorative layers (SiteLayout.jsx) stay mounted and are never faded, so
+   the navbar does not flicker. "Content" = every direct child of #root
+   except those permanent parts.
+
+   Only opacity is animated here: a transform would break position:fixed
+   children (the certificate viewer) while it runs. Movement comes from the
+   scroll-reveal below, which floats each section into place. */
+
+/* SiteLink adds .is-leaving just before navigating to another page. */
+body.is-leaving #root > :where(:not(header, style, .glass-decor, .cursor-light, .page-progress)) {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+}
+
+/* PageLayout adds .is-entering for the first moments of a new page.
+   .reveal elements are skipped: they have their own entrance (below). */
+body.is-entering #root > :where(:not(header, style, .glass-decor, .cursor-light, .page-progress, .reveal)) {
+    animation: pageContentIn 0.5s ease-out backwards;
+}
+
+@keyframes pageContentIn {
+    from { opacity: 0; }
+}
+
+/* ---------- Scroll reveal ---------------------------------------------- */
+
+/* glass.js tags elements with .reveal and adds .is-visible when they
+   scroll into view. --reveal-delay staggers siblings in a grid. */
+/* Content floats up and settles on a soft spring (--ease-liquid-soft, see
+   liquid.css) instead of sliding to a stop. The transform duration must stay
+   below REVEAL_DURATION_MS in useScrollReveal.js. */
+.reveal {
+    opacity: 0;
+    transform: translateY(36px) scale(0.965);
+    transition:
+        opacity 0.7s ease-out,
+        transform 1.1s var(--ease-liquid-soft);
+    transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ---------- Shared keyframes ------------------------------------------- */
+
+@keyframes auroraDrift {
+    0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    50% { transform: translate3d(3%, -2%, 0) rotate(8deg) scale(1.05); }
+    100% { transform: translate3d(-3%, 2%, 0) rotate(-6deg) scale(1); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Home page bubbles drifting upward. */
+@keyframes rise {
+    from { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    to { transform: translateY(-115vh) scale(1.4); opacity: 0; }
+}
+
+/* Skill progress bars "fill" from left without squashing their label. */
+@keyframes barFill {
+    from { clip-path: inset(0 100% 0 0 round 999px); }
+    to { clip-path: inset(0 0 0 0 round 999px); }
+}
+
+@keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* ---------- Reduced motion ---------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Decorative moving backgrounds are hidden entirely. */
+    #particles-js,
+    .bubble-background {
+        display: none;
+    }
+}
+
+/* ---------- Split heading (SplitHeading.jsx) ----------------------------- */
+
+/* Each word rises and fades in, one after the other. Opacity + transform
+   only, so the browser can run it on the GPU. */
+/* A trailing space inside an inline-block is dropped by the browser, so the gap
+   between words is a margin. Words are still separate inline boxes, so they wrap. */
+.split-word {
+    display: inline-block;
+    margin-right: 0.26em;
+    animation: wordRise 0.8s var(--ease-out) backwards;
+    animation-delay: calc(0.12s + var(--word-index, 0) * 0.08s);
+}
+
+.split-word:last-child {
+    margin-right: 0;
+}
+
+@keyframes wordRise {
+    from { opacity: 0; transform: translateY(0.45em); }
+}
