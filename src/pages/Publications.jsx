@@ -5,7 +5,7 @@ import publicationsCss from '../styles/publications.css?inline'
 
 export default function Publications() {
   return (
-    <PageLayout title="Publications" pageCss={publicationsCss}>
+    <PageLayout title="Publications" description="Publications and written work by Abhimanyu Surendran." pageCss={publicationsCss}>
       <div className="main-content">
         {papers.map((paper) => (
           <div key={paper.link} className="research-paper glass-panel">

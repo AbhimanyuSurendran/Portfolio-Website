@@ -22,7 +22,7 @@ function SkillImagePanel({ className, title, skills }) {
 
 export default function Skills() {
   return (
-    <PageLayout title="Skills" pageCss={skillsCss}>
+    <PageLayout title="Skills" description="Skills and technologies used by Abhimanyu Surendran: JavaScript, TypeScript, React, Node.js, Java, SQL, PostgreSQL and more." pageCss={skillsCss}>
       <div className="main-content">
         <div className="top-skill-sets glass-panel">
           <SplitHeading text="Top Skill Sets" />

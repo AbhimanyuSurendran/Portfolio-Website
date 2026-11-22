@@ -141,7 +141,7 @@ function AllProjects() {
 
 export default function Projects() {
   return (
-    <PageLayout title="Projects" pageCss={projectsCss}>
+    <PageLayout title="Projects" description="Projects built by Abhimanyu Surendran, including TRINETRA (bank management system) and EVOLVE (social media platform), with live demos." pageCss={projectsCss}>
       <TopProjects />
       <AllProjects />
     </PageLayout>

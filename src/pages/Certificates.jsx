@@ -71,7 +71,7 @@ export default function Certificates() {
   }
 
   return (
-    <PageLayout title="Certificates" pageCss={certificatesCss}>
+    <PageLayout title="Certificates" description="Certificates and courses earned by Abhimanyu Surendran across programming, web development, databases and cloud." pageCss={certificatesCss}>
       <div className="main-content">
         <div className="title glass-panel">
           <h2>Check Out</h2>

@@ -3,7 +3,8 @@ import PageLayout from '../components/PageLayout'
 import Footer from '../components/Footer'
 import DownloadButton from '../components/DownloadButton'
 import SiteLink from '../components/SiteLink'
-import { certifications, education, experience, featuredProjects, internships, skillGroups } from '../data/about'
+import ExperienceTimeline from '../components/ExperienceTimeline'
+import { certifications, education, experience, featuredProjects, freelance, internships, skillGroups } from '../data/about'
 import { assetUrl } from '../utils/assetUrl'
 import aboutCss from '../styles/about.css?inline'
 // Address of the bundled resume file, used as the plain link (new tab / no JavaScript).
@@ -137,6 +138,13 @@ function MainProfile() {
         ))}
       </div>
 
+      <h1 className="title section-heading">My Freelance Work</h1>
+      <div className="card-container">
+        {freelance.map((item) => (
+          <ExperienceCard key={item.heading} item={item} />
+        ))}
+      </div>
+
       <h1 className="title section-heading">My Internships</h1>
       <div className="card-container">
         {internships.map((item) => (
@@ -245,9 +253,12 @@ function MainProfile() {
 
 export default function About() {
   return (
-    <PageLayout title="About" pageCss={aboutCss}>
+    <PageLayout title="About" description="Learn about Abhimanyu Surendran: software developer at PUNON Technologies, MCA student and BCA gold medalist, with experience, internships, education and certifications." pageCss={aboutCss}>
       <div className="main-content">
-        <ResumeProfile />
+        <div className="profile-column">
+          <ResumeProfile />
+          <ExperienceTimeline />
+        </div>
         <MainProfile />
       </div>
       <Footer />

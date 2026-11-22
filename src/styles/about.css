@@ -11,22 +11,22 @@
 .main-content {
     display: grid;
     grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
-    /* One row that exactly fills the fixed height, so the panels inside
-       can scroll on their own. */
-    grid-template-rows: minmax(0, 1fr);
+    /* Both columns grow to their full height and the whole page scrolls. */
     gap: clamp(20px, 2.5vw, 32px);
     align-items: start;
     width: min(var(--page-max), calc(100% - 2 * var(--page-gutter)));
-    height: calc(100vh - 146px);
-    height: calc(100dvh - 146px);
     margin: 28px auto 0;
 }
 
 /* ---------- 1. Profile sidebar ----------------------------------------- */
 
+/* Left column: the profile card and the timeline panel, stacked. */
+.profile-column {
+    display: grid;
+    gap: 16px;
+}
+
 .resume-profile {
-    max-height: 100%;
-    overflow-y: auto;
     padding: clamp(24px, 2.5vw, 34px);
     text-align: center;
 }
@@ -104,15 +104,12 @@
 /* ---------- 2. Story panel --------------------------------------------- */
 
 .main-profile {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0 clamp(16px, 2.5vw, 34px) clamp(20px, 3vw, 36px);
-    overscroll-behavior: contain;
+    padding: clamp(16px, 2.5vw, 34px) clamp(16px, 2.5vw, 34px) clamp(20px, 3vw, 36px);
 }
 
+/* The panel no longer scrolls on its own, so its progress bar has nothing to show. */
 .main-profile .progress-container {
-    margin-bottom: 24px;
+    display: none;
 }
 
 .main-profile > .glass-card,
@@ -458,28 +455,10 @@ body.dark-mode .map-container iframe {
     }
 }
 
-/* Narrow screens: sidebar and story stack and scroll with the page
-   (nested scrolling is awkward on touch), so the in-panel bar is hidden. */
+/* Narrow screens: the profile column and the story stack in one column. */
 @media (max-width: 1000px) {
     .main-content {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: auto;
-    }
-
-    .resume-profile,
-    .main-profile {
-        max-height: none;
-        height: auto;
-        overflow: visible;
-    }
-
-    .main-profile {
-        padding-top: clamp(16px, 2.5vw, 34px);
-    }
-
-    .main-profile .progress-container {
-        display: none;
     }
 
     .footer-top {

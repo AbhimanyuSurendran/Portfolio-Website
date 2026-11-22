@@ -77,7 +77,7 @@ export default function Home() {
   }, [])
 
   return (
-    <PageLayout title="Home" pageCss={homeCss}>
+    <PageLayout title="Home" description="Abhimanyu Surendran is a full-stack software developer building web and Android applications with React, Node.js, TypeScript, Java and PostgreSQL." pageCss={homeCss}>
       {/* Hero: two-column glass layout (text left, photo slider right) */}
       <main className="hero">
         <div className="profile-title">

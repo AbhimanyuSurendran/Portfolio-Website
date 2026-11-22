@@ -1,4 +1,4 @@
-// Content for the About page (experience, internships, projects, skills, education, certificates).
+// Content for the About page (experience, freelance, internships, projects, skills, education, certificates).
 // Image paths are relative to the public/ folder (wrap them with assetUrl()).
 
 export const experience = [
@@ -76,7 +76,10 @@ export const internships = [
     "role": "Web Developer Intern",
     "period": "Duration :- 2 Months",
     "description": "Completed a 2-month remote internship at CORIZO, designing responsive web interfaces with HTML, CSS, and JavaScript, optimizing code and fixing issues, and gaining experience with Git and agile methodologies."
-  },
+  }
+];
+
+export const freelance = [
   {
     "logo": null,
     "logoAlt": null,

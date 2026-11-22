@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
+const SITE_NAME = 'Abhimanyu Surendran'
+
 // How long body.is-entering stays on. Must cover the pageContentIn
 // animation in animation.css (0.5s).
 const ENTER_ANIMATION_MS = 600
@@ -9,11 +11,12 @@ const ENTER_ANIMATION_MS = 600
 // scroll-reveal animations. The header and decorative layers are NOT here;
 // they live in SiteLayout so they stay mounted between pages.
 //
+// title / description: shown in the browser tab and used as the meta description.
 // pageCss: this page's own stylesheet (imported with `?inline`). It is only
 // added to the document while the page is on screen, because several pages
 // reuse the same class names (.main-content, .card-container ...) with
 // different styles, so they cannot all be loaded at once.
-export default function PageLayout({ title, pageCss, children }) {
+export default function PageLayout({ title, description, pageCss, children }) {
   // Layout effect = runs before the browser paints, so the new page is never
   // shown un-animated for a frame.
   useLayoutEffect(() => {
@@ -28,9 +31,12 @@ export default function PageLayout({ title, pageCss, children }) {
     }
   }, [])
 
+  // Tab title and description. (Link previews and Google read index.html instead,
+  // because the site's addresses are "/#/page" and the part after # is never sent to a server.)
   useEffect(() => {
-    document.title = title
-  }, [title])
+    document.title = `${title} | ${SITE_NAME}`
+    if (description) document.querySelector('meta[name="description"]')?.setAttribute('content', description)
+  }, [title, description])
 
   useScrollReveal()
 
