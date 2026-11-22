@@ -1,0 +1,234 @@
+/* =====================================================================
+   CONTACT BUTTON (components/ContactButton.jsx)
+   Built on .glass-btn. data-status on the button is "idle", "connecting"
+   or "done".
+
+   The button "shrinks" into a circle with clip-path (the button itself never
+   changes size, so nothing else on the page moves). Everything else animates
+   transform and opacity.
+   ===================================================================== */
+
+.contact-btn {
+    --btn-height: 46px;
+    height: var(--btn-height);
+    padding-block: 0;
+    box-sizing: border-box;
+    isolation: isolate;
+    /* Full button. The negative values leave room for its glow (box-shadow). */
+    clip-path: inset(-40px -40px -40px -40px round 0);
+    transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur) var(--ease-out), filter var(--dur) ease;
+}
+
+.contact-stage {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: opacity 0.25s ease;
+}
+
+/* ---- Idle: chat bubble + label ---- */
+
+.contact-icon {
+    width: 21px;
+    height: 21px;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-bubble {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    transition: transform 0.4s var(--ease-spring);
+}
+
+.contact-btn[data-status="idle"]:hover .contact-bubble {
+    transform: translateY(-2px) rotate(-8deg) scale(1.08);
+}
+
+.contact-check {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+}
+
+/* ---- Connecting: shrink to a circle ---- */
+
+.contact-btn[data-status="connecting"] {
+    /* Both sides move in until only a circle (as wide as the button is tall) is left. */
+    clip-path: inset(0 calc(50% - var(--btn-height) / 2) 0 calc(50% - var(--btn-height) / 2) round calc(var(--btn-height) / 2));
+    cursor: default;
+}
+
+.contact-btn[data-status="connecting"] .contact-stage {
+    opacity: 0;
+}
+
+/* The circle's contents: spinning ring, typing dots, check mark. */
+.contact-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--btn-height);
+    height: var(--btn-height);
+    margin: calc(var(--btn-height) / -2) 0 0 calc(var(--btn-height) / -2);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.contact-btn[data-status="connecting"] .contact-core {
+    opacity: 1;
+    transition: opacity 0.2s ease 0.3s; /* appears once the circle has formed */
+}
+
+.contact-ring {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-top-color: #fff;
+}
+
+.contact-btn[data-status="connecting"] .contact-ring {
+    animation: contactSpin 0.8s linear infinite;
+}
+
+@keyframes contactSpin {
+    to { transform: rotate(360deg); }
+}
+
+.contact-dots {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    gap: 3px;
+    transform: translate(-50%, -50%);
+}
+
+.contact-dots i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.contact-btn[data-status="connecting"] .contact-dots i {
+    animation: contactDot 0.9s ease-in-out infinite;
+}
+
+.contact-btn[data-status="connecting"] .contact-dots i:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.contact-btn[data-status="connecting"] .contact-dots i:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes contactDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+    30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ---- Done: check mark in the circle, then the circle pops open ---- */
+
+.contact-core-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+}
+
+.contact-btn[data-status="done"] {
+    animation: contactPopOpen 1s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+    cursor: default;
+}
+
+/* Stays a circle for the first 45%, then opens back to the full button. */
+@keyframes contactPopOpen {
+    0%, 45% {
+        clip-path: inset(0 calc(50% - var(--btn-height) / 2) 0 calc(50% - var(--btn-height) / 2) round calc(var(--btn-height) / 2));
+    }
+    100% {
+        clip-path: inset(-40px -40px -40px -40px round 0);
+    }
+}
+
+.contact-btn[data-status="done"] .contact-core {
+    animation: contactCoreOut 1s ease forwards;
+}
+
+@keyframes contactCoreOut {
+    0%, 45% { opacity: 1; transform: scale(1); }
+    70%, 100% { opacity: 0; transform: scale(1.25); }
+}
+
+/* The ring closes into a solid circle and the dots give way to the check mark. */
+.contact-btn[data-status="done"] .contact-ring {
+    border-color: #fff;
+}
+
+.contact-btn[data-status="done"] .contact-dots {
+    opacity: 0;
+}
+
+.contact-btn[data-status="done"] .contact-core-check {
+    animation: contactCheckDraw 0.4s 0.05s var(--ease-out) forwards;
+}
+
+@keyframes contactCheckDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* The label returns ("Message sent") as the button opens. */
+.contact-btn[data-status="done"] .contact-stage {
+    opacity: 0;
+    animation: contactStageIn 0.4s 0.6s ease forwards;
+}
+
+.contact-btn[data-status="done"] .contact-bubble {
+    opacity: 0;
+}
+
+.contact-btn[data-status="done"] .contact-check {
+    animation: contactCheckDraw 0.4s 0.75s var(--ease-out) forwards;
+}
+
+@keyframes contactStageIn {
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-btn,
+    .contact-btn[data-status="done"],
+    .contact-btn[data-status="done"] .contact-core,
+    .contact-btn[data-status="done"] .contact-stage {
+        animation: none;
+        transition-duration: 0.01ms;
+    }
+
+    .contact-btn[data-status="done"] .contact-stage {
+        opacity: 1;
+    }
+
+    .contact-btn[data-status="done"] .contact-check {
+        stroke-dashoffset: 0;
+        animation: none;
+    }
+
+    .contact-btn[data-status="done"] .contact-core {
+        opacity: 0;
+    }
+}

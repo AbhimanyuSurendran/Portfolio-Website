@@ -2,6 +2,7 @@ import { useState } from 'react'
 import PageLayout from '../components/PageLayout'
 import Footer from '../components/Footer'
 import DownloadButton from '../components/DownloadButton'
+import ContactButton from '../components/ContactButton'
 import SiteLink from '../components/SiteLink'
 import ExperienceTimeline from '../components/ExperienceTimeline'
 import { certifications, education, experience, featuredProjects, freelance, internships, skillGroups } from '../data/about'
@@ -46,6 +47,8 @@ function ResumeProfile() {
         </div>
       ))}
       <div className="resume-button">
+        {/* The phone number is not printed on the page; visitors reach you through WhatsApp. */}
+        <ContactButton href="https://wa.me/918839261551" label="Contact Me" className="resume-link" />
         <DownloadButton
           loadFile={loadResume}
           href={resumeUrl}

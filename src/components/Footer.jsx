@@ -1,4 +1,5 @@
 import SiteLink from './SiteLink'
+import ContactButton from './ContactButton'
 import { assetUrl } from '../utils/assetUrl'
 
 const SOCIAL_LINKS = [
@@ -49,17 +50,7 @@ export default function Footer() {
         <div className="footer-top-items glass-card">
           <img src={assetUrl('about_elements/footer-whatsapp-logo.png')} alt="image" />
           <div className="footer-top-content">
-            <button className="btn glass-btn">
-              <svg width="150" height="60" viewBox="0 0 150 60" className="border">
-                <polyline points="179,1 179,59 1,59 1,1 179,1" className="bg-line" />
-                <polyline points="179,1 179,59 1,59 1,1 179,1" className="hl-line" />
-              </svg>
-              <span>
-                <a href="https://wa.me/+918839261551" target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                </a>
-              </span>
-            </button>
+            <ContactButton href="https://wa.me/918839261551" label="WhatsApp" />
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Preloader from './pages/Preloader'
 import SiteLayout from './components/SiteLayout'
-import { useAntiInspect } from './hooks/useAntiInspect'
+import { useDisableRightClick } from './hooks/useDisableRightClick'
 import { useImageFallbacks } from './hooks/useImageFallbacks'
 import { usePointerEffects } from './hooks/usePointerEffects'
 
@@ -16,7 +16,7 @@ const About = lazy(() => import('./pages/About'))
 
 export default function App() {
   // Behaviours that apply to the whole site, whichever page is open.
-  useAntiInspect()
+  useDisableRightClick()
   useImageFallbacks()
   usePointerEffects()
 
