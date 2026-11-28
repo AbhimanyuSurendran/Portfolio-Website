@@ -163,7 +163,7 @@ function MobileNav({ currentPath }) {
 // Site header: logo, navigation (desktop + mobile) and the dark/light switch.
 export default function Header() {
   const { pathname } = useLocation()
-  const { isDarkMode, changeMode, themes, themeId, changeTheme } = useTheme()
+  const { isDarkMode, themes, themeId, changeAppearance } = useTheme()
   const [isScrolled, setIsScrolled] = useState(false)
 
   // header.css uses .is-scrolled to strengthen the glass once the page moves.
@@ -188,10 +188,15 @@ export default function Header() {
       <DesktopNav currentPath={pathname} />
       <MobileNav currentPath={pathname} />
 
-      <ThemePicker themes={themes} themeId={themeId} modeLabel={isDarkMode ? 'Dark' : 'Light'} onChange={changeTheme} />
+      <ThemePicker
+        themes={themes}
+        themeId={themeId}
+        modeLabel={isDarkMode ? 'Dark' : 'Light'}
+        onChange={(nextThemeId) => changeAppearance({ themeId: nextThemeId })}
+      />
 
       {/* Light / dark switch. The 6 palettes of the chosen mode are in the picker above. */}
-      <ThemeToggle isDarkMode={isDarkMode} onChange={changeMode} />
+      <ThemeToggle isDarkMode={isDarkMode} onChange={(nextIsDarkMode) => changeAppearance({ isDarkMode: nextIsDarkMode })} />
     </header>
   )
 }

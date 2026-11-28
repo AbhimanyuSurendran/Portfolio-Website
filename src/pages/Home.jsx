@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PageLayout from '../components/PageLayout'
+import SocialDock from '../components/SocialDock'
 import { useTypewriter } from '../hooks/useTypewriter'
-import { assetUrl } from '../utils/assetUrl'
 import homeCss from '../styles/home.css?inline'
 
 const ROLES = ['Software Developer', 'Full-Stack Developer', 'Web Developer', 'React Developer', 'Android Developer']
@@ -91,13 +91,7 @@ export default function Home() {
             functional, user-friendly digital solutions.
           </h3>
           <h4 style={{ textAlign: 'center' }}>Contact Me</h4>
-          <div className="contact-sources">
-            {CONTACT_LINKS.map((contact) => (
-              <a key={contact.name} href={contact.url} target="_blank" rel="noopener noreferrer">
-                <img src={assetUrl(contact.logo)} alt={contact.name} className="circular-image" />
-              </a>
-            ))}
-          </div>
+          <SocialDock links={CONTACT_LINKS} />
         </div>
 
         <div className="profile-image">

@@ -17,6 +17,7 @@ import './styles/controls.css'
 // Animated download button (About page resume).
 import './styles/download-button.css'
 import './styles/contact-button.css'
+import './styles/social-dock.css'
 // Tech Stack Builder game (Skills page).
 import './styles/stack-builder.css'
 import App from './App'

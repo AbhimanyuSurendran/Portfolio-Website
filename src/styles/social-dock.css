@@ -1,0 +1,186 @@
+/* =====================================================================
+   SOCIAL DOCK (components/SocialDock.jsx) — social icons on the Home page
+   While the cursor moves, the component writes transform (icons, bar) and
+   scale (names) directly, so nothing here reads those values.
+   Everything that animates here is transform or opacity, so the browser can
+   do it without redoing layout or repainting.
+   ===================================================================== */
+
+.social-dock {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px 10px 16px; /* extra room below for the reflection */
+}
+
+/* The glass bar. A separate layer, stretched sideways by the component when the
+   icons spread apart (its own layer, so the stretch costs no layout). */
+.dock-bar {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--radius-pill);
+    background-color: var(--glass-bg);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: var(--shadow-panel), inset 0 1px 0 var(--glass-highlight);
+    transform-origin: center;
+    will-change: transform;
+}
+
+.dock-item {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-stroke);
+    box-shadow: inset 0 1px 0 var(--glass-highlight);
+    transform-origin: center;
+    will-change: transform;
+}
+
+/* Hover wash and glow are fixed layers that only fade in, instead of
+   animating the background colour and a blurred shadow (both repaint). */
+.dock-item::before,
+.dock-item::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-fast) ease;
+}
+
+.dock-item::before {
+    background: var(--glass-card-hover);
+}
+
+.dock-item::after {
+    box-shadow: 0 16px 24px -14px color-mix(in srgb, var(--c-a) 85%, transparent);
+}
+
+.dock-logo {
+    position: relative; /* stays above the hover wash */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Name above the icon. The component shrinks it by the same amount the icon
+   grows, so the text stays the same size. */
+.dock-label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    /* Centred with auto margins inside a box wider than the name, not with
+       translate(-50%): the component's `scale` is applied before `transform`, so a
+       translate inside `transform` would be shrunk by it and the name would drift
+       off-centre while the icon is magnified. (The box must be wider than the name,
+       or the browser ignores auto margins and pins the name to the left.) */
+    left: -60px;
+    right: -60px;
+    width: max-content;
+    margin-inline: auto;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-stroke);
+    color: var(--text-1);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transform-origin: center bottom;
+    will-change: scale; /* its own layer, so resizing the name does not repaint the icon */
+    transition: opacity 0.2s ease, transform 0.3s var(--ease-out);
+}
+
+/* Faded mirror image under the icon. Only its top half is shown, fading out. */
+.dock-reflection {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 50%;
+    width: 30px;
+    height: 16px;
+    margin-left: -15px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.55), transparent);
+    mask-image: linear-gradient(rgba(0, 0, 0, 0.55), transparent);
+    transition: opacity 0.3s ease;
+}
+
+.dock-reflection img {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    transform: scaleY(-1);
+}
+
+@media (hover: hover) {
+    .dock-item:hover::before,
+    .dock-item:hover::after {
+        opacity: 1;
+    }
+
+    .dock-item:hover .dock-label,
+    .dock-item:focus-visible .dock-label {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dock-item:hover .dock-reflection,
+    .dock-item:focus-visible .dock-reflection {
+        opacity: 1;
+    }
+}
+
+.dock-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .social-dock {
+        gap: 6px;
+        padding: 8px 8px 8px;
+    }
+
+    .dock-item {
+        width: 46px;
+        height: 46px;
+    }
+
+    .dock-logo {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* Touch screens have no hover, so the label and reflection are not needed. */
+    .dock-label,
+    .dock-reflection {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dock-item::before,
+    .dock-item::after,
+    .dock-label,
+    .dock-reflection {
+        transition-duration: 0.01ms;
+    }
+}

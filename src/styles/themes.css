@@ -321,3 +321,13 @@
         width: auto;
     }
 }
+
+/* ---------- Theme change: circle reveal (utils/circleReveal.js) ----------------- */
+
+/* The browser's default cross-fade is switched off; the new look is shown by
+   the circle animation that circleReveal.js plays on ::view-transition-new(root). */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
