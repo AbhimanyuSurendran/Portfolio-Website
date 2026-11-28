@@ -22,27 +22,39 @@ function getRevealOrigin() {
   return isRecentPress ? lastPress : { x: window.innerWidth / 2, y: window.innerHeight / 2 }
 }
 
+let waitTimerId = null
+
 // Runs `applyChange` (which must change the page's look synchronously) and shows
 // the new look growing out of the click point as a circle, over the old look.
+//
+// waitMs: how long to wait before the circle starts, so the control that was
+// clicked (for example the light/dark switch) can finish its own animation first.
+// A newer call replaces one that is still waiting, so quick clicks end with a
+// single circle for the last choice.
 // Without View Transitions support, or with reduced motion, the change is instant.
-export function runWithCircleReveal(applyChange) {
+export function runWithCircleReveal(applyChange, waitMs = 0) {
+  clearTimeout(waitTimerId)
+
   if (!document.startViewTransition || prefersReducedMotion()) {
     applyChange()
     return
   }
 
+  // Taken now, not after the wait: the click would be too old by then.
   const { x, y } = getRevealOrigin()
   // Distance to the farthest corner: the circle then always ends up covering the whole screen.
   const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
 
-  const transition = document.startViewTransition(applyChange)
-  transition.ready
-    .then(() => {
-      document.documentElement.animate(
-        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-        { duration: REVEAL_DURATION_MS, easing: REVEAL_EASING, pseudoElement: '::view-transition-new(root)' }
-      )
-    })
-    // A transition is skipped when the tab is hidden or a newer one starts; the change itself still happens.
-    .catch(() => {})
+  waitTimerId = setTimeout(() => {
+    const transition = document.startViewTransition(applyChange)
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          { duration: REVEAL_DURATION_MS, easing: REVEAL_EASING, pseudoElement: '::view-transition-new(root)' }
+        )
+      })
+      // A transition is skipped when the tab is hidden or a newer one starts; the change itself still happens.
+      .catch(() => {})
+  }, waitMs)
 }
